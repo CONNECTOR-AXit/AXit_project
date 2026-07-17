@@ -14,6 +14,18 @@ check-worthy claim selection, fact-check output을 개발 시점에 작성·상�
 코딩 에이전트를 HTTP/runtime provider로 호출하지 않는다. 이 전략은 외부 키·쿼터 없이
 파이프라인, schema, citation, UI, retry를 구현·검증하기 위한 임시 substitute다.
 
+## Immediate Team scope
+
+첫 Team 실행은 provider fixture 실험만 수행한다. Phase 0 transport proof와 Phase 1 G0는
+이 실행의 평가 대상이 아니며, greenfield 저장소에 toolchain이나 앱 코드가 아직 없다는
+사실을 Phase 0/G0 `NO-GO`로 판정하지 않는다.
+
+세 코딩 에이전트는 아래의 서로 겹치지 않는 파일 영역에서 source pack, summary fixture,
+research/fact-check fixture를 작성한다. 외부 provider 호출 없이 Python 표준 라이브러리로
+canonical JSON, ID 해석, citation/격리 규칙을 검증할 수 있는 최소 validator와 테스트를
+함께 남긴다. 애플리케이션 통합과 Phase 0/G0 판정은 이 fixture baseline이 merge된 뒤
+승인된 gate 순서에서 별도로 수행한다.
+
 ## Team fixture protocol
 
 1. **Source pack owner**

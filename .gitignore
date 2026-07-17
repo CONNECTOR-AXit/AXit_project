@@ -1,0 +1,33 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# JavaScript
+node_modules/
+.next/
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local data and runtime
+data/
+*.log
+.omx/state/
+.omx/logs/
+.omx/metrics.json
+
+# Editors and OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

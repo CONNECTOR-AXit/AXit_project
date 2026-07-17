@@ -1,0 +1,88 @@
+name: axit-phase0
+
+services:
+  postgres:
+    image: postgres:17.6-alpine3.22
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-axit}
+      POSTGRES_USER: ${POSTGRES_USER:-axit}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-axit-phase0-only}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}",
+        ]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    tmpfs:
+      - /var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    init: true
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-axit}:${POSTGRES_PASSWORD:-axit-phase0-only}@postgres:5432/${POSTGRES_DB:-axit}
+      PUBLIC_HOST: ${PUBLIC_HOST:-localhost:3000}
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost:3000}
+      SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)",
+        ]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+
+  orchestrator:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    command: ["python", "-m", "app.orchestrator"]
+    init: true
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-axit}:${POSTGRES_PASSWORD:-axit-phase0-only}@postgres:5432/${POSTGRES_DB:-axit}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-m", "app.orchestrator", "--healthcheck"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    init: true
+    environment:
+      INTERNAL_API_URL: http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    ports:
+      - "127.0.0.1:3000:3000"

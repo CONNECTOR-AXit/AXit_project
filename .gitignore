@@ -25,6 +25,9 @@ data/
 .omx/state/
 .omx/logs/
 .omx/metrics.json
+.omx/hud-config.json
+.omx/setup-scope.json
+.omx/tmux-hook.json
 
 # Editors and OS
 .DS_Store

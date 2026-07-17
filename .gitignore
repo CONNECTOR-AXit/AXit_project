@@ -24,6 +24,9 @@ data/
 *.log
 .omx/state/
 .omx/logs/
+# Team worktrees and generated merge reports are runtime-only.
+.omx/team/
+.omx/reports/
 .omx/metrics.json
 .omx/hud-config.json
 .omx/setup-scope.json

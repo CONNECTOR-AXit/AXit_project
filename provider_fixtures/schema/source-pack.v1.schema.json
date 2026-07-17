@@ -1,0 +1,1 @@
+{"$id":"provider-fixture.v1/source-pack","$schema":"https://json-schema.org/draft/2020-12/schema","allOf":[{"$ref":"provider-fixture.v1"}],"properties":{"anchors":{"minItems":5,"type":"array"},"fixture_id":{"const":"meeting-pack-001"},"revisions":{"minItems":3,"type":"array"}},"required":["fixture_id","revisions","anchors"],"title":"Immutable synthetic meeting source pack"}

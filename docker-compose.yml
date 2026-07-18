@@ -3,6 +3,8 @@ name: axit-phase0
 services:
   postgres:
     image: postgres:17.6-alpine3.22
+    ports:
+      - "127.0.0.1:54329:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-axit}
       POSTGRES_USER: ${POSTGRES_USER:-axit}

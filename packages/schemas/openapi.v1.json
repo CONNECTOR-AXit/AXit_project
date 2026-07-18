@@ -1,0 +1,2472 @@
+{
+  "components": {
+    "schemas": {
+      "AnchorKind": {
+        "enum": [
+          "text_line",
+          "pdf_block",
+          "image_bbox",
+          "hwp_paragraph"
+        ],
+        "title": "AnchorKind",
+        "type": "string"
+      },
+      "Body_submitFile": {
+        "properties": {
+          "file": {
+            "contentMediaType": "application/octet-stream",
+            "title": "File",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "title": "Body_submitFile",
+        "type": "object"
+      },
+      "CitationTarget": {
+        "additionalProperties": false,
+        "properties": {
+          "citation_id": {
+            "format": "uuid",
+            "title": "Citation Id",
+            "type": "string"
+          },
+          "source_anchor_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Anchor Id"
+          },
+          "source_revision_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Revision Id"
+          },
+          "target_type": {
+            "enum": [
+              "source_anchor",
+              "web_evidence"
+            ],
+            "title": "Target Type",
+            "type": "string"
+          },
+          "web_evidence_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Web Evidence Id"
+          }
+        },
+        "required": [
+          "citation_id",
+          "target_type"
+        ],
+        "title": "CitationTarget",
+        "type": "object"
+      },
+      "CloseSessionRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "exclusions": {
+            "items": {
+              "$ref": "#/components/schemas/RevisionExclusion"
+            },
+            "maxItems": 20,
+            "title": "Exclusions",
+            "type": "array"
+          }
+        },
+        "title": "CloseSessionRequest",
+        "type": "object"
+      },
+      "CloseSessionResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "generation_epoch": {
+            "minimum": 1.0,
+            "title": "Generation Epoch",
+            "type": "integer"
+          },
+          "idempotent": {
+            "title": "Idempotent",
+            "type": "boolean"
+          },
+          "snapshot_id": {
+            "format": "uuid",
+            "title": "Snapshot Id",
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/SessionState",
+            "description": "Aggregate session state"
+          }
+        },
+        "required": [
+          "snapshot_id",
+          "generation_epoch",
+          "state",
+          "idempotent"
+        ],
+        "title": "CloseSessionResponse",
+        "type": "object"
+      },
+      "CsrfResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "csrf_token": {
+            "maxLength": 512,
+            "minLength": 20,
+            "title": "Csrf Token",
+            "type": "string"
+          }
+        },
+        "required": [
+          "csrf_token"
+        ],
+        "title": "CsrfResponse",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Code",
+            "type": "string"
+          },
+          "detail": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Detail",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "detail"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "FactCheckItem": {
+        "additionalProperties": false,
+        "properties": {
+          "explanation": {
+            "maxLength": 10000,
+            "minLength": 1,
+            "title": "Explanation",
+            "type": "string"
+          },
+          "source_anchor_id": {
+            "format": "uuid",
+            "title": "Source Anchor Id",
+            "type": "string"
+          },
+          "source_claim_quote": {
+            "maxLength": 20000,
+            "minLength": 1,
+            "title": "Source Claim Quote",
+            "type": "string"
+          },
+          "verdict": {
+            "$ref": "#/components/schemas/FactCheckVerdict"
+          },
+          "web_evidence_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Web Evidence Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "source_anchor_id",
+          "source_claim_quote",
+          "verdict",
+          "explanation",
+          "web_evidence_ids"
+        ],
+        "title": "FactCheckItem",
+        "type": "object"
+      },
+      "FactCheckVerdict": {
+        "enum": [
+          "supported",
+          "refuted",
+          "mixed",
+          "unverifiable"
+        ],
+        "title": "FactCheckVerdict",
+        "type": "string"
+      },
+      "FriendRequestCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "addressee_id": {
+            "format": "uuid",
+            "title": "Addressee Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "addressee_id"
+        ],
+        "title": "FriendRequestCreate",
+        "type": "object"
+      },
+      "FriendRequestResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "addressee": {
+            "$ref": "#/components/schemas/UserResponse"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "requester": {
+            "$ref": "#/components/schemas/UserResponse"
+          },
+          "status": {
+            "$ref": "#/components/schemas/FriendshipStatus"
+          }
+        },
+        "required": [
+          "id",
+          "requester",
+          "addressee",
+          "status"
+        ],
+        "title": "FriendRequestResponse",
+        "type": "object"
+      },
+      "FriendResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "friendship_id": {
+            "format": "uuid",
+            "title": "Friendship Id",
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserResponse"
+          }
+        },
+        "required": [
+          "user",
+          "friendship_id"
+        ],
+        "title": "FriendResponse",
+        "type": "object"
+      },
+      "FriendshipStatus": {
+        "enum": [
+          "pending",
+          "accepted",
+          "rejected"
+        ],
+        "title": "FriendshipStatus",
+        "type": "string"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HwpFootnotePath": {
+        "additionalProperties": false,
+        "properties": {
+          "index": {
+            "minimum": 0.0,
+            "title": "Index",
+            "type": "integer"
+          },
+          "paragraph": {
+            "minimum": 0.0,
+            "title": "Paragraph",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "index",
+          "paragraph"
+        ],
+        "title": "HwpFootnotePath",
+        "type": "object"
+      },
+      "HwpParagraphLocator": {
+        "additionalProperties": false,
+        "properties": {
+          "footnote": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HwpFootnotePath"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "paragraph": {
+            "minimum": 0.0,
+            "title": "Paragraph",
+            "type": "integer"
+          },
+          "parser": {
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Parser",
+            "type": "string"
+          },
+          "parser_version": {
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Parser Version",
+            "type": "string"
+          },
+          "section": {
+            "minimum": 0.0,
+            "title": "Section",
+            "type": "integer"
+          },
+          "table": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HwpTablePath"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "parser",
+          "parser_version",
+          "section",
+          "paragraph"
+        ],
+        "title": "HwpParagraphLocator",
+        "type": "object"
+      },
+      "HwpTablePath": {
+        "additionalProperties": false,
+        "properties": {
+          "block": {
+            "minimum": 0.0,
+            "title": "Block",
+            "type": "integer"
+          },
+          "cell": {
+            "minimum": 0.0,
+            "title": "Cell",
+            "type": "integer"
+          },
+          "index": {
+            "minimum": 0.0,
+            "title": "Index",
+            "type": "integer"
+          },
+          "paragraph": {
+            "minimum": 0.0,
+            "title": "Paragraph",
+            "type": "integer"
+          },
+          "row": {
+            "minimum": 0.0,
+            "title": "Row",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "index",
+          "block",
+          "row",
+          "cell",
+          "paragraph"
+        ],
+        "title": "HwpTablePath",
+        "type": "object"
+      },
+      "ImageBBoxLocator": {
+        "additionalProperties": false,
+        "properties": {
+          "bbox": {
+            "$ref": "#/components/schemas/NormalizedBoundingBox"
+          },
+          "image_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Image Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "image_id",
+          "bbox"
+        ],
+        "title": "ImageBBoxLocator",
+        "type": "object"
+      },
+      "LoginRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "maxLength": 320,
+            "minLength": 3,
+            "title": "Email",
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "title": "Password",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "LoginRequest",
+        "type": "object"
+      },
+      "NormalizedBoundingBox": {
+        "description": "Canonical G0 ``[left, top, right, bottom]`` bounds.\n\nG0 hashes a JSON array rather than a named-coordinate object.  Keeping\nthat representation in the public DTO lets a browser consume the exact\npersisted locator without a lossy adapter or a second hash identity.",
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "title": "NormalizedBoundingBox",
+        "type": "array"
+      },
+      "PdfBlockLocator": {
+        "additionalProperties": false,
+        "properties": {
+          "bbox": {
+            "$ref": "#/components/schemas/NormalizedBoundingBox"
+          },
+          "block_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Block Id",
+            "type": "string"
+          },
+          "page": {
+            "minimum": 0.0,
+            "title": "Page",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "page",
+          "block_id",
+          "bbox"
+        ],
+        "title": "PdfBlockLocator",
+        "type": "object"
+      },
+      "RegisterRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "display_name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Display Name",
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 320,
+            "minLength": 3,
+            "title": "Email",
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 1024,
+            "minLength": 12,
+            "title": "Password",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "display_name"
+        ],
+        "title": "RegisterRequest",
+        "type": "object"
+      },
+      "ResearchItem": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "maxLength": 10000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "web_evidence_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Web Evidence Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "text",
+          "web_evidence_ids"
+        ],
+        "title": "ResearchItem",
+        "type": "object"
+      },
+      "ResearchResult": {
+        "additionalProperties": false,
+        "properties": {
+          "fact_checks": {
+            "items": {
+              "$ref": "#/components/schemas/FactCheckItem"
+            },
+            "maxItems": 100,
+            "title": "Fact Checks",
+            "type": "array"
+          },
+          "snapshot_id": {
+            "format": "uuid",
+            "title": "Snapshot Id",
+            "type": "string"
+          },
+          "topic_items": {
+            "items": {
+              "$ref": "#/components/schemas/ResearchItem"
+            },
+            "maxItems": 100,
+            "title": "Topic Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "snapshot_id"
+        ],
+        "title": "ResearchResult",
+        "type": "object"
+      },
+      "RetrySessionResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "snapshot_id": {
+            "format": "uuid",
+            "title": "Snapshot Id",
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/SessionState"
+          }
+        },
+        "required": [
+          "snapshot_id",
+          "state"
+        ],
+        "title": "RetrySessionResponse",
+        "type": "object"
+      },
+      "RevisionExclusion": {
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          },
+          "revision_id": {
+            "format": "uuid",
+            "title": "Revision Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "revision_id",
+          "reason"
+        ],
+        "title": "RevisionExclusion",
+        "type": "object"
+      },
+      "RoomCreateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "RoomCreateRequest",
+        "type": "object"
+      },
+      "RoomInvitationCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "invitee_id": {
+            "format": "uuid",
+            "title": "Invitee Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "invitee_id"
+        ],
+        "title": "RoomInvitationCreate",
+        "type": "object"
+      },
+      "RoomInvitationResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "invitee_id": {
+            "format": "uuid",
+            "title": "Invitee Id",
+            "type": "string"
+          },
+          "room_id": {
+            "format": "uuid",
+            "title": "Room Id",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/FriendshipStatus"
+          }
+        },
+        "required": [
+          "id",
+          "room_id",
+          "invitee_id",
+          "status"
+        ],
+        "title": "RoomInvitationResponse",
+        "type": "object"
+      },
+      "RoomResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "owner_id": {
+            "format": "uuid",
+            "title": "Owner Id",
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/RoomRole"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "owner_id",
+          "role"
+        ],
+        "title": "RoomResponse",
+        "type": "object"
+      },
+      "RoomRole": {
+        "enum": [
+          "host",
+          "member"
+        ],
+        "title": "RoomRole",
+        "type": "string"
+      },
+      "SessionState": {
+        "enum": [
+          "draft",
+          "open",
+          "closed",
+          "processing",
+          "ready",
+          "needs_attention"
+        ],
+        "title": "SessionState",
+        "type": "string"
+      },
+      "SourceAnchor": {
+        "additionalProperties": false,
+        "description": "Server UUID envelope over the lossless, canonical G0 anchor payload.",
+        "properties": {
+          "exact_quote": {
+            "maxLength": 20000,
+            "minLength": 1,
+            "title": "Exact Quote",
+            "type": "string"
+          },
+          "extraction_profile_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Extraction Profile Hash",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/AnchorKind"
+          },
+          "locator": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TextLineLocator"
+              },
+              {
+                "$ref": "#/components/schemas/PdfBlockLocator"
+              },
+              {
+                "$ref": "#/components/schemas/ImageBBoxLocator"
+              },
+              {
+                "$ref": "#/components/schemas/HwpParagraphLocator"
+              }
+            ],
+            "title": "Locator"
+          },
+          "revision_id": {
+            "format": "uuid",
+            "title": "Revision Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "source_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Source Sha256",
+            "type": "string"
+          },
+          "text_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Text Fingerprint",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "revision_id",
+          "schema_version",
+          "kind",
+          "source_sha256",
+          "extraction_profile_hash",
+          "locator",
+          "text_fingerprint",
+          "exact_quote"
+        ],
+        "title": "SourceAnchor",
+        "type": "object"
+      },
+      "SourceProcessingState": {
+        "enum": [
+          "uploaded",
+          "queued",
+          "extracting",
+          "ready",
+          "failed"
+        ],
+        "title": "SourceProcessingState",
+        "type": "string"
+      },
+      "SourceRevisionResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "byte_size": {
+            "maximum": 20971520.0,
+            "minimum": 0.0,
+            "title": "Byte Size",
+            "type": "integer"
+          },
+          "filename": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "title": "Filename",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "mime_type": {
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Mime Type",
+            "type": "string"
+          },
+          "processing_state": {
+            "$ref": "#/components/schemas/SourceProcessingState"
+          },
+          "submission_id": {
+            "format": "uuid",
+            "title": "Submission Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "submission_id",
+          "filename",
+          "mime_type",
+          "byte_size",
+          "processing_state"
+        ],
+        "title": "SourceRevisionResponse",
+        "type": "object"
+      },
+      "SourceViewerResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "highlighted_anchor": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceAnchor"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "revision": {
+            "$ref": "#/components/schemas/SourceRevisionResponse"
+          }
+        },
+        "required": [
+          "revision"
+        ],
+        "title": "SourceViewerResponse",
+        "type": "object"
+      },
+      "SubmissionReplaceRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "maxLength": 100000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "SubmissionReplaceRequest",
+        "type": "object"
+      },
+      "SubmissionResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "author_id": {
+            "format": "uuid",
+            "title": "Author Id",
+            "type": "string"
+          },
+          "current_revision_id": {
+            "format": "uuid",
+            "title": "Current Revision Id",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "text",
+              "file"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "processing_state": {
+            "$ref": "#/components/schemas/SourceProcessingState"
+          },
+          "session_id": {
+            "format": "uuid",
+            "title": "Session Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "session_id",
+          "author_id",
+          "kind",
+          "current_revision_id",
+          "processing_state"
+        ],
+        "title": "SubmissionResponse",
+        "type": "object"
+      },
+      "SummaryItem": {
+        "additionalProperties": false,
+        "properties": {
+          "source_anchor_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Source Anchor Ids",
+            "type": "array"
+          },
+          "supports": {
+            "items": {
+              "$ref": "#/components/schemas/SummarySupport"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Supports",
+            "type": "array"
+          },
+          "text": {
+            "maxLength": 10000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "source_anchor_ids",
+          "supports"
+        ],
+        "title": "SummaryItem",
+        "type": "object"
+      },
+      "SummaryResult": {
+        "additionalProperties": false,
+        "properties": {
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/SummarySection"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Sections",
+            "type": "array"
+          },
+          "snapshot_id": {
+            "format": "uuid",
+            "title": "Snapshot Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "snapshot_id",
+          "sections"
+        ],
+        "title": "SummaryResult",
+        "type": "object"
+      },
+      "SummarySection": {
+        "additionalProperties": false,
+        "properties": {
+          "heading": {
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Heading",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/SummaryItem"
+            },
+            "maxItems": 100,
+            "minItems": 1,
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "heading",
+          "items"
+        ],
+        "title": "SummarySection",
+        "type": "object"
+      },
+      "SummarySupport": {
+        "additionalProperties": false,
+        "properties": {
+          "citation_id": {
+            "format": "uuid",
+            "title": "Citation Id",
+            "type": "string"
+          },
+          "end": {
+            "exclusiveMinimum": 0.0,
+            "title": "End",
+            "type": "integer"
+          },
+          "exact_quote": {
+            "maxLength": 20000,
+            "minLength": 1,
+            "title": "Exact Quote",
+            "type": "string"
+          },
+          "source_anchor_id": {
+            "format": "uuid",
+            "title": "Source Anchor Id",
+            "type": "string"
+          },
+          "start": {
+            "minimum": 0.0,
+            "title": "Start",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "citation_id",
+          "source_anchor_id",
+          "exact_quote",
+          "start",
+          "end"
+        ],
+        "title": "SummarySupport",
+        "type": "object"
+      },
+      "TalkSessionCreateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "deadline": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deadline"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 10000,
+            "title": "Description",
+            "type": "string"
+          },
+          "topic": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Topic",
+            "type": "string"
+          }
+        },
+        "required": [
+          "topic"
+        ],
+        "title": "TalkSessionCreateRequest",
+        "type": "object"
+      },
+      "TalkSessionResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "deadline": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deadline"
+          },
+          "description": {
+            "maxLength": 10000,
+            "title": "Description",
+            "type": "string"
+          },
+          "generation_epoch": {
+            "minimum": 0.0,
+            "title": "Generation Epoch",
+            "type": "integer"
+          },
+          "host_id": {
+            "format": "uuid",
+            "title": "Host Id",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "room_id": {
+            "format": "uuid",
+            "title": "Room Id",
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/SessionState"
+          },
+          "topic": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Topic",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "room_id",
+          "host_id",
+          "topic",
+          "description",
+          "state",
+          "generation_epoch"
+        ],
+        "title": "TalkSessionResponse",
+        "type": "object"
+      },
+      "TextLineLocator": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "exclusiveMinimum": 0.0,
+            "title": "End",
+            "type": "integer"
+          },
+          "line": {
+            "minimum": 1.0,
+            "title": "Line",
+            "type": "integer"
+          },
+          "start": {
+            "minimum": 0.0,
+            "title": "Start",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "line",
+          "start",
+          "end"
+        ],
+        "title": "TextLineLocator",
+        "type": "object"
+      },
+      "TextSubmissionCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "maxLength": 100000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "TextSubmissionCreate",
+        "type": "object"
+      },
+      "UserResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "display_name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Display Name",
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 320,
+            "minLength": 3,
+            "title": "Email",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "display_name"
+        ],
+        "title": "UserResponse",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "Frozen Phase 2 durable-core wire contract.",
+    "title": "AXit Meeting RAG API",
+    "version": "0.1.0-phase2"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Login Contract"
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "operationId": "logout",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Logout Contract"
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "operationId": "register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Register Contract"
+      }
+    },
+    "/api/citations/{citation_id}/resolve": {
+      "get": {
+        "operationId": "resolveCitation",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "citation_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Citation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitationTarget"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Resolve Citation Contract"
+      }
+    },
+    "/api/csrf": {
+      "get": {
+        "operationId": "getCsrf",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CsrfResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Get Csrf Contract"
+      }
+    },
+    "/api/friend-requests": {
+      "post": {
+        "operationId": "createFriendRequest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendRequestCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendRequestResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Create Friend Request Contract"
+      }
+    },
+    "/api/friend-requests/{friend_request_id}/accept": {
+      "post": {
+        "operationId": "acceptFriendRequest",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "friend_request_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Friend Request Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendRequestResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Accept Friend Request Contract"
+      }
+    },
+    "/api/friend-requests/{friend_request_id}/reject": {
+      "post": {
+        "operationId": "rejectFriendRequest",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "friend_request_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Friend Request Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendRequestResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Reject Friend Request Contract"
+      }
+    },
+    "/api/friends": {
+      "get": {
+        "operationId": "listFriends",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FriendResponse"
+                  },
+                  "title": "Response Listfriends",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "List Friends Contract"
+      }
+    },
+    "/api/me": {
+      "get": {
+        "operationId": "getMe",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Get Me Contract"
+      }
+    },
+    "/api/rooms": {
+      "get": {
+        "operationId": "listRooms",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RoomResponse"
+                  },
+                  "title": "Response Listrooms",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "List Rooms Contract"
+      },
+      "post": {
+        "operationId": "createRoom",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoomCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Create Room Contract"
+      }
+    },
+    "/api/rooms/{room_id}/invitations": {
+      "post": {
+        "operationId": "createRoomInvitation",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "room_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Room Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoomInvitationCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomInvitationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Create Room Invitation Contract"
+      }
+    },
+    "/api/rooms/{room_id}/sessions": {
+      "post": {
+        "operationId": "createTalkSession",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "room_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Room Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TalkSessionCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TalkSessionResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Create Talk Session Contract"
+      }
+    },
+    "/api/sessions/{session_id}": {
+      "get": {
+        "operationId": "getTalkSession",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TalkSessionResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Get Talk Session Contract"
+      }
+    },
+    "/api/sessions/{session_id}/close": {
+      "post": {
+        "operationId": "closeSession",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloseSessionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloseSessionResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Close Session Contract"
+      }
+    },
+    "/api/sessions/{session_id}/research": {
+      "get": {
+        "operationId": "getSessionResearch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResearchResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Get Research Contract"
+      }
+    },
+    "/api/sessions/{session_id}/retry": {
+      "post": {
+        "operationId": "retrySession",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetrySessionResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Retry Session Contract"
+      }
+    },
+    "/api/sessions/{session_id}/submissions/files": {
+      "post": {
+        "operationId": "submitFile",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_submitFile"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Submit File Contract"
+      }
+    },
+    "/api/sessions/{session_id}/submissions/text": {
+      "post": {
+        "operationId": "submitText",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextSubmissionCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Submit Text Contract"
+      }
+    },
+    "/api/sessions/{session_id}/summary": {
+      "get": {
+        "operationId": "getSessionSummary",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummaryResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Get Summary Contract"
+      }
+    },
+    "/api/source-revisions/{revision_id}/original": {
+      "get": {
+        "operationId": "downloadSourceOriginal",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "revision_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Revision Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              },
+              "application/octet-stream": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Attachment-only original source bytes."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Download Original Contract"
+      }
+    },
+    "/api/source-revisions/{revision_id}/viewer": {
+      "get": {
+        "operationId": "getSourceViewer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "revision_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Revision Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "anchor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Anchor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceViewerResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Get Source Viewer Contract"
+      }
+    },
+    "/api/submissions/{submission_id}": {
+      "put": {
+        "operationId": "replaceTextSubmission",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "submission_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Submission Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmissionReplaceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          }
+        },
+        "summary": "Replace Submission Contract"
+      }
+    }
+  }
+}

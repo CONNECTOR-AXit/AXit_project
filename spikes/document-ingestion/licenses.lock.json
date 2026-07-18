@@ -1,0 +1,116 @@
+{
+  "engineering_screening_only": true,
+  "schema_version": 1,
+  "components": [
+    {
+      "name": "Python",
+      "role": "parser runtime",
+      "version": "3.12.11",
+      "spdx": "PSF-2.0",
+      "source_url": "https://www.python.org/downloads/release/python-31211/",
+      "redistributable": true,
+      "notice": "Preserve the Python license shipped in the base image."
+    },
+    {
+      "name": "uv",
+      "role": "locked environment builder",
+      "version": "0.11.29",
+      "spdx": "Apache-2.0 OR MIT",
+      "source_url": "https://github.com/astral-sh/uv/releases/tag/0.11.29",
+      "redistributable": true,
+      "notice": "Build tool only; retain upstream license metadata."
+    },
+    {
+      "name": "pypdfium2",
+      "role": "PDF text and rendering adapter",
+      "version": "5.12.1",
+      "spdx": "BSD-3-Clause AND Apache-2.0",
+      "source_url": "https://pypi.org/project/pypdfium2/5.12.1/",
+      "redistributable": true,
+      "notice": "Ship the wheel BUILD_LICENSES directory and PDFium third-party notices."
+    },
+    {
+      "name": "Pillow",
+      "role": "image decode and EXIF normalization",
+      "version": "12.3.0",
+      "spdx": "HPND",
+      "source_url": "https://pypi.org/project/Pillow/12.3.0/",
+      "redistributable": true,
+      "notice": "Retain the Pillow license and bundled codec notices."
+    },
+    {
+      "name": "Tesseract OCR",
+      "role": "Korean OCR engine",
+      "version": "5.3.0-2 (Debian bookworm)",
+      "spdx": "Apache-2.0",
+      "source_url": "https://packages.debian.org/bookworm/tesseract-ocr",
+      "redistributable": true,
+      "notice": "Retain Debian copyright metadata and Apache-2.0 notice."
+    },
+    {
+      "name": "Leptonica",
+      "role": "Tesseract image library",
+      "version": "1.82.0-3+b3 (Debian bookworm)",
+      "spdx": "BSD-2-Clause",
+      "source_url": "https://packages.debian.org/bookworm/liblept5",
+      "redistributable": true,
+      "notice": "Retain Debian copyright metadata and BSD notice."
+    },
+    {
+      "name": "tessdata_best Korean",
+      "role": "offline Korean OCR model",
+      "version": "e12c65a915945e4c28e237a9b52bc4a8f39a0cec",
+      "sha256": "f888d4038348a0c3d25151e7f452bda0d74ca275b18cab146798bcbb94084fff",
+      "spdx": "Apache-2.0",
+      "source_url": "https://github.com/tesseract-ocr/tessdata_best/blob/e12c65a915945e4c28e237a9b52bc4a8f39a0cec/kor.traineddata",
+      "redistributable": true,
+      "notice": "Model is copied at build time only after SHA-256 verification."
+    },
+    {
+      "name": "hwplib",
+      "role": "HWP 5 parser",
+      "version": "1.1.10",
+      "spdx": "Apache-2.0",
+      "source_url": "https://central.sonatype.com/artifact/kr.dogfoot/hwplib/1.1.10",
+      "redistributable": true,
+      "notice": "Retain upstream Apache-2.0 notice."
+    },
+    {
+      "name": "hwpxlib",
+      "role": "HWPX parser",
+      "version": "1.0.9",
+      "spdx": "Apache-2.0",
+      "source_url": "https://central.sonatype.com/artifact/kr.dogfoot/hwpxlib/1.0.9",
+      "redistributable": true,
+      "notice": "Retain upstream Apache-2.0 notice."
+    },
+    {
+      "name": "Eclipse Temurin OpenJDK",
+      "role": "HWP sidecar runtime",
+      "version": "17 (maven:3.9.11-eclipse-temurin-17 image)",
+      "spdx": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "source_url": "https://adoptium.net/about/",
+      "redistributable": true,
+      "notice": "Copy the runtime without modification and retain its legal directory."
+    },
+    {
+      "name": "Noto Sans KR fixture subset",
+      "role": "project-authored Korean golden fixture generation",
+      "version": "2.004 (Sans2.004 tag)",
+      "sha256": "a2c4986eabb2296fe733b90c4a6c8911c1c7bf7dd6d2b47675139e1afa0eb1bb",
+      "spdx": "OFL-1.1",
+      "source_url": "https://github.com/notofonts/noto-cjk/tree/Sans2.004",
+      "redistributable": true,
+      "notice": "Keep OFL.txt adjacent to the renamed subset font."
+    },
+    {
+      "name": "Playwright Test",
+      "role": "browser click-to-highlight proof",
+      "version": "1.61.0",
+      "spdx": "Apache-2.0",
+      "source_url": "https://github.com/microsoft/playwright/releases/tag/v1.61.0",
+      "redistributable": true,
+      "notice": "Development and test use only."
+    }
+  ]
+}

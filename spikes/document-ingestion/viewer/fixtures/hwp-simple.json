@@ -1,0 +1,38 @@
+{
+  "ok": true,
+  "result": {
+    "anchor_set_hash": "1f5c84fb4fbf0b262a8cdd6b46ef74bcb0ea9a99638bc250d581cc7b56328644",
+    "blocks": [
+      {
+        "anchor": {
+          "extraction_profile_hash": "e06db70a9d3aaf30c4ba3044bb75466ad85591bb92037fa1a894e651351c9c4e",
+          "kind": "hwp_paragraph",
+          "locator": {
+            "paragraph": 0,
+            "parser": "hwplib",
+            "parser_version": "1.1.10",
+            "section": 0
+          },
+          "schema_version": 1,
+          "source_sha256": "6d517dd5a9f082e831ae59df1e90f31d56293e11154d5338c08dec2618e437a4",
+          "text_fingerprint": "bed252a9dcbd24ed70c186d441f3c27b1d2e32a3cacc6ea04fcdca3853ff1eab"
+        },
+        "anchor_hash": "41610a7f7e9751431fe5510a4bb778e3d4ac341b5f0cb1ee533597442cb461d6",
+        "block_type": "hwp_paragraph",
+        "confidence": null,
+        "ordinal": 0,
+        "text": "회의 사전 브리핑은 안건과 참가자 근거를 함께 제시합니다."
+      }
+    ],
+    "config_profile_hash": "e06db70a9d3aaf30c4ba3044bb75466ad85591bb92037fa1a894e651351c9c4e",
+    "media_type": "application/x-hwp",
+    "normalization_profile": "nfc-lf-v1",
+    "parser": {
+      "name": "hwplib",
+      "version": "1.1.10"
+    },
+    "source_sha256": "6d517dd5a9f082e831ae59df1e90f31d56293e11154d5338c08dec2618e437a4",
+    "warnings": []
+  },
+  "schema_version": 1
+}

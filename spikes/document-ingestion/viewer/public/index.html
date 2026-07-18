@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AXit G0 인용 앵커 검증기</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/viewer.mjs"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">AXit · DOCUMENT INGESTION G0</p>
+        <h1>인용 앵커 검증기</h1>
+      </div>
+      <div class="status-card" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span data-viewer-status>Loading</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="proof-summary" aria-labelledby="proof-title">
+        <div>
+          <p class="section-label">현재 검증 대상</p>
+          <h2 id="proof-title" data-document-title>추출 결과를 불러오는 중입니다</h2>
+        </div>
+        <dl class="proof-meta" data-proof-meta></dl>
+      </section>
+
+      <div class="workspace">
+        <aside class="citation-panel" aria-labelledby="citation-heading">
+          <div class="panel-heading">
+            <p class="section-label">근거 목록</p>
+            <h2 id="citation-heading">인용</h2>
+          </div>
+          <ol class="citation-list" data-citation-list></ol>
+        </aside>
+
+        <section class="source-panel" aria-labelledby="source-heading">
+          <div class="panel-heading source-heading">
+            <div>
+              <p class="section-label">원문 좌표</p>
+              <h2 id="source-heading">Source preview</h2>
+            </div>
+            <p class="source-hint">인용을 선택하면 정확히 하나의 원문 위치가 강조됩니다.</p>
+          </div>
+          <div class="source-stage" data-source-stage></div>
+        </section>
+      </div>
+
+      <section class="selection-panel" aria-labelledby="selection-heading">
+        <div>
+          <p class="section-label">선택된 결정적 식별자</p>
+          <h2 id="selection-heading">Anchor identity</h2>
+        </div>
+        <dl class="selection-meta">
+          <div>
+            <dt>anchor hash</dt>
+            <dd data-selected-anchor-hash>선택 전</dd>
+          </div>
+          <div>
+            <dt>text fingerprint</dt>
+            <dd data-selected-text-fingerprint>선택 전</dd>
+          </div>
+        </dl>
+      </section>
+    </main>
+  </body>
+</html>

@@ -4,10 +4,12 @@ version = "0.1.0"
 description = "Provenance-first meeting pre-briefing RAG platform"
 requires-python = "==3.12.*"
 dependencies = [
+  "alembic==1.18.5",
   "fastapi==0.139.2",
   "psycopg[binary]==3.3.4",
   "pydantic==2.13.4",
   "python-multipart==0.0.32",
+  "sqlalchemy==2.0.51",
   "uvicorn==0.51.0",
 ]
 
@@ -19,20 +21,28 @@ dev = [
   "pytest-asyncio==1.4.0",
   "ruff==0.15.22",
 ]
+ingestion-g0 = [
+  "Pillow==12.3.0",
+  "pypdfium2==5.12.1",
+]
 
 [tool.uv]
 package = false
+default-groups = ["dev", "ingestion-g0"]
 
 [tool.pytest.ini_options]
 addopts = "-ra --strict-config --strict-markers"
+pythonpath = ["apps/api"]
 markers = [
   "e2e: browser end-to-end tests",
   "evaluation: deterministic quality evaluation tests",
   "integration: tests that require service processes",
+  "g0: blocking document parser, OCR, sandbox, and locator proof",
   "phase0: disposable Option A transport proof",
   "security: security boundary tests",
 ]
 testpaths = ["tests"]
+cache_dir = ".omx/state/pytest-cache"
 
 [tool.ruff]
 target-version = "py312"
@@ -40,5 +50,5 @@ target-version = "py312"
 [tool.mypy]
 python_version = "3.12"
 strict = true
-files = ["apps/api"]
-exclude = ["^apps/api/tests/"]
+files = ["apps/api", "spikes/document-ingestion/src", "spikes/document-ingestion/*.py"]
+exclude = ["(^|/)tests/"]

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "input": {
+    "max_bytes": 20971520,
+    "pdf_max_pages": 100,
+    "image_max_pixels": 25000000
+  },
+  "archive": {
+    "max_entries": 256,
+    "max_entry_uncompressed_bytes": 20971520,
+    "max_total_uncompressed_bytes": 67108864,
+    "max_compression_ratio": 100,
+    "max_xml_bytes": 8388608
+  },
+  "result": {
+    "max_stdout_bytes": 1048576,
+    "max_stderr_bytes": 65536,
+    "max_blocks": 10000,
+    "max_block_chars": 100000,
+    "max_total_chars": 1000000
+  },
+  "sandbox": {
+    "wall_timeout_seconds": 20,
+    "stop_grace_seconds": 1,
+    "memory_bytes": 805306368,
+    "memory_swap_bytes": 805306368,
+    "pids": 64,
+    "cpus": 1.0,
+    "tmpfs_bytes": 134217728,
+    "uid": 10001,
+    "gid": 10001
+  }
+}

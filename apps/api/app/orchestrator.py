@@ -1,8 +1,10 @@
-"""Disposable Phase 0 orchestrator process and database health probe.
+"""Phase 0 process health probe and Phase 2 runner entry surface.
 
-The process intentionally performs no production job orchestration. Its only
-purpose is to prove that API and orchestrator are separate processes sharing
-the same Python package while both can reach PostgreSQL.
+``FencedExtractionRunner`` owns the Phase 2 claim -> adapter -> fenced
+completion protocol.  This CLI intentionally remains an idle/health process
+until Phase 3 supplies the durable source loader and separately approved G0
+container launcher; it must not promote the local IPC adapter into a runtime
+sandbox by accident.
 """
 
 from __future__ import annotations
@@ -13,9 +15,12 @@ from collections.abc import Sequence
 from typing import Final
 
 from app.db import database_is_ready
+from app.orchestrator_runner import FencedExtractionRunner
 
 
 _IDLE_SECONDS: Final = 60.0
+
+__all__ = ["FencedExtractionRunner", "main"]
 
 
 def _healthcheck_requested(argv: Sequence[str] | None) -> bool:

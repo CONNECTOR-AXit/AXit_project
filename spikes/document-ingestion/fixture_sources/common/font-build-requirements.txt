@@ -1,0 +1,4 @@
+# Build-only Linux CPython 3.12 wheel used to derive the committed OFL subset.
+# Runtime fixture regeneration needs only Pillow; see requirements.txt.
+fonttools==4.59.2 \
+    --hash=sha256:738f31f23e0339785fd67652a94bc69ea49e413dfdb14dcb8c8ff383d249464e

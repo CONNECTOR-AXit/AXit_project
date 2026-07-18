@@ -1,0 +1,15 @@
+{
+  "anchor": {
+    "schema_version": 1,
+    "kind": "text_line",
+    "source_sha256": "797b840a9fd7f1133d5c80dd781f1ecc987b32107b2a50f653448aa9a00269f4",
+    "extraction_profile_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "locator": {
+      "line": 1,
+      "start": 0,
+      "end": 30
+    },
+    "text_fingerprint": "797b840a9fd7f1133d5c80dd781f1ecc987b32107b2a50f653448aa9a00269f4"
+  },
+  "exact_quote": "Alice: The checklist is ready."
+}

@@ -33,6 +33,13 @@ data/
 .omx/setup-scope.json
 .omx/tmux-hook.json
 
+# Reproducible document-ingestion runtime evidence and Java build output.
+/spikes/document-ingestion/evidence/g0-evidence.v1.json
+/spikes/document-ingestion/viewer/evidence/browser-evidence.v1.json
+/spikes/document-ingestion/viewer/evidence/browser-evidence.v2.json
+/spikes/document-ingestion/viewer/evidence/*.png
+/spikes/document-ingestion/hwp-sidecar/target/
+
 # Editors and OS
 .DS_Store
 Thumbs.db

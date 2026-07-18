@@ -1,0 +1,419 @@
+{
+  "content_license": "CC0-1.0",
+  "fixtures": [
+    {
+      "classification": "golden",
+      "expected": {
+        "anchor_kind": "hwp_paragraph",
+        "normalization_profile": "nfc-lf-v1",
+        "text_nfc": "회의 사전 브리핑은 안건과 참가자 근거를 함께 제시합니다.",
+        "text_nfc_sha256": "bed252a9dcbd24ed70c186d441f3c27b1d2e32a3cacc6ea04fcdca3853ff1eab"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/hwp/generate.ps1",
+      "media_type": "application/x-hwp",
+      "path": "hwp/simple.hwp",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "6d517dd5a9f082e831ae59df1e90f31d56293e11154d5338c08dec2618e437a4",
+      "size_bytes": 4608
+    },
+    {
+      "classification": "golden",
+      "expected": {
+        "anchor_kind": "hwp_paragraph",
+        "normalization_profile": "nfc-lf-v1",
+        "required_block_types": [
+          "hwp_paragraph",
+          "hwp_table_cell",
+          "hwp_footnote"
+        ],
+        "requires_complete_structural_paths": true,
+        "text_nfc": "회의 후속 조치 표와 검토 기준 각주\n항목\n담당\n후속 과제\n후속 담당: 민서\n검토 기준일: 2026-07-18",
+        "text_nfc_sha256": "9d7de4cccfdebfeeaf681f079190f2e9134b8e989d91b5dea77f18c98e7ed56c"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/hwp/generate.ps1",
+      "media_type": "application/x-hwp",
+      "path": "hwp/table-footnote.hwp",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+      "size_bytes": 4608
+    },
+    {
+      "classification": "golden",
+      "expected": {
+        "anchor_kind": "hwp_paragraph",
+        "normalization_profile": "nfc-lf-v1",
+        "text_nfc": "회의 안건과 근거를 HWPX 문단에서 확인합니다.",
+        "text_nfc_sha256": "8ed9bfaaa1a086a66e359beec1ed04ee25319d194dff7bc835793e4bb3e29cba"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/hwp/generate.ps1",
+      "media_type": "application/x-hwpx",
+      "path": "hwpx/simple.hwpx",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "c0d12dd6d6346e727a327cf4d30b7b6e8a3e1936b946ee0e401a070e1c29c02b",
+      "size_bytes": 6534
+    },
+    {
+      "classification": "golden",
+      "expected": {
+        "anchor_kind": "hwp_paragraph",
+        "normalization_profile": "nfc-lf-v1",
+        "required_block_types": [
+          "hwp_paragraph",
+          "hwp_table_cell",
+          "hwp_footnote"
+        ],
+        "requires_complete_structural_paths": true,
+        "text_nfc": "HWPX 후속 조치 표와 검토 기준 각주\n항목\n담당\n후속 과제\nHWPX 후속 담당: 지윤\nHWPX 검토 기준일: 2026-07-18",
+        "text_nfc_sha256": "190a3d6151f9b3a29b0ebf67faafe9d987f910cca4085e3874fa01f42c64717b"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/hwp/generate.ps1",
+      "media_type": "application/x-hwpx",
+      "path": "hwpx/table-footnote.hwpx",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "20f802e7da3770307f15b4e3a174f974527239aae3ec1828f7913684e54da789",
+      "size_bytes": 6921
+    },
+    {
+      "classification": "golden",
+      "expected": {
+        "anchor_kind": "image_bbox",
+        "min_ocr_accuracy": 0.9,
+        "normalization_profile": "nfc-lf-v1",
+        "text_nfc": "회의 사전 브리핑 자료\n참석자 김민수 이서연 박준호\n안건 고객 피드백과 출시 일정\n결론 다음 주 월요일까지 검토",
+        "text_nfc_sha256": "20e1376a179bfa503f021b45b09df39a62fd63a8e45736c9f581215db42fc9b2"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "image/jpeg",
+      "path": "images/korean-clean.jpg",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "5f71f7cb4e91a89ebfb4575eaab8e4bde3c779cd1943a85c1a49a6e2fb09b5f4",
+      "size_bytes": 155126
+    },
+    {
+      "classification": "golden",
+      "expected": {
+        "anchor_kind": "image_bbox",
+        "min_ocr_accuracy": 0.9,
+        "normalization_profile": "nfc-lf-v1",
+        "text_nfc": "회의 사전 브리핑 자료\n참석자 김민수 이서연 박준호\n안건 고객 피드백과 출시 일정\n결론 다음 주 월요일까지 검토",
+        "text_nfc_sha256": "20e1376a179bfa503f021b45b09df39a62fd63a8e45736c9f581215db42fc9b2"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "image/png",
+      "path": "images/korean-clean.png",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "8e4b9045f2a1a75495723476c1606754cc116ef9daed082ff679ca04775531d3",
+      "size_bytes": 52850
+    },
+    {
+      "classification": "golden",
+      "expected": {
+        "anchor_kind": "image_bbox",
+        "exif_orientation": 6,
+        "normalization_profile": "nfc-lf-v1",
+        "required_anchor_bbox": [
+          0,
+          0,
+          1,
+          0.060417
+        ],
+        "required_warning": "LOW_CONFIDENCE",
+        "text_nfc": "회 의  자 료\n일 정  확 인",
+        "text_nfc_sha256": "b53d97097da999b196748b9afd2024951f3db0a1a5bc7fa0d28dc44058538a87"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "image/jpeg",
+      "path": "images/rotated-low-confidence.jpg",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "b36455b6e78f8f877666e21f06db7afe6d1ab99ec9eddb3fc2770591dff2ef60",
+      "size_bytes": 95468
+    },
+    {
+      "classification": "golden",
+      "expected": {
+        "anchor_kind": "pdf_block",
+        "image_only": true,
+        "min_ocr_accuracy": 0.9,
+        "normalization_profile": "nfc-lf-v1",
+        "text_nfc": "회의 사전 브리핑 자료\n참석자 김민수 이서연 박준호\n안건 고객 피드백과 출시 일정\n결론 다음 주 월요일까지 검토",
+        "text_nfc_sha256": "20e1376a179bfa503f021b45b09df39a62fd63a8e45736c9f581215db42fc9b2"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "application/pdf",
+      "path": "pdf/scanned-korean.pdf",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "d3f8f9b2c8fbe9676417a58be617bc228a60ab60410a4da9040ad86e1f578240",
+      "size_bytes": 45713
+    },
+    {
+      "classification": "golden",
+      "expected": {
+        "anchor_kind": "pdf_block",
+        "has_text_layer": true,
+        "normalization_profile": "nfc-lf-v1",
+        "text_nfc": "회의 준비 문서\n참석자 의견과 결정 사항을 확인합니다\n다음 회의 전까지 실행 계획을 검토합니다",
+        "text_nfc_sha256": "4128ead032e284c217be0ddabe7444ae0230af21dadf23af6360164fc509e520"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "application/pdf",
+      "path": "pdf/text-korean.pdf",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "2d3346ba65f95a18cb8921c9581447d6445fdfe70752de55bf10775e1dfba1a5",
+      "size_bytes": 15981
+    },
+    {
+      "classification": "malicious",
+      "expected": {
+        "error_code": "CORRUPT_DOCUMENT"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "image/png",
+      "path": "malicious/corrupt-image.png",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "a8e4a40ccffe4c43ac2827a3986f147fab414f3cac646b6d6ba1a0689a3d5352",
+      "size_bytes": 25
+    },
+    {
+      "classification": "malicious",
+      "expected": {
+        "error_code": "CORRUPT_DOCUMENT"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/hwp/generate.ps1",
+      "media_type": "application/x-hwp",
+      "path": "malicious/corrupt.hwp",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "941464b7cb100cd42dc2e1c502e24a16615875e748698988ea685e37351f9e7b",
+      "size_bytes": 384
+    },
+    {
+      "classification": "malicious",
+      "expected": {
+        "error_code": "CORRUPT_DOCUMENT"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "application/pdf",
+      "path": "malicious/corrupt.pdf",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "fdad2113a9af07bbc4c3f5d8d9eb83777169e13aab879c00cd4e4a81163e338f",
+      "size_bytes": 59
+    },
+    {
+      "classification": "malicious",
+      "expected": {
+        "error_code": "ENCRYPTED_DOCUMENT",
+        "password": "fixture-user"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "application/pdf",
+      "path": "malicious/encrypted.pdf",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "cabeedac0406a981b74f1491bd48e2c8fd86e163eb9e79ae96c09488f8ff1822",
+      "size_bytes": 778
+    },
+    {
+      "classification": "malicious",
+      "expected": {
+        "error_code": "IMAGE_PIXEL_LIMIT",
+        "media_box_points": [
+          100000,
+          100000
+        ],
+        "render_dpi": 300
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "application/pdf",
+      "path": "malicious/oversized-page.pdf",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "cfb089b8bfa620e8dab1ebae606075b4874862c802c7c87a6eca47e3d3015883",
+      "size_bytes": 501
+    },
+    {
+      "classification": "malicious",
+      "expected": {
+        "error_code": "CORRUPT_DOCUMENT",
+        "forbidden_entry": "../escape.xml"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "application/x-hwpx",
+      "path": "malicious/path-traversal.hwpx",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "a5919e018307822cd2df61c5308d58da740a11256925e5698b93d77b8ae75983",
+      "size_bytes": 265
+    },
+    {
+      "classification": "malicious",
+      "expected": {
+        "contains_appended_zip": true,
+        "error_code": "CORRUPT_DOCUMENT"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "image/jpeg",
+      "path": "malicious/polyglot-image.jpg",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "b6c2caea2b7f96badc9db8d45e5140366b7a8dc82c3346332658a61ac0748b58",
+      "size_bytes": 155268
+    },
+    {
+      "classification": "malicious",
+      "expected": {
+        "error_code": "XML_DTD_FORBIDDEN"
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "application/x-hwpx",
+      "path": "malicious/xxe.hwpx",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "69b61c56ae5790dfb7519d824440dcf45a4291d786ebfb8cd2df9335d6a7b835",
+      "size_bytes": 429
+    },
+    {
+      "classification": "malicious",
+      "expected": {
+        "error_code": "ZIP_EXPANSION_LIMIT",
+        "min_compression_ratio": 100
+      },
+      "generation_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+      "media_type": "application/x-hwpx",
+      "path": "malicious/zip-bomb.hwpx",
+      "provenance": {
+        "content_license": "CC0-1.0",
+        "copyrighted_source_document": false,
+        "generated_by_repository": true,
+        "redistributable": true
+      },
+      "sha256": "a2590d19688e431074a2972bf0a39dff57942b6dc8152d6862fc469cde08bacc",
+      "size_bytes": 4374
+    }
+  ],
+  "schema_version": 1,
+  "source_metadata": {
+    "common": {
+      "font": {
+        "deterministic_rebuild_verified": true,
+        "license": "OFL-1.1",
+        "license_file": "spikes/document-ingestion/fixture_sources/common/font/OFL.txt",
+        "license_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2",
+        "path": "spikes/document-ingestion/fixture_sources/common/font/NotoSansKR-FixtureSubset.ttf",
+        "subset_command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/verify-font-rebuild.ps1",
+        "subset_platform": "linux/amd64",
+        "subset_recipe": "spikes/document-ingestion/fixture_sources/common/font-build.Dockerfile",
+        "subset_sha256": "a2c4986eabb2296fe733b90c4a6c8911c1c7bf7dd6d2b47675139e1afa0eb1bb",
+        "subset_tool": "fonttools==4.59.2",
+        "subset_tool_wheel_sha256": "738f31f23e0339785fd67652a94bc69ea49e413dfdb14dcb8c8ff383d249464e",
+        "upstream_sha256": "9e1d729e7e2b36f9ef439da102f8c134c10aabe46f1c843bf0aca5c043b86f76",
+        "upstream_url": "https://raw.githubusercontent.com/notofonts/noto-cjk/Sans2.004/Sans/Variable/TTF/Subset/NotoSansKR-VF.ttf",
+        "upstream_version": "Noto Sans KR 2.004 (Sans2.004 tag)"
+      },
+      "generator": {
+        "command": "pwsh -NoProfile -File spikes/document-ingestion/fixture_sources/common/regenerate.ps1",
+        "container_image": "axit-g0-fixture-generator:python3.12.11-pillow11.3.0",
+        "freetype": "2.13.3",
+        "jpeg_codec": "6.2",
+        "libjpeg_turbo": "3.1.1",
+        "path": "spikes/document-ingestion/fixture_sources/common/generate.py",
+        "pillow": "11.3.0",
+        "pillow_zlib_codec": "1.2.13",
+        "platform": "linux/amd64",
+        "python": "3.12.11",
+        "python_zlib": "1.2.13",
+        "random_seed": "0xA71600D",
+        "timestamps": "fixed-or-omitted"
+      },
+      "metadata_path": "spikes/document-ingestion/fixture_sources/common/metadata.v1.json"
+    },
+    "hwp": {
+      "generator": {
+        "command": "spikes/document-ingestion/fixture_sources/hwp/generate.ps1",
+        "dependency_license_spdx": "Apache-2.0",
+        "hwplib": "1.1.10",
+        "hwpxlib": "1.0.9",
+        "java_feature": "17"
+      },
+      "metadata_path": "spikes/document-ingestion/fixture_sources/hwp/generated-fixtures.json"
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "ok": true,
+  "result": {
+    "anchor_set_hash": "9a129ad97f0817a40d730d1d6e77ac7ccdad86ca673396404b469448a47e97f6",
+    "blocks": [
+      {
+        "anchor": {
+          "extraction_profile_hash": "9127c55f97a0360e7133d40f585f5f3e342464a6fe6630a6f654a8e6ba8105ed",
+          "kind": "pdf_block",
+          "locator": {
+            "bbox": [
+              0.10121,
+              0.369051,
+              0.421371,
+              0.392989
+            ],
+            "block_id": "ocr-0000",
+            "page": 0
+          },
+          "schema_version": 1,
+          "source_sha256": "d3f8f9b2c8fbe9676417a58be617bc228a60ab60410a4da9040ad86e1f578240",
+          "text_fingerprint": "6ec1ab6867d8ed1088ee85568f3ca1f73193bae5b13cd5585b24224203f32b2f"
+        },
+        "anchor_hash": "b4145a27660a5bf3addbea551497f08eceff9b9bc79a52ba28713271f41cbbeb",
+        "block_type": "pdf_ocr",
+        "confidence": 0.950131,
+        "ordinal": 0,
+        "text": "회의 사전 브리핑 자료"
+      },
+      {
+        "anchor": {
+          "extraction_profile_hash": "9127c55f97a0360e7133d40f585f5f3e342464a6fe6630a6f654a8e6ba8105ed",
+          "kind": "pdf_block",
+          "locator": {
+            "bbox": [
+              0.10121,
+              0.436877,
+              0.521371,
+              0.46053
+            ],
+            "block_id": "ocr-0001",
+            "page": 0
+          },
+          "schema_version": 1,
+          "source_sha256": "d3f8f9b2c8fbe9676417a58be617bc228a60ab60410a4da9040ad86e1f578240",
+          "text_fingerprint": "6ceea4f93c77ab55d7539595bf172070cbab710858daac144bfdc65a45429d41"
+        },
+        "anchor_hash": "2db2608439e06e3827325e35bcb197c8d8a337de9bc8bc76d052007ceae04ae9",
+        "block_type": "pdf_ocr",
+        "confidence": 0.950384,
+        "ordinal": 1,
+        "text": "참석자 김민수 이 서 연 박준호"
+      },
+      {
+        "anchor": {
+          "extraction_profile_hash": "9127c55f97a0360e7133d40f585f5f3e342464a6fe6630a6f654a8e6ba8105ed",
+          "kind": "pdf_block",
+          "locator": {
+            "bbox": [
+              0.101613,
+              0.503277,
+              0.527016,
+              0.53719
+            ],
+            "block_id": "ocr-0002",
+            "page": 0
+          },
+          "schema_version": 1,
+          "source_sha256": "d3f8f9b2c8fbe9676417a58be617bc228a60ab60410a4da9040ad86e1f578240",
+          "text_fingerprint": "8930fb286e98fcb5e2e36afeefe58ace30293a6da2b29d29899fa5e81f150b91"
+        },
+        "anchor_hash": "ff803234673af4471daba113ab3778bd9f3954d97717c0454aa334ebfd4a14a9",
+        "block_type": "pdf_ocr",
+        "confidence": 0.922129,
+        "ordinal": 2,
+        "text": "안건 고객 피 드 백 과 줄 시 일정"
+      },
+      {
+        "anchor": {
+          "extraction_profile_hash": "9127c55f97a0360e7133d40f585f5f3e342464a6fe6630a6f654a8e6ba8105ed",
+          "kind": "pdf_block",
+          "locator": {
+            "bbox": [
+              0.101613,
+              0.572243,
+              0.529435,
+              0.595896
+            ],
+            "block_id": "ocr-0003",
+            "page": 0
+          },
+          "schema_version": 1,
+          "source_sha256": "d3f8f9b2c8fbe9676417a58be617bc228a60ab60410a4da9040ad86e1f578240",
+          "text_fingerprint": "04ee69ea85adde7fe0d8b83a5e62221e51501bc3fd48422863237dcf64ce7a80"
+        },
+        "anchor_hash": "59e11ccff9d209dd125f29cad6ec30a959ef96d8df7ca0f13ae6b7a9c9b9d2ef",
+        "block_type": "pdf_ocr",
+        "confidence": 0.934111,
+        "ordinal": 3,
+        "text": "결론 다음 주 월 요 일 까지 검토"
+      }
+    ],
+    "config_profile_hash": "9127c55f97a0360e7133d40f585f5f3e342464a6fe6630a6f654a8e6ba8105ed",
+    "media_type": "application/pdf",
+    "normalization_profile": "nfc-lf-v1",
+    "parser": {
+      "name": "pypdfium2",
+      "version": "5.12.1"
+    },
+    "source_sha256": "d3f8f9b2c8fbe9676417a58be617bc228a60ab60410a4da9040ad86e1f578240",
+    "warnings": []
+  },
+  "schema_version": 1
+}

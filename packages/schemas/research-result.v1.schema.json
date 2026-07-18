@@ -1,0 +1,114 @@
+{
+  "$defs": {
+    "FactCheckItem": {
+      "additionalProperties": false,
+      "properties": {
+        "explanation": {
+          "maxLength": 10000,
+          "minLength": 1,
+          "title": "Explanation",
+          "type": "string"
+        },
+        "source_anchor_id": {
+          "format": "uuid",
+          "title": "Source Anchor Id",
+          "type": "string"
+        },
+        "source_claim_quote": {
+          "maxLength": 20000,
+          "minLength": 1,
+          "title": "Source Claim Quote",
+          "type": "string"
+        },
+        "verdict": {
+          "$ref": "#/$defs/FactCheckVerdict"
+        },
+        "web_evidence_ids": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Web Evidence Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "source_anchor_id",
+        "source_claim_quote",
+        "verdict",
+        "explanation",
+        "web_evidence_ids"
+      ],
+      "title": "FactCheckItem",
+      "type": "object"
+    },
+    "FactCheckVerdict": {
+      "enum": [
+        "supported",
+        "refuted",
+        "mixed",
+        "unverifiable"
+      ],
+      "title": "FactCheckVerdict",
+      "type": "string"
+    },
+    "ResearchItem": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 10000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "web_evidence_ids": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Web Evidence Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "text",
+        "web_evidence_ids"
+      ],
+      "title": "ResearchItem",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "fact_checks": {
+      "items": {
+        "$ref": "#/$defs/FactCheckItem"
+      },
+      "maxItems": 100,
+      "title": "Fact Checks",
+      "type": "array"
+    },
+    "snapshot_id": {
+      "format": "uuid",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "topic_items": {
+      "items": {
+        "$ref": "#/$defs/ResearchItem"
+      },
+      "maxItems": 100,
+      "title": "Topic Items",
+      "type": "array"
+    }
+  },
+  "required": [
+    "snapshot_id"
+  ],
+  "title": "ResearchResult",
+  "type": "object"
+}

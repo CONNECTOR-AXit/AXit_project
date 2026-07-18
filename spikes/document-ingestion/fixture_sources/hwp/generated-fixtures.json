@@ -1,0 +1,68 @@
+{
+  "fixture_license_spdx": "CC0-1.0",
+  "fixtures": [
+    {
+      "anchor_kind": "hwp_paragraph",
+      "bytes": 4608,
+      "classification": "golden",
+      "expected_nfc_text": ["회의 사전 브리핑은 안건과 참가자 근거를 함께 제시합니다."],
+      "format": "OLE2 CFB / HWP 5",
+      "media_type": "application/x-hwp",
+      "path": "hwp/simple.hwp",
+      "provenance": "Synthetic Korean text authored for AXit G0; no third-party document content",
+      "sha256": "6d517dd5a9f082e831ae59df1e90f31d56293e11154d5338c08dec2618e437a4"
+    },
+    {
+      "anchor_kind": "hwp_paragraph",
+      "bytes": 4608,
+      "classification": "golden",
+      "expected_nfc_text": ["회의 후속 조치 표와 검토 기준 각주", "항목", "담당", "후속 과제", "후속 담당: 민서", "검토 기준일: 2026-07-18"],
+      "format": "OLE2 CFB / HWP 5",
+      "media_type": "application/x-hwp",
+      "path": "hwp/table-footnote.hwp",
+      "provenance": "Synthetic Korean text authored for AXit G0; no third-party document content",
+      "sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38"
+    },
+    {
+      "anchor_kind": "hwp_paragraph",
+      "bytes": 6534,
+      "classification": "golden",
+      "expected_nfc_text": ["회의 안건과 근거를 HWPX 문단에서 확인합니다."],
+      "format": "HWPX ZIP package (application/hwp+zip marker)",
+      "media_type": "application/x-hwpx",
+      "path": "hwpx/simple.hwpx",
+      "provenance": "Synthetic Korean text authored for AXit G0; no third-party document content",
+      "sha256": "c0d12dd6d6346e727a327cf4d30b7b6e8a3e1936b946ee0e401a070e1c29c02b"
+    },
+    {
+      "anchor_kind": "hwp_paragraph",
+      "bytes": 6921,
+      "classification": "golden",
+      "expected_nfc_text": ["HWPX 후속 조치 표와 검토 기준 각주", "항목", "담당", "후속 과제", "HWPX 후속 담당: 지윤", "HWPX 검토 기준일: 2026-07-18"],
+      "format": "HWPX ZIP package with table-cell and footnote controls",
+      "media_type": "application/x-hwpx",
+      "path": "hwpx/table-footnote.hwpx",
+      "provenance": "Synthetic Korean text authored for AXit G0; no third-party document content",
+      "sha256": "20f802e7da3770307f15b4e3a174f974527239aae3ec1828f7913684e54da789"
+    },
+    {
+      "anchor_kind": "hwp_paragraph",
+      "bytes": 384,
+      "classification": "malicious",
+      "expected_error": "CORRUPT_DOCUMENT",
+      "format": "truncated OLE2 CFB with genuine HWP magic",
+      "media_type": "application/x-hwp",
+      "path": "malicious/corrupt.hwp",
+      "provenance": "Synthetic Korean text authored for AXit G0; no third-party document content",
+      "sha256": "941464b7cb100cd42dc2e1c502e24a16615875e748698988ea685e37351f9e7b"
+    }
+  ],
+  "generator": {
+    "command": "spikes/document-ingestion/fixture_sources/hwp/generate.ps1",
+    "dependency_license_spdx": "Apache-2.0",
+    "hwplib": "1.1.10",
+    "hwpxlib": "1.0.9",
+    "java_feature": "17"
+  },
+  "schema_version": "axit.hwp-fixture-lane.v1"
+}

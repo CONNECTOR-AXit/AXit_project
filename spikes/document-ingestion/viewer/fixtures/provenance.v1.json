@@ -1,0 +1,234 @@
+{
+  "capture_method": "sandbox_runner.execute_sandbox",
+  "captures": [
+    {
+      "anchor_set_hash": "1f5c84fb4fbf0b262a8cdd6b46ef74bcb0ea9a99638bc250d581cc7b56328644",
+      "container_name": "axit-g0-viewer-hwp-simple",
+      "execution": {
+        "duration_ms": 1157,
+        "error_code": null,
+        "exit_code": 0,
+        "killed": false,
+        "ok": true,
+        "peak_memory_bytes": null,
+        "peak_pids": null,
+        "source_sha256": "6d517dd5a9f082e831ae59df1e90f31d56293e11154d5338c08dec2618e437a4",
+        "stderr_bytes": 0,
+        "stdout_bytes": 1068
+      },
+      "invocation_id": "hwp-simple",
+      "manifest_path": "hwp/simple.hwp",
+      "manifest_sha256": "6d517dd5a9f082e831ae59df1e90f31d56293e11154d5338c08dec2618e437a4",
+      "media_type": "application/x-hwp",
+      "payload_file": "hwp-simple.json",
+      "payload_sha256": "8890267628fed9b87ede927a526e47fe5d887ef78551be9428fe52c3855c9050"
+    },
+    {
+      "anchor_set_hash": "cba5c597b3e5a70a4f4c1727cb4dac51ff61ba0aad3cb8093a9095f918815df9",
+      "container_name": "axit-g0-viewer-hwp-table-footnote-run-a",
+      "execution": {
+        "duration_ms": 1078,
+        "error_code": null,
+        "exit_code": 0,
+        "killed": false,
+        "ok": true,
+        "peak_memory_bytes": null,
+        "peak_pids": null,
+        "source_sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+        "stderr_bytes": 0,
+        "stdout_bytes": 4139
+      },
+      "invocation_id": "hwp-table-footnote-run-a",
+      "manifest_path": "hwp/table-footnote.hwp",
+      "manifest_sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+      "media_type": "application/x-hwp",
+      "payload_file": "hwp-table-footnote-run-a.json",
+      "payload_sha256": "dc650122a4adbf1ab5287dbe86546999fa597cfe1c658682a3de128ee2f6d9bf"
+    },
+    {
+      "anchor_set_hash": "cba5c597b3e5a70a4f4c1727cb4dac51ff61ba0aad3cb8093a9095f918815df9",
+      "container_name": "axit-g0-viewer-hwp-table-footnote-run-b",
+      "execution": {
+        "duration_ms": 1062,
+        "error_code": null,
+        "exit_code": 0,
+        "killed": false,
+        "ok": true,
+        "peak_memory_bytes": null,
+        "peak_pids": null,
+        "source_sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+        "stderr_bytes": 0,
+        "stdout_bytes": 4139
+      },
+      "invocation_id": "hwp-table-footnote-run-b",
+      "manifest_path": "hwp/table-footnote.hwp",
+      "manifest_sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+      "media_type": "application/x-hwp",
+      "payload_file": "hwp-table-footnote-run-b.json",
+      "payload_sha256": "dc650122a4adbf1ab5287dbe86546999fa597cfe1c658682a3de128ee2f6d9bf"
+    },
+    {
+      "anchor_set_hash": "88c87c66d761174a165c765ffab84ee3dee5d56d2185804697d36e95363db3b9",
+      "container_name": "axit-g0-viewer-hwpx-simple",
+      "execution": {
+        "duration_ms": 1657,
+        "error_code": null,
+        "exit_code": 0,
+        "killed": false,
+        "ok": true,
+        "peak_memory_bytes": null,
+        "peak_pids": null,
+        "source_sha256": "c0d12dd6d6346e727a327cf4d30b7b6e8a3e1936b946ee0e401a070e1c29c02b",
+        "stderr_bytes": 0,
+        "stdout_bytes": 1050
+      },
+      "invocation_id": "hwpx-simple",
+      "manifest_path": "hwpx/simple.hwpx",
+      "manifest_sha256": "c0d12dd6d6346e727a327cf4d30b7b6e8a3e1936b946ee0e401a070e1c29c02b",
+      "media_type": "application/x-hwpx",
+      "payload_file": "hwpx-simple.json",
+      "payload_sha256": "5cbeaf49a8b5238727f3839df676a1dbcd3bccbc5e42685db2d279c6b231d4ff"
+    },
+    {
+      "anchor_set_hash": "9f1321823661da7284716501c986f5c1cb6cb323c8e837cf2b2094f2eaab2027",
+      "container_name": "axit-g0-viewer-hwpx-table-footnote",
+      "execution": {
+        "duration_ms": 1359,
+        "error_code": null,
+        "exit_code": 0,
+        "killed": false,
+        "ok": true,
+        "peak_memory_bytes": null,
+        "peak_pids": null,
+        "source_sha256": "20f802e7da3770307f15b4e3a174f974527239aae3ec1828f7913684e54da789",
+        "stderr_bytes": 0,
+        "stdout_bytes": 4148
+      },
+      "invocation_id": "hwpx-table-footnote",
+      "manifest_path": "hwpx/table-footnote.hwpx",
+      "manifest_sha256": "20f802e7da3770307f15b4e3a174f974527239aae3ec1828f7913684e54da789",
+      "media_type": "application/x-hwpx",
+      "payload_file": "hwpx-table-footnote.json",
+      "payload_sha256": "e6f94e636f9ec99cdcd5876a61f95e6570395f2cdf176808be3ddff5081135b9"
+    },
+    {
+      "anchor_set_hash": "a4bef86ef832b744da0e68f00b4dbfe2c4fda4274fe98d296a12eb77a98f83ff",
+      "container_name": "axit-g0-viewer-image-korean-clean-jpeg",
+      "execution": {
+        "duration_ms": 1453,
+        "error_code": null,
+        "exit_code": 0,
+        "killed": false,
+        "ok": true,
+        "peak_memory_bytes": null,
+        "peak_pids": null,
+        "source_sha256": "5f71f7cb4e91a89ebfb4575eaab8e4bde3c779cd1943a85c1a49a6e2fb09b5f4",
+        "stderr_bytes": 0,
+        "stdout_bytes": 2753
+      },
+      "invocation_id": "image-korean-clean-jpeg",
+      "manifest_path": "images/korean-clean.jpg",
+      "manifest_sha256": "5f71f7cb4e91a89ebfb4575eaab8e4bde3c779cd1943a85c1a49a6e2fb09b5f4",
+      "media_type": "image/jpeg",
+      "payload_file": "image-korean-clean-jpeg.json",
+      "payload_sha256": "e08e4fcafac02b94963a6bdddce0f3db00ea1a7a2b3a043824775742fbbe97df"
+    },
+    {
+      "anchor_set_hash": "f7183f7b029aff58d70a51fd09d053ecc25d4801db7153d35fbc647d1b9a4cc5",
+      "container_name": "axit-g0-viewer-image-korean-clean-png",
+      "execution": {
+        "duration_ms": 1453,
+        "error_code": null,
+        "exit_code": 0,
+        "killed": false,
+        "ok": true,
+        "peak_memory_bytes": null,
+        "peak_pids": null,
+        "source_sha256": "8e4b9045f2a1a75495723476c1606754cc116ef9daed082ff679ca04775531d3",
+        "stderr_bytes": 0,
+        "stdout_bytes": 2751
+      },
+      "invocation_id": "image-korean-clean-png",
+      "manifest_path": "images/korean-clean.png",
+      "manifest_sha256": "8e4b9045f2a1a75495723476c1606754cc116ef9daed082ff679ca04775531d3",
+      "media_type": "image/png",
+      "payload_file": "image-korean-clean-png.json",
+      "payload_sha256": "0e81a5ca02046d6dfe2c0eb91c9aaa96f8b93bf17d37045cb360e66761d04eca"
+    },
+    {
+      "anchor_set_hash": "da27e03cb2f1a5b5be98e80b09921f09d63de1fbbf3f0f67d1406f4bf1158108",
+      "container_name": "axit-g0-viewer-image-rotated-low-confidence",
+      "execution": {
+        "duration_ms": 4172,
+        "error_code": null,
+        "exit_code": 0,
+        "killed": false,
+        "ok": true,
+        "peak_memory_bytes": null,
+        "peak_pids": null,
+        "source_sha256": "b36455b6e78f8f877666e21f06db7afe6d1ab99ec9eddb3fc2770591dff2ef60",
+        "stderr_bytes": 0,
+        "stdout_bytes": 11920
+      },
+      "invocation_id": "image-rotated-low-confidence",
+      "manifest_path": "images/rotated-low-confidence.jpg",
+      "manifest_sha256": "b36455b6e78f8f877666e21f06db7afe6d1ab99ec9eddb3fc2770591dff2ef60",
+      "media_type": "image/jpeg",
+      "payload_file": "image-rotated-low-confidence.json",
+      "payload_sha256": "5dfad57b60cc336b8bbbf80fb7af8290037d111bdecd9c989582794b67987219"
+    },
+    {
+      "anchor_set_hash": "9a129ad97f0817a40d730d1d6e77ac7ccdad86ca673396404b469448a47e97f6",
+      "container_name": "axit-g0-viewer-pdf-scanned-korean",
+      "execution": {
+        "duration_ms": 2093,
+        "error_code": null,
+        "exit_code": 0,
+        "killed": false,
+        "ok": true,
+        "peak_memory_bytes": null,
+        "peak_pids": null,
+        "source_sha256": "d3f8f9b2c8fbe9676417a58be617bc228a60ab60410a4da9040ad86e1f578240",
+        "stderr_bytes": 0,
+        "stdout_bytes": 2790
+      },
+      "invocation_id": "pdf-scanned-korean",
+      "manifest_path": "pdf/scanned-korean.pdf",
+      "manifest_sha256": "d3f8f9b2c8fbe9676417a58be617bc228a60ab60410a4da9040ad86e1f578240",
+      "media_type": "application/pdf",
+      "payload_file": "pdf-scanned-korean.json",
+      "payload_sha256": "46db3db3e2ca218a9cd52529e1a819013d684b79fe995ff025761954e6f0f380"
+    },
+    {
+      "anchor_set_hash": "1941e54c6971e603c3b54cde81c1161c2c9d4c9440217dc90f9767a264e49946",
+      "container_name": "axit-g0-viewer-pdf-text-korean",
+      "execution": {
+        "duration_ms": 938,
+        "error_code": null,
+        "exit_code": 0,
+        "killed": false,
+        "ok": true,
+        "peak_memory_bytes": null,
+        "peak_pids": null,
+        "source_sha256": "2d3346ba65f95a18cb8921c9581447d6445fdfe70752de55bf10775e1dfba1a5",
+        "stderr_bytes": 0,
+        "stdout_bytes": 2207
+      },
+      "invocation_id": "pdf-text-korean",
+      "manifest_path": "pdf/text-korean.pdf",
+      "manifest_sha256": "2d3346ba65f95a18cb8921c9581447d6445fdfe70752de55bf10775e1dfba1a5",
+      "media_type": "application/pdf",
+      "payload_file": "pdf-text-korean.json",
+      "payload_sha256": "03c2b82e3a331a19fd955ffac53402262be00b600096f6cb085cd32dd6e29922"
+    }
+  ],
+  "image": {
+    "id": "sha256:a5a293b071adc6629a7dec5764657ea6e4a073fe0c82c545519bda1c9f36bc04",
+    "reference": "axit-ingestion-g0:local"
+  },
+  "manifest_path": "tests/fixtures/document-ingestion/manifest.v1.json",
+  "manifest_sha256": "287b3fee1bd68fda28bf3547c38d16b419ed7a28ea1584c4311c4a9d1771d856",
+  "policy_path": "spikes/document-ingestion/policy.v1.json",
+  "policy_sha256": "8e0c1a327198c632bae9031831dfa695223c543244b666b9ae555a71fa81be57",
+  "schema_version": 1
+}

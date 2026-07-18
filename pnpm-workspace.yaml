@@ -1,6 +1,7 @@
 packages:
   - "apps/web"
   - "packages/*"
+  - "spikes/document-ingestion/viewer"
 
 allowBuilds:
   sharp: true

@@ -1,0 +1,9 @@
+FROM debian:bookworm-slim@sha256:7b140f374b289a7c2befc338f42ebe6441b7ea838a042bbd5acbfca6ec875818
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends \
+      tesseract-ocr=5.3.0-2 \
+      tesseract-ocr-kor=1:4.1.0-2 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["/usr/bin/tesseract"]

@@ -1,0 +1,130 @@
+{
+  "$defs": {
+    "SummaryItem": {
+      "additionalProperties": false,
+      "properties": {
+        "source_anchor_ids": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Source Anchor Ids",
+          "type": "array"
+        },
+        "supports": {
+          "items": {
+            "$ref": "#/$defs/SummarySupport"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Supports",
+          "type": "array"
+        },
+        "text": {
+          "maxLength": 10000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "source_anchor_ids",
+        "supports"
+      ],
+      "title": "SummaryItem",
+      "type": "object"
+    },
+    "SummarySection": {
+      "additionalProperties": false,
+      "properties": {
+        "heading": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Heading",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/SummaryItem"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "heading",
+        "items"
+      ],
+      "title": "SummarySection",
+      "type": "object"
+    },
+    "SummarySupport": {
+      "additionalProperties": false,
+      "properties": {
+        "citation_id": {
+          "format": "uuid",
+          "title": "Citation Id",
+          "type": "string"
+        },
+        "end": {
+          "exclusiveMinimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "exact_quote": {
+          "maxLength": 20000,
+          "minLength": 1,
+          "title": "Exact Quote",
+          "type": "string"
+        },
+        "source_anchor_id": {
+          "format": "uuid",
+          "title": "Source Anchor Id",
+          "type": "string"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "citation_id",
+        "source_anchor_id",
+        "exact_quote",
+        "start",
+        "end"
+      ],
+      "title": "SummarySupport",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "sections": {
+      "items": {
+        "$ref": "#/$defs/SummarySection"
+      },
+      "maxItems": 50,
+      "minItems": 1,
+      "title": "Sections",
+      "type": "array"
+    },
+    "snapshot_id": {
+      "format": "uuid",
+      "title": "Snapshot Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "snapshot_id",
+    "sections"
+  ],
+  "title": "SummaryResult",
+  "type": "object"
+}

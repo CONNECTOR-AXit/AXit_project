@@ -1,0 +1,287 @@
+{
+  "$defs": {
+    "AnchorKind": {
+      "enum": [
+        "text_line",
+        "pdf_block",
+        "image_bbox",
+        "hwp_paragraph"
+      ],
+      "title": "AnchorKind",
+      "type": "string"
+    },
+    "HwpFootnotePath": {
+      "additionalProperties": false,
+      "properties": {
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "paragraph": {
+          "minimum": 0,
+          "title": "Paragraph",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "index",
+        "paragraph"
+      ],
+      "title": "HwpFootnotePath",
+      "type": "object"
+    },
+    "HwpParagraphLocator": {
+      "additionalProperties": false,
+      "properties": {
+        "footnote": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HwpFootnotePath"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "paragraph": {
+          "minimum": 0,
+          "title": "Paragraph",
+          "type": "integer"
+        },
+        "parser": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Parser",
+          "type": "string"
+        },
+        "parser_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Parser Version",
+          "type": "string"
+        },
+        "section": {
+          "minimum": 0,
+          "title": "Section",
+          "type": "integer"
+        },
+        "table": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HwpTablePath"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "parser",
+        "parser_version",
+        "section",
+        "paragraph"
+      ],
+      "title": "HwpParagraphLocator",
+      "type": "object"
+    },
+    "HwpTablePath": {
+      "additionalProperties": false,
+      "properties": {
+        "block": {
+          "minimum": 0,
+          "title": "Block",
+          "type": "integer"
+        },
+        "cell": {
+          "minimum": 0,
+          "title": "Cell",
+          "type": "integer"
+        },
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "paragraph": {
+          "minimum": 0,
+          "title": "Paragraph",
+          "type": "integer"
+        },
+        "row": {
+          "minimum": 0,
+          "title": "Row",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "index",
+        "block",
+        "row",
+        "cell",
+        "paragraph"
+      ],
+      "title": "HwpTablePath",
+      "type": "object"
+    },
+    "ImageBBoxLocator": {
+      "additionalProperties": false,
+      "properties": {
+        "bbox": {
+          "$ref": "#/$defs/NormalizedBoundingBox"
+        },
+        "image_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Image Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "image_id",
+        "bbox"
+      ],
+      "title": "ImageBBoxLocator",
+      "type": "object"
+    },
+    "NormalizedBoundingBox": {
+      "description": "Canonical G0 ``[left, top, right, bottom]`` bounds.\n\nG0 hashes a JSON array rather than a named-coordinate object.  Keeping\nthat representation in the public DTO lets a browser consume the exact\npersisted locator without a lossy adapter or a second hash identity.",
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "title": "NormalizedBoundingBox",
+      "type": "array"
+    },
+    "PdfBlockLocator": {
+      "additionalProperties": false,
+      "properties": {
+        "bbox": {
+          "$ref": "#/$defs/NormalizedBoundingBox"
+        },
+        "block_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Block Id",
+          "type": "string"
+        },
+        "page": {
+          "minimum": 0,
+          "title": "Page",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "page",
+        "block_id",
+        "bbox"
+      ],
+      "title": "PdfBlockLocator",
+      "type": "object"
+    },
+    "TextLineLocator": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "exclusiveMinimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "line": {
+          "minimum": 1,
+          "title": "Line",
+          "type": "integer"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "line",
+        "start",
+        "end"
+      ],
+      "title": "TextLineLocator",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Server UUID envelope over the lossless, canonical G0 anchor payload.",
+  "properties": {
+    "exact_quote": {
+      "maxLength": 20000,
+      "minLength": 1,
+      "title": "Exact Quote",
+      "type": "string"
+    },
+    "extraction_profile_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Extraction Profile Hash",
+      "type": "string"
+    },
+    "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "$ref": "#/$defs/AnchorKind"
+    },
+    "locator": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TextLineLocator"
+        },
+        {
+          "$ref": "#/$defs/PdfBlockLocator"
+        },
+        {
+          "$ref": "#/$defs/ImageBBoxLocator"
+        },
+        {
+          "$ref": "#/$defs/HwpParagraphLocator"
+        }
+      ],
+      "title": "Locator"
+    },
+    "revision_id": {
+      "format": "uuid",
+      "title": "Revision Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "source_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Sha256",
+      "type": "string"
+    },
+    "text_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Text Fingerprint",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "revision_id",
+    "schema_version",
+    "kind",
+    "source_sha256",
+    "extraction_profile_hash",
+    "locator",
+    "text_fingerprint",
+    "exact_quote"
+  ],
+  "title": "SourceAnchor",
+  "type": "object"
+}

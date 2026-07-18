@@ -1,0 +1,40 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "author_id": {
+      "format": "uuid",
+      "title": "Author Id",
+      "type": "string"
+    },
+    "body": {
+      "maxLength": 10000,
+      "minLength": 1,
+      "title": "Body",
+      "type": "string"
+    },
+    "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+    },
+    "room_id": {
+      "format": "uuid",
+      "title": "Room Id",
+      "type": "string"
+    },
+    "sent_at": {
+      "format": "date-time",
+      "title": "Sent At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "room_id",
+    "author_id",
+    "sent_at",
+    "body"
+  ],
+  "title": "ConversationMessage",
+  "type": "object"
+}

@@ -1,9 +1,9 @@
-"""Disposable FastAPI transport harness for the Phase 0 Option A proof.
+"""FastAPI entry point with a disposable Phase 0 harness and frozen contract.
 
-This module deliberately uses in-memory state. It is not production
-authentication, authorization, session storage, upload persistence, or a
-provider implementation. Phase 3 must replace it with the approved durable
-contracts rather than extending this harness.
+The ``/api/__phase0`` routes deliberately remain in-memory transport proof
+fixtures.  The separately defined ``/api`` Phase 2 contract is visible in
+OpenAPI but returns 501 until Phase 3 supplies durable authentication and
+business handlers.  Neither surface auto-runs migrations on import.
 """
 
 from __future__ import annotations
@@ -22,6 +22,7 @@ from starlette import status
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.responses import JSONResponse, RedirectResponse
 
+from app.contracts import contract_router, install_contract_only_exception_handler
 from app.db import database_is_ready
 
 
@@ -73,7 +74,8 @@ class _Phase0UpstreamHeaderMiddleware(BaseHTTPMiddleware):
         call_next: RequestResponseEndpoint,
     ) -> Response:
         response = await call_next(request)
-        response.headers[UPSTREAM_HEADER_NAME] = UPSTREAM_HEADER_VALUE
+        if request.url.path.startswith(PHASE0_PREFIX):
+            response.headers[UPSTREAM_HEADER_NAME] = UPSTREAM_HEADER_VALUE
         return response
 
 
@@ -240,7 +242,7 @@ async def _require_csrf(
 
 
 _state = _Phase0State()
-_phase0_router = APIRouter(prefix=PHASE0_PREFIX)
+_phase0_router = APIRouter(prefix=PHASE0_PREFIX, include_in_schema=False)
 
 
 @_phase0_router.post(
@@ -364,13 +366,16 @@ async def phase0_citation_invocation(
 
 
 app = FastAPI(
-    title="AXit disposable Phase 0 transport harness",
+    title="AXit Meeting RAG API",
+    version="0.1.0-phase2",
     docs_url=None,
     redoc_url=None,
-    openapi_url=None,
+    openapi_url="/openapi.json",
 )
 app.add_middleware(_Phase0UpstreamHeaderMiddleware)
 app.include_router(_phase0_router)
+app.include_router(contract_router)
+install_contract_only_exception_handler(app)
 
 
 @app.get("/health", response_model=HealthResponse)

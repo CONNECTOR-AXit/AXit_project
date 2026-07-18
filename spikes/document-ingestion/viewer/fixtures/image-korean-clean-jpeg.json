@@ -1,0 +1,110 @@
+{
+  "ok": true,
+  "result": {
+    "anchor_set_hash": "a4bef86ef832b744da0e68f00b4dbfe2c4fda4274fe98d296a12eb77a98f83ff",
+    "blocks": [
+      {
+        "anchor": {
+          "extraction_profile_hash": "11c78e43eaf35f0638b0e76aca885a0725033f229ef278f99d7364a9b2a03529",
+          "kind": "image_bbox",
+          "locator": {
+            "bbox": [
+              0.06,
+              0.132,
+              0.413333,
+              0.199
+            ],
+            "image_id": "image-0000"
+          },
+          "schema_version": 1,
+          "source_sha256": "5f71f7cb4e91a89ebfb4575eaab8e4bde3c779cd1943a85c1a49a6e2fb09b5f4",
+          "text_fingerprint": "6ec1ab6867d8ed1088ee85568f3ca1f73193bae5b13cd5585b24224203f32b2f"
+        },
+        "anchor_hash": "a3e51479167d58a0fb235f403e8111d111211759f89aaf06c449327522cb729a",
+        "block_type": "image_ocr",
+        "confidence": 0.968615,
+        "ordinal": 0,
+        "text": "회의 사전 브리핑 자료"
+      },
+      {
+        "anchor": {
+          "extraction_profile_hash": "11c78e43eaf35f0638b0e76aca885a0725033f229ef278f99d7364a9b2a03529",
+          "kind": "image_bbox",
+          "locator": {
+            "bbox": [
+              0.06,
+              0.322,
+              0.523333,
+              0.389
+            ],
+            "image_id": "image-0000"
+          },
+          "schema_version": 1,
+          "source_sha256": "5f71f7cb4e91a89ebfb4575eaab8e4bde3c779cd1943a85c1a49a6e2fb09b5f4",
+          "text_fingerprint": "6ceea4f93c77ab55d7539595bf172070cbab710858daac144bfdc65a45429d41"
+        },
+        "anchor_hash": "b0dff52693617562782df1d18b6872517b60ffb9ac238b950d116b71ea3ad0c2",
+        "block_type": "image_ocr",
+        "confidence": 0.950732,
+        "ordinal": 1,
+        "text": "참석자 김민수 이 서 연 박준호"
+      },
+      {
+        "anchor": {
+          "extraction_profile_hash": "11c78e43eaf35f0638b0e76aca885a0725033f229ef278f99d7364a9b2a03529",
+          "kind": "image_bbox",
+          "locator": {
+            "bbox": [
+              0.060556,
+              0.511,
+              0.53,
+              0.579
+            ],
+            "image_id": "image-0000"
+          },
+          "schema_version": 1,
+          "source_sha256": "5f71f7cb4e91a89ebfb4575eaab8e4bde3c779cd1943a85c1a49a6e2fb09b5f4",
+          "text_fingerprint": "ebfa79e5049ae8545c870434c3b3c97dc318bd9011431cd295388fcda33e90fd"
+        },
+        "anchor_hash": "679864cad30605b073731ae6a2fb3c7c30b1dce8729240db33ef6462a60936d7",
+        "block_type": "image_ocr",
+        "confidence": 0.950229,
+        "ordinal": 2,
+        "text": "안건 고객 피 드 백 과 출시 일정"
+      },
+      {
+        "anchor": {
+          "extraction_profile_hash": "11c78e43eaf35f0638b0e76aca885a0725033f229ef278f99d7364a9b2a03529",
+          "kind": "image_bbox",
+          "locator": {
+            "bbox": [
+              0.060556,
+              0.702,
+              0.532222,
+              0.769
+            ],
+            "image_id": "image-0000"
+          },
+          "schema_version": 1,
+          "source_sha256": "5f71f7cb4e91a89ebfb4575eaab8e4bde3c779cd1943a85c1a49a6e2fb09b5f4",
+          "text_fingerprint": "04ee69ea85adde7fe0d8b83a5e62221e51501bc3fd48422863237dcf64ce7a80"
+        },
+        "anchor_hash": "9f541d462b8eb85b9a228c33832b8126019f5fb719d972d881bd27c02dd64179",
+        "block_type": "image_ocr",
+        "confidence": 0.956795,
+        "ordinal": 3,
+        "text": "결론 다음 주 월 요 일 까지 검토"
+      }
+    ],
+    "config_profile_hash": "11c78e43eaf35f0638b0e76aca885a0725033f229ef278f99d7364a9b2a03529",
+    "media_type": "image/jpeg",
+    "normalization_profile": "nfc-lf-v1",
+    "parser": {
+      "name": "pillow+tesseract-cli",
+      "version": "12.3.0+5.3.0"
+    },
+    "source_sha256": "5f71f7cb4e91a89ebfb4575eaab8e4bde3c779cd1943a85c1a49a6e2fb09b5f4",
+    "warnings": []
+  },
+  "schema_version": 1
+}

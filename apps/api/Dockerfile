@@ -15,7 +15,7 @@ RUN groupadd --gid 10001 axit \
 WORKDIR /workspace
 
 COPY pyproject.toml uv.lock ./
-RUN uv sync --locked --no-dev --no-install-project
+RUN uv sync --locked --no-default-groups --no-install-project
 
 COPY apps/api ./apps/api
 

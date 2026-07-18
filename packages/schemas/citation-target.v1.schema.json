@@ -1,0 +1,63 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "citation_id": {
+      "format": "uuid",
+      "title": "Citation Id",
+      "type": "string"
+    },
+    "source_anchor_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Anchor Id"
+    },
+    "source_revision_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Revision Id"
+    },
+    "target_type": {
+      "enum": [
+        "source_anchor",
+        "web_evidence"
+      ],
+      "title": "Target Type",
+      "type": "string"
+    },
+    "web_evidence_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Web Evidence Id"
+    }
+  },
+  "required": [
+    "citation_id",
+    "target_type"
+  ],
+  "title": "CitationTarget",
+  "type": "object"
+}

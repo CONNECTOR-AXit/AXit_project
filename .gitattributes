@@ -1,0 +1,8 @@
+# Binary parser/OCR fixtures are validated by their manifest hashes, not text diffs.
+*.pdf binary
+*.hwp binary
+*.hwpx binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ttf binary

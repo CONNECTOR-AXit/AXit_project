@@ -1,0 +1,170 @@
+{
+  "ok": true,
+  "result": {
+    "anchor_set_hash": "cba5c597b3e5a70a4f4c1727cb4dac51ff61ba0aad3cb8093a9095f918815df9",
+    "blocks": [
+      {
+        "anchor": {
+          "extraction_profile_hash": "e06db70a9d3aaf30c4ba3044bb75466ad85591bb92037fa1a894e651351c9c4e",
+          "kind": "hwp_paragraph",
+          "locator": {
+            "paragraph": 0,
+            "parser": "hwplib",
+            "parser_version": "1.1.10",
+            "section": 0
+          },
+          "schema_version": 1,
+          "source_sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+          "text_fingerprint": "1b9b89c257df2d809f608a8d9afb9a1bf558c282b10f3aac1262a5e4a077d8ab"
+        },
+        "anchor_hash": "fda2bcd32d2bd331775e7fce7af7db847e78457c99fb69723e43c33d958c0791",
+        "block_type": "hwp_paragraph",
+        "confidence": null,
+        "ordinal": 0,
+        "text": "회의 후속 조치 표와 검토 기준 각주"
+      },
+      {
+        "anchor": {
+          "extraction_profile_hash": "e06db70a9d3aaf30c4ba3044bb75466ad85591bb92037fa1a894e651351c9c4e",
+          "kind": "hwp_paragraph",
+          "locator": {
+            "paragraph": 0,
+            "parser": "hwplib",
+            "parser_version": "1.1.10",
+            "section": 0,
+            "table": {
+              "block": 0,
+              "cell": 0,
+              "index": 0,
+              "paragraph": 0,
+              "row": 0
+            }
+          },
+          "schema_version": 1,
+          "source_sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+          "text_fingerprint": "962f286b1490fd7e9d1b7a4cfc1558a522c7b0390dd29b794a29d9a3c9774086"
+        },
+        "anchor_hash": "99a5d4507951aa2f2ff33b50dc1807ea5a308617658f1102069f1ef5f728ceae",
+        "block_type": "hwp_table_cell",
+        "confidence": null,
+        "ordinal": 1,
+        "text": "항목"
+      },
+      {
+        "anchor": {
+          "extraction_profile_hash": "e06db70a9d3aaf30c4ba3044bb75466ad85591bb92037fa1a894e651351c9c4e",
+          "kind": "hwp_paragraph",
+          "locator": {
+            "paragraph": 0,
+            "parser": "hwplib",
+            "parser_version": "1.1.10",
+            "section": 0,
+            "table": {
+              "block": 0,
+              "cell": 1,
+              "index": 0,
+              "paragraph": 0,
+              "row": 0
+            }
+          },
+          "schema_version": 1,
+          "source_sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+          "text_fingerprint": "37de7504e7436885b0eb6447ceeb1da1e4ae5d23230152910f31b20aeaea770a"
+        },
+        "anchor_hash": "0c23744de1df37fc4237267523bd72c23e0270d05befb56a70cce20358c227f5",
+        "block_type": "hwp_table_cell",
+        "confidence": null,
+        "ordinal": 2,
+        "text": "담당"
+      },
+      {
+        "anchor": {
+          "extraction_profile_hash": "e06db70a9d3aaf30c4ba3044bb75466ad85591bb92037fa1a894e651351c9c4e",
+          "kind": "hwp_paragraph",
+          "locator": {
+            "paragraph": 0,
+            "parser": "hwplib",
+            "parser_version": "1.1.10",
+            "section": 0,
+            "table": {
+              "block": 0,
+              "cell": 0,
+              "index": 0,
+              "paragraph": 0,
+              "row": 1
+            }
+          },
+          "schema_version": 1,
+          "source_sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+          "text_fingerprint": "07e3454c2ebfc5977938b8b71d7b6b8a4188ea538a486f8d938fce5de2456573"
+        },
+        "anchor_hash": "2622593b07697eead1dc5f7f68432c3ab75f7e94f6d29413cee0570a972ba711",
+        "block_type": "hwp_table_cell",
+        "confidence": null,
+        "ordinal": 3,
+        "text": "후속 과제"
+      },
+      {
+        "anchor": {
+          "extraction_profile_hash": "e06db70a9d3aaf30c4ba3044bb75466ad85591bb92037fa1a894e651351c9c4e",
+          "kind": "hwp_paragraph",
+          "locator": {
+            "paragraph": 0,
+            "parser": "hwplib",
+            "parser_version": "1.1.10",
+            "section": 0,
+            "table": {
+              "block": 0,
+              "cell": 1,
+              "index": 0,
+              "paragraph": 0,
+              "row": 1
+            }
+          },
+          "schema_version": 1,
+          "source_sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+          "text_fingerprint": "c31ae4aa35f6ee2788952334e826cb37fc6a2ca7421120fb6df52b3b8fde7ce4"
+        },
+        "anchor_hash": "29b894d6dbd3bea48205aad881fa42aeecaab6a8795a69687231f6585d372b48",
+        "block_type": "hwp_table_cell",
+        "confidence": null,
+        "ordinal": 4,
+        "text": "후속 담당: 민서"
+      },
+      {
+        "anchor": {
+          "extraction_profile_hash": "e06db70a9d3aaf30c4ba3044bb75466ad85591bb92037fa1a894e651351c9c4e",
+          "kind": "hwp_paragraph",
+          "locator": {
+            "footnote": {
+              "index": 0,
+              "paragraph": 0
+            },
+            "paragraph": 0,
+            "parser": "hwplib",
+            "parser_version": "1.1.10",
+            "section": 0
+          },
+          "schema_version": 1,
+          "source_sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+          "text_fingerprint": "8bbb9c07c44e65adadef559b1e3eebbc20084380bc073a758c850a9aaf20a1f2"
+        },
+        "anchor_hash": "3f8fa15f50ae1c7aff1d162a027d777448f75c8bc199a8ee76993d47dd86bbf2",
+        "block_type": "hwp_footnote",
+        "confidence": null,
+        "ordinal": 5,
+        "text": "검토 기준일: 2026-07-18"
+      }
+    ],
+    "config_profile_hash": "e06db70a9d3aaf30c4ba3044bb75466ad85591bb92037fa1a894e651351c9c4e",
+    "media_type": "application/x-hwp",
+    "normalization_profile": "nfc-lf-v1",
+    "parser": {
+      "name": "hwplib",
+      "version": "1.1.10"
+    },
+    "source_sha256": "e233d381dd5ea0c2713c1ea5122470f247d17b91a7d082c4ba7ceaf4f4762f38",
+    "warnings": []
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,82 @@
+# ── Dependencies ──────────────────────────────────────────
+node_modules
+.pnp
+.pnp.js
+.yarn/cache
+.yarn/install-state.gz
+
+# ── Build output ──────────────────────────────────────────
+dist
+dist-ssr
+build
+out
+*.tsbuildinfo
+
+# ── Cache ─────────────────────────────────────────────────
+.vite
+.cache
+.temp
+.tmp
+.eslintcache
+.stylelintcache
+.oxlintcache
+node_modules/.vite
+node_modules/.tmp
+
+# ── Environment & secrets ─────────────────────────────────
+# 절대 커밋 금지 — API 키, 토큰, 접속 정보
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.json
+credentials.json
+
+# ── Logs ──────────────────────────────────────────────────
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# ── Test & coverage ───────────────────────────────────────
+coverage
+*.lcov
+.nyc_output
+playwright-report
+test-results
+blob-report
+
+# ── Editor / IDE ──────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+
+# ── OS ────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+ehthumbs.db
+
+# ── Local overrides ───────────────────────────────────────
+*.local
+.history
+
+# ── AI / agent tooling ────────────────────────────────────
+.claude
+.cursor
+.aider*

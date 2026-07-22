@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronsLeft, ChevronsRight, LogOut, Sparkles, UserRound } from 'lucide-react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 
 import { Logo } from '@/components/common/Logo'
 import { UserAvatar } from '@/components/common/UserAvatar'
@@ -43,9 +43,11 @@ export function Sidebar({ collapsed, onToggleCollapse, onNavigate }: SidebarProp
           collapsed ? 'justify-center px-3' : 'justify-between px-5',
         )}
       >
-        <NavLink to="/" onClick={onNavigate} aria-label="AXit 홈">
+        {/* 브랜드는 네비게이션 항목이 아니므로 Link 를 씁니다.
+            NavLink 로 두면 / 경로에서 aria-current=page 가 중복으로 붙습니다. */}
+        <Link to="/" onClick={onNavigate} aria-label="AXit 홈">
           <Logo compact={collapsed} />
-        </NavLink>
+        </Link>
         {!collapsed && (
           <Button
             variant="ghost"

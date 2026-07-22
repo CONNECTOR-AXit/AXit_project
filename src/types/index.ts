@@ -89,6 +89,21 @@ export interface Activity {
   createdAt: string
 }
 
+/* ── 프로젝트 목록 필터 ──────────────────────────────────── */
+
+export type ProjectSortKey = 'recent' | 'name' | 'progress'
+
+/** `all` 은 상태 필터를 걸지 않음을 뜻합니다. */
+export type ProjectStatusFilter = ProjectStatus | 'all'
+
+export type ProjectViewMode = 'grid' | 'list'
+
+export interface ProjectFilters {
+  search?: string
+  sort?: ProjectSortKey
+  status?: ProjectStatusFilter
+}
+
 /* ── AI 분석 결과 ────────────────────────────────────────── */
 
 export interface CommonTopic {

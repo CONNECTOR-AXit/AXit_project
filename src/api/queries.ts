@@ -5,6 +5,7 @@ import { aiCredit, dashboardStats, trend, weeklyActivity } from '@/data/dashboar
 import { mergedDocuments } from '@/data/documents'
 import { activities, projects } from '@/data/projects'
 import { sleep } from '@/lib/utils'
+import type { ProjectFilters } from '@/types'
 
 /** 로딩 상태를 실제로 확인할 수 있도록 지연을 흉내냅니다. */
 const LATENCY = 260
@@ -33,5 +34,39 @@ export function useDashboard() {
         activities: activities.slice(0, 4),
         mergedDocuments: mergedDocuments.slice(0, 6),
       }),
+  })
+}
+
+/**
+ * 프로젝트 목록. 검색·정렬·상태 필터를 서버 대신 여기서 처리합니다.
+ * 실제 API 전환 시 이 조건들을 쿼리 파라미터로 넘기면 됩니다.
+ */
+export function useProjects(filters: ProjectFilters = {}) {
+  const { search = '', sort = 'recent', status = 'all' } = filters
+
+  return useQuery({
+    queryKey: queryKeys.projects(`${search}|${sort}|${status}`),
+    queryFn: () => {
+      const keyword = search.trim().toLowerCase()
+
+      const filtered = projects.filter((project) => {
+        const matchesKeyword =
+          !keyword ||
+          project.name.toLowerCase().includes(keyword) ||
+          project.description.toLowerCase().includes(keyword)
+        const matchesStatus = status === 'all' || project.status === status
+        return matchesKeyword && matchesStatus
+      })
+
+      const sorted = [...filtered].sort((a, b) => {
+        if (sort === 'name') return a.name.localeCompare(b.name, 'ko')
+        if (sort === 'progress') return b.progress - a.progress
+        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+      })
+
+      return resolve(sorted)
+    },
+    // 검색어를 입력하는 동안 목록이 사라지지 않도록 이전 결과를 유지합니다.
+    placeholderData: (previous) => previous,
   })
 }

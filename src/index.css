@@ -1,1 +1,171 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 @import 'tailwindcss';
+
+/* ══════════════════════════════════════════════════════════
+   AXit Design Tokens
+
+   Tailwind v4 는 @theme 안의 CSS 변수를 그대로 유틸리티로 만듭니다.
+   예) --color-primary → bg-primary / text-primary / border-primary
+   ══════════════════════════════════════════════════════════ */
+@theme {
+  /* ── Brand ─────────────────────────────────────────────── */
+  --color-primary: #0f73d8;
+  --color-primary-foreground: #ffffff;
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #4a9bea;
+  --color-primary-500: #0f73d8;
+  --color-primary-600: #0d63bc;
+  --color-primary-700: #0b5099;
+  --color-primary-800: #0a4380;
+  --color-primary-900: #08376a;
+
+  --color-secondary: #38d0b8;
+  --color-secondary-foreground: #06463c;
+  --color-secondary-50: #eefbf8;
+  --color-secondary-100: #d3f6ef;
+  --color-secondary-200: #a8ecdf;
+  --color-secondary-300: #6fdfcc;
+  --color-secondary-400: #38d0b8;
+  --color-secondary-500: #1eb69f;
+  --color-secondary-600: #129281;
+
+  /* ── Surface & Text ────────────────────────────────────── */
+  --color-canvas: #f8fafc; /* Background */
+  --color-surface: #ffffff;
+  --color-ink: #2e3742; /* Text */
+  --color-ink-muted: #64748b;
+  --color-ink-subtle: #94a3b8;
+  --color-line: #e5e7eb; /* Border */
+  --color-line-soft: #f1f5f9;
+
+  /* ── Semantic ──────────────────────────────────────────── */
+  --color-success: #22c55e;
+  --color-success-soft: #dcfce7;
+  --color-warning: #f59e0b;
+  --color-warning-soft: #fef3c7;
+  --color-danger: #ef4444;
+  --color-danger-soft: #fee2e2;
+  --color-info: #0f73d8;
+  --color-info-soft: #dbeafe;
+
+  /* ── Typography ────────────────────────────────────────── */
+  --font-sans:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI',
+    Roboto, 'Helvetica Neue', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* ── Radius ────────────────────────────────────────────── */
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.125rem;
+
+  /* ── Elevation (Soft Shadow) ───────────────────────────── */
+  --shadow-soft: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.06);
+  --shadow-card: 0 1px 2px 0 rgb(15 23 42 / 0.03), 0 4px 16px -4px rgb(15 23 42 / 0.08);
+  --shadow-lift: 0 2px 4px 0 rgb(15 23 42 / 0.04), 0 12px 32px -8px rgb(15 23 42 / 0.14);
+  --shadow-pop: 0 8px 40px -8px rgb(15 23 42 / 0.18);
+  --shadow-brand: 0 6px 20px -6px rgb(15 115 216 / 0.45);
+
+  /* ── Motion ────────────────────────────────────────────── */
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-pulse-ring: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  @keyframes pulse-ring {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.15;
+      transform: scale(1.12);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-primary) 22%, transparent);
+  }
+
+  /* 얇고 눈에 띄지 않는 스크롤바 — Linear / Notion 스타일 */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--color-ink-subtle) 40%, transparent);
+    border: 3px solid transparent;
+    border-radius: 9999px;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in srgb, var(--color-ink-muted) 55%, transparent);
+    background-clip: content-box;
+  }
+
+  [contenteditable]:focus {
+    outline: none;
+  }
+}
+
+/* ── Custom Utilities ────────────────────────────────────── */
+
+/** Blue → Mint 브랜드 그라디언트 배경 */
+@utility brand-gradient {
+  background-image: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+}
+
+/** Blue → Mint 그라디언트 텍스트 */
+@utility brand-text-gradient {
+  background-image: linear-gradient(120deg, var(--color-primary) 10%, var(--color-secondary) 95%);
+  background-clip: text;
+  color: transparent;
+}
+
+/** 스크롤은 되지만 스크롤바는 숨김 */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

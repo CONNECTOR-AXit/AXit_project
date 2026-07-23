@@ -6,6 +6,7 @@ import { aiCredit, dashboardStats, trend, weeklyActivity } from '@/data/dashboar
 import { aiSuggestions, documentVersions, mergedDocument } from '@/data/editor'
 import { documentsOf, mergedDocuments } from '@/data/documents'
 import { history } from '@/data/history'
+import { notifications } from '@/data/notifications'
 import { activitiesOf, activities, projects } from '@/data/projects'
 import { sleep } from '@/lib/utils'
 import type { ProjectFilters } from '@/types'
@@ -131,5 +132,13 @@ export function useHistory() {
   return useQuery({
     queryKey: queryKeys.history,
     queryFn: () => resolve(history),
+  })
+}
+
+/** 알림 목록. 읽음 처리는 화면 상태에서 관리합니다. */
+export function useNotifications() {
+  return useQuery({
+    queryKey: queryKeys.notifications,
+    queryFn: () => resolve(notifications),
   })
 }

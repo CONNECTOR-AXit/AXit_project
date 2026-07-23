@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from './client'
 import { aiCredit, dashboardStats, trend, weeklyActivity } from '@/data/dashboard'
-import { mergedDocuments } from '@/data/documents'
-import { activities, projects } from '@/data/projects'
+import { documentsOf, mergedDocuments } from '@/data/documents'
+import { activitiesOf, activities, projects } from '@/data/projects'
 import { sleep } from '@/lib/utils'
 import type { ProjectFilters } from '@/types'
 
@@ -68,5 +68,28 @@ export function useProjects(filters: ProjectFilters = {}) {
     },
     // 검색어를 입력하는 동안 목록이 사라지지 않도록 이전 결과를 유지합니다.
     placeholderData: (previous) => previous,
+  })
+}
+
+/**
+ * 프로젝트 상세. 프로젝트 정보와 소속 문서·활동을 함께 가져옵니다.
+ * 없는 id 면 throw 하고 화면에서 목록으로 돌려보냅니다.
+ */
+export function useProject(projectId: string | undefined) {
+  return useQuery({
+    queryKey: queryKeys.project(projectId ?? ''),
+    enabled: Boolean(projectId),
+    // 잘못된 id 는 재시도해도 결과가 같으므로 즉시 실패시킵니다.
+    retry: false,
+    queryFn: () => {
+      const project = projects.find((item) => item.id === projectId)
+      if (!project) throw new Error('프로젝트를 찾을 수 없습니다.')
+
+      return resolve({
+        project,
+        documents: documentsOf(project.id),
+        activities: activitiesOf(project.id),
+      })
+    },
   })
 }

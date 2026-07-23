@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from './client'
 import { analysisResult } from '@/data/analysis'
 import { aiCredit, dashboardStats, trend, weeklyActivity } from '@/data/dashboard'
+import { aiSuggestions, documentVersions, mergedDocument } from '@/data/editor'
 import { documentsOf, mergedDocuments } from '@/data/documents'
 import { activitiesOf, activities, projects } from '@/data/projects'
 import { sleep } from '@/lib/utils'
@@ -105,5 +106,21 @@ export function useAnalysis(projectId: string | undefined) {
     enabled: Boolean(projectId),
     queryFn: () =>
       resolve({ ...analysisResult, projectId: projectId ?? analysisResult.projectId }),
+  })
+}
+
+/**
+ * 편집기에서 여는 통합 문서. 문서 본문·AI 추천·버전 내역을 함께 가져옵니다.
+ */
+export function useMergedDocument(projectId: string | undefined) {
+  return useQuery({
+    queryKey: queryKeys.merged(projectId ?? ''),
+    enabled: Boolean(projectId),
+    queryFn: () =>
+      resolve({
+        document: mergedDocument,
+        suggestions: aiSuggestions,
+        versions: documentVersions,
+      }),
   })
 }

@@ -5,6 +5,7 @@ import { analysisResult } from '@/data/analysis'
 import { aiCredit, dashboardStats, trend, weeklyActivity } from '@/data/dashboard'
 import { aiSuggestions, documentVersions, mergedDocument } from '@/data/editor'
 import { documentsOf, mergedDocuments } from '@/data/documents'
+import { history } from '@/data/history'
 import { activitiesOf, activities, projects } from '@/data/projects'
 import { sleep } from '@/lib/utils'
 import type { ProjectFilters } from '@/types'
@@ -122,5 +123,13 @@ export function useMergedDocument(projectId: string | undefined) {
         suggestions: aiSuggestions,
         versions: documentVersions,
       }),
+  })
+}
+
+/** 전체 활동 기록. 히스토리 화면에서 검색·필터·날짜 그룹을 처리합니다. */
+export function useHistory() {
+  return useQuery({
+    queryKey: queryKeys.history,
+    queryFn: () => resolve(history),
   })
 }

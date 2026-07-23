@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from './client'
+import { analysisResult } from '@/data/analysis'
 import { aiCredit, dashboardStats, trend, weeklyActivity } from '@/data/dashboard'
 import { documentsOf, mergedDocuments } from '@/data/documents'
 import { activitiesOf, activities, projects } from '@/data/projects'
@@ -91,5 +92,18 @@ export function useProject(projectId: string | undefined) {
         activities: activitiesOf(project.id),
       })
     },
+  })
+}
+
+/**
+ * 프로젝트의 AI 분석 결과. 진행 화면에서 넘어온 projectId 로 결과를 가져옵니다.
+ * 더미 결과에 projectId 만 덮어써 어느 프로젝트에서 열어도 자연스럽게 보입니다.
+ */
+export function useAnalysis(projectId: string | undefined) {
+  return useQuery({
+    queryKey: queryKeys.analysis(projectId ?? ''),
+    enabled: Boolean(projectId),
+    queryFn: () =>
+      resolve({ ...analysisResult, projectId: projectId ?? analysisResult.projectId }),
   })
 }

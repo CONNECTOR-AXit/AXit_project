@@ -1,5 +1,6 @@
 import {
   Bell,
+  CreditCard,
   FileStack,
   FolderKanban,
   History,
@@ -48,6 +49,12 @@ export const primaryNav: NavItem[] = [
 
 /** 구분선 아래 보조 메뉴. */
 export const secondaryNav: NavItem[] = [
+  {
+    label: '이용요금',
+    to: '/pricing',
+    icon: CreditCard,
+    match: (p) => p.startsWith('/pricing'),
+  },
   { label: '설정', to: '/settings', icon: Settings, match: (p) => p.startsWith('/settings') },
 ]
 

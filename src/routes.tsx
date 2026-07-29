@@ -16,6 +16,7 @@ const Editor = lazy(() => import('@/pages/Editor'))
 const Documents = lazy(() => import('@/pages/Documents'))
 const History = lazy(() => import('@/pages/History'))
 const Notifications = lazy(() => import('@/pages/Notifications'))
+const Pricing = lazy(() => import('@/pages/Pricing'))
 const Settings = lazy(() => import('@/pages/Settings'))
 
 /** lazy 페이지를 불러오는 동안 표시되는 스켈레톤. */
@@ -72,6 +73,7 @@ export const router = createBrowserRouter([
       { path: 'documents', element: page(<Documents />), handle: { title: '통합 문서' } },
       { path: 'history', element: page(<History />), handle: { title: '히스토리' } },
       { path: 'notifications', element: page(<Notifications />), handle: { title: '알림' } },
+      { path: 'pricing', element: page(<Pricing />), handle: { title: '이용요금' } },
       { path: 'settings', element: page(<Settings />), handle: { title: '설정' } },
     ],
   },

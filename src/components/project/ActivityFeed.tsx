@@ -38,7 +38,7 @@ export function ActivityFeed({ activities, className }: ActivityFeedProps) {
         return (
           <li
             key={activity.id}
-            className="flex items-start gap-3 rounded-lg px-2 py-2.5 transition-colors hover:bg-line-soft/70"
+            className="flex items-center gap-3 rounded-lg px-2 py-2.5 transition-colors hover:bg-line-soft/70"
           >
             <span
               className={cn(
@@ -58,7 +58,7 @@ export function ActivityFeed({ activities, className }: ActivityFeedProps) {
               )}
               {activity.message}
             </p>
-            <time className="shrink-0 pt-0.5 text-[11.5px] text-ink-subtle tabular-nums">
+            <time className="shrink-0 text-[11.5px] text-ink-subtle tabular-nums">
               {formatTime(activity.createdAt)}
             </time>
           </li>

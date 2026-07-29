@@ -188,7 +188,7 @@ export default function Upload() {
         {/* 우측 사이드 레일 */}
         <div className="space-y-5">
           <SectionCard title="지원 형식">
-            <ul className="space-y-2.5">
+            <ul className="space-y-4">
               {[
                 { ext: 'PDF', note: '텍스트 레이어가 있는 문서' },
                 { ext: 'DOCX', note: 'Microsoft Word 문서' },

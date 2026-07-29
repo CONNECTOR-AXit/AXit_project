@@ -111,7 +111,11 @@ export default function Dashboard() {
             />
           }
         >
-          {pending ? <Skeleton className="h-[260px]" /> : <TrendAreaChart data={data.trend} />}
+          {pending ? (
+            <Skeleton className="h-[45vh] max-h-[560px] min-h-[260px] w-full" />
+          ) : (
+            <TrendAreaChart data={data.trend} />
+          )}
         </SectionCard>
 
         <SectionCard

@@ -136,7 +136,7 @@ function ProjectRow({ project }: { project: Project }) {
           to={`/projects/${project.id}`}
           className="flex flex-wrap items-center gap-4 px-5 py-4 focus-visible:ring-[3px] focus-visible:ring-primary/25 focus-visible:outline-none"
         >
-          <div className="min-w-[200px] flex-1">
+          <div className="min-w-0 flex-1 sm:flex-none sm:basis-[240px]">
             <p className="truncate text-[14px] font-bold text-ink">{project.name}</p>
             <p className="mt-0.5 truncate text-[12px] text-ink-subtle">
               생성일 {formatDate(project.createdAt)} · 문서 {project.documentCount}개 · 멤버{' '}
@@ -144,7 +144,7 @@ function ProjectRow({ project }: { project: Project }) {
             </p>
           </div>
           <ProjectStatusBadge status={project.status} />
-          <AvatarGroup users={project.members} max={4} size="xs" />
+          <AvatarGroup users={project.members} max={4} size="xs" className="ml-auto" />
           <MiniRing value={project.progress} complete={project.progress >= 100} />
         </Link>
       </Card>

@@ -104,7 +104,9 @@ export default function Projects() {
             initial="hidden"
             animate="show"
             className={
-              view === 'grid' ? 'grid gap-4 md:grid-cols-2 xl:grid-cols-3' : 'space-y-2'
+              view === 'grid'
+                ? 'grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-3'
+                : 'space-y-2'
             }
           >
             {projects.map((project) =>

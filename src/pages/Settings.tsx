@@ -104,7 +104,11 @@ export default function Settings() {
 
         {/* 계정 */}
         <TabsContent value="account" className="space-y-5">
-          <SectionCard title="프로필" description="다른 멤버에게 표시되는 정보입니다.">
+          <SectionCard
+            title="프로필"
+            description="다른 멤버에게 표시되는 정보입니다."
+            contentClassName="pb-6"
+          >
             <div className="flex flex-wrap items-center gap-4">
               <UserAvatar user={currentUser} size="lg" />
               <div className="min-w-0">
@@ -153,18 +157,26 @@ export default function Settings() {
 
         {/* 알림 */}
         <TabsContent value="notification">
-          <SectionCard title="알림 설정" description="받고 싶은 알림만 켜두세요.">
+          <SectionCard title="알림 설정" description="받고 싶은 알림만 켜두세요." contentClassName="pb-6">
             <SettingToggles items={notificationSettings} values={toggles} onChange={setToggle} />
           </SectionCard>
         </TabsContent>
 
         {/* AI */}
         <TabsContent value="ai" className="space-y-5">
-          <SectionCard title="AI 분석 동작" description="문서를 통합하는 방식을 조정합니다.">
+          <SectionCard
+            title="AI 분석 동작"
+            description="문서를 통합하는 방식을 조정합니다."
+            contentClassName="pb-6"
+          >
             <SettingToggles items={aiSettings} values={toggles} onChange={setToggle} />
           </SectionCard>
 
-          <SectionCard title="분석 정확도" description="느릴수록 더 꼼꼼하게 비교합니다.">
+          <SectionCard
+            title="분석 정확도"
+            description="느릴수록 더 꼼꼼하게 비교합니다."
+            contentClassName="pb-6"
+          >
             <Select defaultValue="balanced">
               <SelectTrigger className="w-full sm:w-[280px]">
                 <SelectValue />
@@ -188,6 +200,7 @@ export default function Settings() {
                 멤버 초대
               </Button>
             }
+            contentClassName="pb-6"
           >
             <MemberList members={projects[0]!.members} />
           </SectionCard>
@@ -214,7 +227,7 @@ export default function Settings() {
             </div>
           </Card>
 
-          <SectionCard title="사용량" description="이번 달 사용 현황입니다.">
+          <SectionCard title="사용량" description="이번 달 사용 현황입니다." contentClassName="pb-6">
             <div className="space-y-5">
               <UsageRow label="AI 분석" used={32} total={50} unit="회" />
               <UsageRow label="저장 용량" used={8} total={10} unit="GB" />

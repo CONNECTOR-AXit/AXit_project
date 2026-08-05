@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronsLeft, ChevronsRight, LogOut, Sparkles, UserRound } from 'lucide-react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 
 import { Logo } from '@/components/common/Logo'
 import { UserAvatar } from '@/components/common/UserAvatar'
@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Tooltip } from '@/components/ui/tooltip'
 import { currentUser } from '@/data/user'
+import { useAuth } from '@/hooks/useAuth'
 import { cn } from '@/lib/utils'
 import { isActive, primaryNav, secondaryNav, type NavItem } from './navigation'
 
@@ -28,6 +29,15 @@ export interface SidebarProps {
 /** 좌측 고정 사이드바. 데스크톱에서 248px ↔ 76px 로 접고 펼칩니다. */
 export function Sidebar({ collapsed, onToggleCollapse, onNavigate }: SidebarProps) {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const { user, logout } = useAuth()
+  const displayUser = user ?? currentUser
+
+  const handleLogout = () => {
+    logout()
+    onNavigate?.()
+    navigate('/landing')
+  }
 
   return (
     <aside
@@ -133,9 +143,9 @@ export function Sidebar({ collapsed, onToggleCollapse, onNavigate }: SidebarProp
             >
               <ChevronsRight />
             </Button>
-            <Tooltip label={currentUser.name} side="right">
+            <Tooltip label={displayUser.name} side="right">
               <button type="button" className="rounded-full">
-                <UserAvatar user={currentUser} size="sm" />
+                <UserAvatar user={displayUser} size="sm" />
               </button>
             </Tooltip>
           </div>
@@ -146,13 +156,13 @@ export function Sidebar({ collapsed, onToggleCollapse, onNavigate }: SidebarProp
                 type="button"
                 className="flex w-full items-center gap-2.5 rounded-lg p-2 text-left transition-colors hover:bg-line-soft"
               >
-                <UserAvatar user={currentUser} size="sm" />
+                <UserAvatar user={displayUser} size="sm" />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-[13px] font-bold text-ink">
-                    {currentUser.name}
+                    {displayUser.name}
                   </span>
                   <span className="block truncate text-[11px] text-ink-subtle">
-                    {currentUser.email}
+                    {displayUser.email}
                   </span>
                 </span>
               </button>
@@ -168,7 +178,7 @@ export function Sidebar({ collapsed, onToggleCollapse, onNavigate }: SidebarProp
                 플랜 관리
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem variant="danger">
+              <DropdownMenuItem variant="danger" onSelect={handleLogout}>
                 <LogOut />
                 로그아웃
               </DropdownMenuItem>

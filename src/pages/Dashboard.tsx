@@ -19,15 +19,17 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { DEMO_NOW } from '@/data/dashboard'
 import { currentUser } from '@/data/user'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function Dashboard() {
   const { data, isLoading } = useDashboard()
+  const { user } = useAuth()
   const pending = isLoading || !data
 
   return (
     <PageTransition className="space-y-6">
       <PageHeader
-        title={`안녕하세요, ${currentUser.name}님 👋`}
+        title={`안녕하세요, ${user?.name ?? currentUser.name}님 👋`}
         description="오늘의 문서 통합 현황을 한눈에 확인하세요."
         actions={
           <>

@@ -17,6 +17,7 @@ import { Tooltip } from '@/components/ui/tooltip'
 import { DEMO_NOW } from '@/data/dashboard'
 import { notifications } from '@/data/notifications'
 import { currentUser } from '@/data/user'
+import { useAuth } from '@/hooks/useAuth'
 import { formatRelative } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
@@ -29,9 +30,16 @@ export interface HeaderProps {
 /** 상단 고정 헤더 — 좌측 페이지 제목, 우측 검색 · 알림 · 프로필. */
 export function Header({ title, onOpenMobileNav }: HeaderProps) {
   const navigate = useNavigate()
+  const { user, logout } = useAuth()
+  const displayUser = user ?? currentUser
   const [query, setQuery] = useState('')
   const searchRef = useRef<HTMLInputElement>(null)
   const unread = notifications.filter((item) => !item.read)
+
+  const handleLogout = () => {
+    logout()
+    navigate('/landing')
+  }
 
   // ⌘K / Ctrl+K 로 검색창 포커스 — 이 부류 앱의 관용적인 단축키
   useEffect(() => {
@@ -161,11 +169,11 @@ export function Header({ title, onOpenMobileNav }: HeaderProps) {
               className="ml-1 rounded-full outline-none focus-visible:ring-[3px] focus-visible:ring-primary/25"
               aria-label="프로필 메뉴"
             >
-              <UserAvatar user={currentUser} size="sm" />
+              <UserAvatar user={displayUser} size="sm" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-[210px]">
-            <DropdownMenuLabel>{currentUser.email}</DropdownMenuLabel>
+            <DropdownMenuLabel>{displayUser.email}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link to="/settings">계정 설정</Link>
@@ -174,7 +182,9 @@ export function Header({ title, onOpenMobileNav }: HeaderProps) {
               <Link to="/history">내 활동 기록</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="danger">로그아웃</DropdownMenuItem>
+            <DropdownMenuItem variant="danger" onSelect={handleLogout}>
+              로그아웃
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

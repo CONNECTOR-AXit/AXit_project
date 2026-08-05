@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useAuth } from '@/hooks/useAuth'
 
 interface FormValues {
   email: string
@@ -33,6 +34,7 @@ function validate(values: FormValues): FormErrors {
 export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { login } = useAuth()
   const justSignedUp = Boolean((location.state as { justSignedUp?: boolean } | null)?.justSignedUp)
 
   const [values, setValues] = useState<FormValues>({ email: '', password: '' })
@@ -50,6 +52,7 @@ export default function Login() {
     setSubmitted(true)
     if (Object.keys(nextErrors).length === 0) {
       // 데모 빌드: 실제 인증 없이 대시보드로 이동합니다.
+      login(values.email, values.password)
       navigate('/')
     }
   }

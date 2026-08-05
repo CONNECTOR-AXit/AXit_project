@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useAuth } from '@/hooks/useAuth'
 
 interface FormValues {
   name: string
@@ -39,6 +40,7 @@ function validate(values: FormValues): FormErrors {
 /** 회원가입 페이지. UI 검증만 수행하며, 실제 계정 생성 API는 아직 연결되어 있지 않습니다. */
 export default function SignUp() {
   const navigate = useNavigate()
+  const { signup } = useAuth()
   const [values, setValues] = useState<FormValues>({
     name: '',
     email: '',
@@ -58,7 +60,8 @@ export default function SignUp() {
     setErrors(nextErrors)
     setSubmitted(true)
     if (Object.keys(nextErrors).length === 0) {
-      // 데모 빌드: 실제 계정 생성 없이 로그인 페이지로 안내합니다.
+      // 이름을 저장해두면 로그인 후 대시보드 인사말에 바로 반영됩니다.
+      signup(values.name.trim(), values.email, values.password)
       navigate('/login', { state: { justSignedUp: true } })
     }
   }

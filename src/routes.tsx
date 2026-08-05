@@ -20,6 +20,7 @@ const Pricing = lazy(() => import('@/pages/Pricing'))
 const Settings = lazy(() => import('@/pages/Settings'))
 const Landing = lazy(() => import('@/pages/Landing'))
 const SignUp = lazy(() => import('@/pages/SignUp'))
+const Login = lazy(() => import('@/pages/Login'))
 
 /** lazy 페이지를 불러오는 동안 표시되는 스켈레톤. */
 function RouteFallback() {
@@ -81,5 +82,6 @@ export const router = createBrowserRouter([
   },
   { path: '/landing', element: page(<Landing />) },
   { path: '/signup', element: page(<SignUp />) },
+  { path: '/login', element: page(<Login />) },
   { path: '*', element: <NotFound /> },
 ])

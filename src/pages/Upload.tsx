@@ -216,7 +216,7 @@ export default function Upload() {
             <div className="brand-gradient h-1 w-full" />
             <div className="p-5">
               <p className="flex items-center gap-1.5 text-[13px] font-bold text-ink">
-                <Sparkles className="size-4 text-secondary-500" />
+                <Sparkles className="size-4 text-ink-muted" />
                 다음 단계
               </p>
               <p className="mt-2 text-[12.5px] leading-5 text-ink-muted">

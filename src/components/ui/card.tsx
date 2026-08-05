@@ -2,15 +2,12 @@ import type { ComponentProps } from 'react'
 
 import { cn } from '@/lib/utils'
 
-/** 흰 배경 + 얇은 테두리 + Soft Shadow 카드. */
+/** 흰 배경 + Soft Shadow 카드. 테두리 대신 그림자로 구분합니다. */
 export function Card({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
       data-slot="card"
-      className={cn(
-        'rounded-xl border border-line bg-white shadow-card transition-shadow duration-200',
-        className,
-      )}
+      className={cn('rounded-xl bg-white shadow-card transition-shadow duration-200', className)}
       {...props}
     />
   )

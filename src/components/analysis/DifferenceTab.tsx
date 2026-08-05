@@ -12,12 +12,6 @@ export interface DifferenceTabProps {
   result: AnalysisResult
 }
 
-const clusterTone = [
-  'border-primary-200 bg-primary-50/60',
-  'border-secondary-200 bg-secondary-50/60',
-  'border-warning/25 bg-warning-soft/60',
-] as const
-
 /** 상충하는 서술을, 문서가 취한 입장별 그룹으로 묶어 보여줍니다. */
 export function DifferenceTab({ result }: DifferenceTabProps) {
   return (
@@ -44,10 +38,7 @@ export function DifferenceTab({ result }: DifferenceTabProps) {
               {diff.clusters.map((cluster, index) => (
                 <div
                   key={`${diff.id}-${index}`}
-                  className={cn(
-                    'rounded-xl border p-3.5 transition-transform duration-200 hover:-translate-y-0.5',
-                    clusterTone[index % clusterTone.length],
-                  )}
+                  className="rounded-xl bg-line-soft p-3.5 transition-transform duration-200 hover:-translate-y-0.5"
                 >
                   <div className="flex flex-wrap items-center gap-1">
                     {cluster.documents.map((doc) => (

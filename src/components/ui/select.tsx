@@ -17,9 +17,9 @@ export function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       className={cn(
-        'flex h-9.5 w-fit items-center justify-between gap-2 rounded-lg border border-line bg-white px-3 text-[13px] font-medium text-ink shadow-soft transition-all outline-none',
-        'hover:bg-line-soft data-[placeholder]:text-ink-subtle',
-        'focus-visible:border-primary focus-visible:ring-[3px] focus-visible:ring-primary/18',
+        'flex h-9.5 w-fit items-center justify-between gap-2 rounded-lg bg-line-soft px-3 text-[13px] font-medium text-ink transition-all outline-none',
+        'hover:bg-line data-[placeholder]:text-ink-subtle',
+        'focus-visible:ring-[3px] focus-visible:ring-primary/18',
         className,
       )}
       {...props}
@@ -45,7 +45,7 @@ export function SelectContent({
         position={position}
         sideOffset={6}
         className={cn(
-          'relative z-50 min-w-[8rem] overflow-hidden rounded-xl border border-line bg-white p-1.5 shadow-pop',
+          'relative z-50 min-w-[8rem] overflow-hidden rounded-xl bg-white p-1.5 shadow-pop',
           className,
         )}
         {...props}

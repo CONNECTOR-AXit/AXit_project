@@ -9,10 +9,10 @@ import { cn } from '@/lib/utils'
 export type KpiTone = 'primary' | 'mint' | 'violet' | 'amber'
 
 const toneClass: Record<KpiTone, string> = {
-  primary: 'bg-primary-50 text-primary',
-  mint: 'bg-secondary-50 text-secondary-600',
-  violet: 'bg-violet-50 text-violet-500',
-  amber: 'bg-warning-soft text-warning',
+  primary: 'bg-line-soft text-ink-muted',
+  mint: 'bg-line-soft text-ink-muted',
+  violet: 'bg-line-soft text-ink-muted',
+  amber: 'bg-line-soft text-ink-muted',
 }
 
 export interface KpiCardProps {

@@ -20,7 +20,7 @@ export function DropdownMenuContent({
         sideOffset={sideOffset}
         align={align}
         className={cn(
-          'z-50 min-w-[11rem] overflow-hidden rounded-xl border border-line bg-white p-1.5 shadow-pop',
+          'z-50 min-w-[11rem] overflow-hidden rounded-xl bg-white p-1.5 shadow-pop',
           'origin-(--radix-dropdown-menu-content-transform-origin) transition-all duration-150',
           'data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0',
           className,

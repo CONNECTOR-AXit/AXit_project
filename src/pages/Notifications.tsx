@@ -26,10 +26,10 @@ import type { NotificationItem, NotificationKind } from '@/types'
 const DEMO_NOW = new Date('2024-05-16T15:00:00')
 
 const kindMeta: Record<NotificationKind, { icon: LucideIcon; className: string; label: string }> = {
-  analysis: { icon: Sparkles, className: 'bg-secondary-50 text-secondary-600', label: 'AI 분석' },
-  mention: { icon: MessageSquare, className: 'bg-primary-50 text-primary', label: '멘션' },
-  invite: { icon: UserPlus, className: 'bg-success-soft text-success', label: '초대' },
-  comment: { icon: MessageSquare, className: 'bg-warning-soft text-warning', label: '댓글' },
+  analysis: { icon: Sparkles, className: 'bg-line-soft text-ink-muted', label: 'AI 분석' },
+  mention: { icon: MessageSquare, className: 'bg-line-soft text-ink-muted', label: '멘션' },
+  invite: { icon: UserPlus, className: 'bg-line-soft text-ink-muted', label: '초대' },
+  comment: { icon: MessageSquare, className: 'bg-line-soft text-ink-muted', label: '댓글' },
   system: { icon: Info, className: 'bg-line-soft text-ink-muted', label: '시스템' },
 }
 
@@ -115,8 +115,8 @@ function NotificationGroup({
           <motion.li key={item.id} variants={staggerItem}>
             <Card
               className={cn(
-                'relative transition-all duration-200 hover:border-primary-200 hover:shadow-lift',
-                !item.read && 'border-primary-100 bg-primary-50/25',
+                'relative transition-all duration-200 hover:shadow-lift',
+                !item.read && 'bg-primary-50/25',
               )}
             >
               <Link

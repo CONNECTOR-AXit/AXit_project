@@ -24,7 +24,7 @@ export function DialogContent({
         data-slot="dialog-content"
         className={cn(
           'fixed top-1/2 left-1/2 z-50 w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2',
-          'rounded-2xl border border-line bg-white p-6 shadow-pop outline-none',
+          'rounded-2xl bg-white p-6 shadow-pop outline-none',
           'transition-all duration-200 data-[state=closed]:scale-[0.97] data-[state=closed]:opacity-0',
           className,
         )}

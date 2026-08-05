@@ -61,7 +61,7 @@ export function PerDocumentTab({ result }: PerDocumentTabProps) {
                   key={highlight}
                   className="flex items-center gap-1.5 rounded-lg bg-line-soft px-2.5 py-1.5 text-[12px] font-medium text-ink-muted"
                 >
-                  <Sparkle className="size-3 text-secondary-500" />
+                  <Sparkle className="size-3 text-ink-subtle" />
                   {highlight}
                 </li>
               ))}

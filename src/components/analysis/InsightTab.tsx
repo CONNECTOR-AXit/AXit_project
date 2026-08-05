@@ -82,7 +82,7 @@ export function InsightTab({ result }: InsightTabProps) {
             '실행 채널 우선순위는 런칭 4주 후 성과 데이터로 재조정하세요.',
           ].map((step, index) => (
             <li key={step} className="flex items-start gap-3">
-              <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary-50 text-[11px] font-extrabold text-primary">
+              <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-line-soft text-[11px] font-extrabold text-ink-muted">
                 {index + 1}
               </span>
               <span className="text-[13px] leading-5 text-ink-muted">{step}</span>

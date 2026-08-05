@@ -9,14 +9,14 @@ interface KindStyle {
   className: string
 }
 
-/** 확장자별 아이콘과 색. 목록에서 문서 종류를 한눈에 구분합니다. */
+/** 확장자별 아이콘. 형식 구분은 아이콘 모양으로만 하고, 배경은 다른 아이콘과 동일하게 회색으로 둡니다. */
 export const kindStyles: Record<FileKind, KindStyle> = {
-  pdf: { icon: FileType2, label: 'PDF', className: 'bg-danger-soft text-danger' },
-  docx: { icon: FileText, label: 'DOCX', className: 'bg-info-soft text-primary' },
-  hwp: { icon: FileText, label: 'HWP', className: 'bg-secondary-50 text-secondary-600' },
+  pdf: { icon: FileType2, label: 'PDF', className: 'bg-line-soft text-ink-muted' },
+  docx: { icon: FileText, label: 'DOCX', className: 'bg-line-soft text-ink-muted' },
+  hwp: { icon: FileText, label: 'HWP', className: 'bg-line-soft text-ink-muted' },
   txt: { icon: FileText, label: 'TXT', className: 'bg-line-soft text-ink-muted' },
-  pptx: { icon: Presentation, label: 'PPTX', className: 'bg-warning-soft text-warning' },
-  xlsx: { icon: FileSpreadsheet, label: 'XLSX', className: 'bg-success-soft text-success' },
+  pptx: { icon: Presentation, label: 'PPTX', className: 'bg-line-soft text-ink-muted' },
+  xlsx: { icon: FileSpreadsheet, label: 'XLSX', className: 'bg-line-soft text-ink-muted' },
 }
 
 const sizeClass = {

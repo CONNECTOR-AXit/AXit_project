@@ -22,25 +22,25 @@ export function AnalysisKpiRow({ result, className }: AnalysisKpiRowProps) {
       label: '문서 수',
       value: `${result.documentCount}`,
       icon: FileText,
-      className: 'bg-primary-50 text-primary',
+      className: 'bg-line-soft text-ink-muted',
     },
     {
       label: '공통 내용 항목',
       value: `${result.commonCount}`,
       icon: ShieldCheck,
-      className: 'bg-secondary-50 text-secondary-600',
+      className: 'bg-line-soft text-ink-muted',
     },
     {
       label: '차이점 항목',
       value: `${result.differenceCount}`,
       icon: GitCompare,
-      className: 'bg-danger-soft text-danger',
+      className: 'bg-line-soft text-ink-muted',
     },
     {
       label: '중복률 (평균)',
       value: `${result.overlapRate}%`,
       icon: Repeat2,
-      className: 'bg-warning-soft text-warning',
+      className: 'bg-line-soft text-ink-muted',
     },
   ]
 
@@ -49,7 +49,7 @@ export function AnalysisKpiRow({ result, className }: AnalysisKpiRowProps) {
       {tiles.map((tile) => (
         <div
           key={tile.label}
-          className="flex items-center gap-3 rounded-xl border border-line bg-line-soft/50 px-4 py-3.5"
+          className="flex items-center gap-3 rounded-xl bg-line-soft/50 px-4 py-3.5"
         >
           <span
             className={cn(

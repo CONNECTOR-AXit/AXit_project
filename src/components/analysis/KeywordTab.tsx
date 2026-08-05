@@ -23,10 +23,8 @@ function sizeFor(weight: number) {
 
 function toneFor(weight: number) {
   if (weight >= 90) return 'bg-primary text-white border-transparent shadow-brand'
-  if (weight >= 75) return 'bg-primary-50 text-primary border-primary-100'
-  if (weight >= 60) return 'bg-secondary-50 text-secondary-600 border-secondary-100'
-  if (weight >= 45) return 'bg-line-soft text-ink border-line'
-  return 'bg-white text-ink-muted border-line'
+  if (weight >= 60) return 'bg-line text-ink border-transparent'
+  return 'bg-line-soft text-ink-muted border-transparent'
 }
 
 export interface KeywordTabProps {

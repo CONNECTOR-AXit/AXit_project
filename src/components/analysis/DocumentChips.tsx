@@ -1,13 +1,5 @@
 import { cn } from '@/lib/utils'
 
-const chipTone = [
-  'bg-primary-50 text-primary',
-  'bg-secondary-50 text-secondary-600',
-  'bg-violet-50 text-violet-500',
-  'bg-warning-soft text-warning',
-  'bg-line-soft text-ink-muted',
-] as const
-
 export interface DocumentChipsProps {
   /** 클러스터 라벨. 예) `[['문서 A','문서 B'], ['문서 C']]` */
   clusters: string[][]
@@ -24,10 +16,7 @@ export function DocumentChips({ clusters, className }: DocumentChipsProps) {
           {cluster.map((label) => (
             <span
               key={label}
-              className={cn(
-                'rounded-md px-1.5 py-0.5 text-[11px] font-bold',
-                chipTone[clusterIndex % chipTone.length],
-              )}
+              className="rounded-md bg-line-soft px-1.5 py-0.5 text-[11px] font-bold text-ink-muted"
             >
               {label.replace('문서 ', '')}
             </span>
@@ -40,6 +29,6 @@ export function DocumentChips({ clusters, className }: DocumentChipsProps) {
 
 export const severityTone = {
   high: { dot: 'bg-danger', label: '높음', badge: 'danger' },
-  medium: { dot: 'bg-primary', label: '보통', badge: 'primary' },
-  low: { dot: 'bg-warning', label: '낮음', badge: 'warning' },
+  medium: { dot: 'bg-warning', label: '보통', badge: 'warning' },
+  low: { dot: 'bg-line', label: '낮음', badge: 'neutral' },
 } as const

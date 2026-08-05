@@ -11,7 +11,7 @@ export function TabsList({ className, ...props }: ComponentProps<typeof TabsPrim
     <TabsPrimitive.List
       data-slot="tabs-list"
       className={cn(
-        'scrollbar-none flex w-full items-center gap-1 overflow-x-auto border-b border-line',
+        'scrollbar-none flex w-full items-center gap-1 overflow-x-auto',
         className,
       )}
       {...props}
@@ -43,7 +43,7 @@ export function TabsListPill({ className, ...props }: ComponentProps<typeof Tabs
     <TabsPrimitive.List
       data-slot="tabs-list-pill"
       className={cn(
-        'inline-flex items-center gap-0.5 rounded-lg border border-line bg-line-soft p-0.5',
+        'inline-flex items-center gap-0.5 rounded-lg bg-line-soft p-0.5',
         className,
       )}
       {...props}

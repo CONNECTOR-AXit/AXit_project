@@ -16,12 +16,12 @@ import type { Activity, ActivityKind } from '@/types'
 
 /** 활동 유형별 아이콘과 색. 히스토리 화면에서도 재사용합니다. */
 export const activityKindMeta: Record<ActivityKind, { icon: LucideIcon; className: string }> = {
-  upload: { icon: Upload, className: 'bg-primary-50 text-primary' },
-  analysis: { icon: Sparkles, className: 'bg-secondary-50 text-secondary-600' },
+  upload: { icon: Upload, className: 'bg-line-soft text-ink-muted' },
+  analysis: { icon: Sparkles, className: 'bg-line-soft text-ink-muted' },
   create: { icon: FolderPlus, className: 'bg-line-soft text-ink-muted' },
-  comment: { icon: MessageSquare, className: 'bg-warning-soft text-warning' },
-  edit: { icon: FileEdit, className: 'bg-violet-50 text-violet-500' },
-  invite: { icon: UserPlus, className: 'bg-success-soft text-success' },
+  comment: { icon: MessageSquare, className: 'bg-line-soft text-ink-muted' },
+  edit: { icon: FileEdit, className: 'bg-line-soft text-ink-muted' },
+  invite: { icon: UserPlus, className: 'bg-line-soft text-ink-muted' },
   export: { icon: Download, className: 'bg-line-soft text-ink-muted' },
 }
 

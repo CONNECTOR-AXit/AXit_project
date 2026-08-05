@@ -52,7 +52,7 @@ export function CommonTab({ result }: CommonTabProps) {
                 {topic.excerpts.map((excerpt, index) => (
                   <li
                     key={`${topic.id}-${index}`}
-                    className="rounded-lg border border-line bg-line-soft/50 px-3 py-2.5"
+                    className="rounded-lg bg-line-soft/50 px-3 py-2.5"
                   >
                     <p className="flex items-center gap-1.5 text-[11.5px] font-bold text-ink-subtle">
                       <Quote className="size-3" />

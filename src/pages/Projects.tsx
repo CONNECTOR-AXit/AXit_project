@@ -131,7 +131,7 @@ export default function Projects() {
 function ProjectRow({ project }: { project: Project }) {
   return (
     <motion.div variants={staggerItem}>
-      <Card className="transition-all duration-200 hover:border-primary-200 hover:shadow-lift">
+      <Card className="transition-all duration-200 hover:shadow-lift">
         <Link
           to={`/projects/${project.id}`}
           className="flex flex-wrap items-center gap-4 px-5 py-4 focus-visible:ring-[3px] focus-visible:ring-primary/25 focus-visible:outline-none"

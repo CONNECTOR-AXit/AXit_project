@@ -19,9 +19,9 @@ const kindMeta: Record<
   edit: {
     icon: PencilLine,
     heading: '수정 제안',
-    chip: 'bg-secondary-50 text-secondary-600',
+    chip: 'bg-warning-soft text-warning',
     action: '적용하기',
-    actionClass: 'text-secondary-600 hover:bg-secondary-50',
+    actionClass: 'text-warning hover:bg-warning-soft',
   },
   remove: {
     icon: Trash2,
@@ -80,7 +80,7 @@ export function AiSuggestionPanel({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, x: 20, height: 0 }}
                     transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    className="rounded-xl border border-line bg-white p-3 transition-shadow hover:shadow-card"
+                    className="rounded-xl bg-line-soft p-3 transition-colors hover:bg-line"
                   >
                     <div className="flex items-start gap-2.5">
                       <span

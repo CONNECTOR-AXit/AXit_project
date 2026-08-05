@@ -25,7 +25,7 @@ export function ChartTooltip({ active, label, payload, unit = '', labelMap }: Ch
   if (!active || !payload?.length) return null
 
   return (
-    <div className="rounded-lg border border-line bg-white px-3 py-2 shadow-pop">
+    <div className="rounded-lg bg-white px-3 py-2 shadow-pop">
       {label !== undefined && label !== '' && (
         <p className="mb-1.5 text-[11px] font-bold text-ink-subtle">{label}</p>
       )}

@@ -135,7 +135,7 @@ export default function ProjectDetail() {
                 <InfoRow label="멤버 수">{project.memberCount}명</InfoRow>
               </dl>
 
-              <div className="mt-5 rounded-xl border border-line bg-line-soft/50 p-4">
+              <div className="mt-5 rounded-xl bg-line-soft/50 p-4">
                 <div className="flex items-baseline justify-between">
                   <span className="text-[12.5px] font-bold text-ink">통합 완료율</span>
                   <span className="text-[18px] font-extrabold text-ink tabular-nums">

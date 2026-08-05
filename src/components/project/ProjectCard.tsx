@@ -20,13 +20,13 @@ import { formatDate } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import type { Project } from '@/types'
 
-/** 폴더 글리프 색상. 카드 그리드가 단조로워 보이지 않게 합니다. */
+/** 폴더 글리프 색상. 상태와 무관한 장식 요소라 회색으로 통일합니다. */
 const accentClass: Record<Project['accent'], string> = {
-  blue: 'bg-primary-50 text-primary',
-  mint: 'bg-secondary-50 text-secondary-600',
-  amber: 'bg-warning-soft text-warning',
-  violet: 'bg-violet-50 text-violet-500',
-  rose: 'bg-danger-soft text-danger',
+  blue: 'bg-line-soft text-ink-muted',
+  mint: 'bg-line-soft text-ink-muted',
+  amber: 'bg-line-soft text-ink-muted',
+  violet: 'bg-line-soft text-ink-muted',
+  rose: 'bg-line-soft text-ink-muted',
   slate: 'bg-line-soft text-ink-muted',
 }
 
@@ -40,7 +40,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
 
   return (
     <motion.div variants={staggerItem} className={className}>
-      <Card className="group relative flex h-full flex-col transition-all duration-200 hover:-translate-y-1 hover:border-primary-200 hover:shadow-lift">
+      <Card className="group relative flex h-full flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lift">
         {/*
           카드 전체를 링크로 덮고, 드롭다운 같은 조작 요소는 z-index 로 위에 둡니다.
           중첩 링크가 되지 않으면서 카드 어디를 눌러도 이동합니다.

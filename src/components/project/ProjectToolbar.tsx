@@ -87,7 +87,7 @@ export function ProjectToolbar({
         </SelectContent>
       </Select>
 
-      <div className="ml-auto hidden items-center gap-0.5 rounded-lg border border-line bg-line-soft p-0.5 sm:flex">
+      <div className="ml-auto hidden items-center gap-0.5 rounded-lg bg-line-soft p-0.5 sm:flex">
         <Button
           variant="ghost"
           size="icon-sm"

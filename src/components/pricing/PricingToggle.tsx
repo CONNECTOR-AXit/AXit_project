@@ -21,7 +21,7 @@ export function PricingToggle({ value, onChange, className }: PricingToggleProps
       role="tablist"
       aria-label="결제 주기"
       className={cn(
-        'inline-flex items-center gap-1 rounded-lg border border-line bg-white p-1',
+        'inline-flex items-center gap-1 rounded-lg bg-white p-1',
         className,
       )}
     >

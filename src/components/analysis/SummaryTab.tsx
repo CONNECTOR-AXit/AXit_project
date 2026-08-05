@@ -112,7 +112,7 @@ export function SummaryTab({ result, onOpenDifferences }: SummaryTabProps) {
           <div className="brand-gradient h-1 w-full" />
           <div className="p-5">
             <p className="flex items-center gap-1.5 text-[13px] font-bold text-ink">
-              <Sparkles className="size-4 text-secondary-500" />
+              <Sparkles className="size-4 text-ink-muted" />
               AI 한줄 인사이트
             </p>
             <p className="mt-2.5 text-[13px] leading-6 text-ink-muted">

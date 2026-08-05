@@ -78,7 +78,7 @@ export function Header({ title, onOpenMobileNav }: HeaderProps) {
             className="h-9 pr-16 pl-9"
             aria-label="통합 검색"
           />
-          <kbd className="pointer-events-none absolute top-1/2 right-2.5 flex -translate-y-1/2 items-center gap-0.5 rounded border border-line bg-line-soft px-1.5 py-0.5 text-[10px] font-bold text-ink-subtle">
+          <kbd className="pointer-events-none absolute top-1/2 right-2.5 flex -translate-y-1/2 items-center gap-0.5 rounded bg-white px-1.5 py-0.5 text-[10px] font-bold text-ink-subtle shadow-soft">
             <Command className="size-2.5" />K
           </kbd>
         </div>

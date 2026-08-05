@@ -44,8 +44,8 @@ export function UploadList({ items, onRemove, onRetry, className }: UploadListPr
                 item.status === 'failed'
                   ? 'text-danger'
                   : item.status === 'uploading'
-                    ? 'text-primary'
-                    : 'text-secondary-600',
+                    ? 'text-warning'
+                    : 'text-success',
               )}
             >
               {item.status === 'uploaded' && <CheckCircle2 className="size-3.5" />}
@@ -60,7 +60,7 @@ export function UploadList({ items, onRemove, onRetry, className }: UploadListPr
               <Progress
                 value={item.progress}
                 tone={
-                  item.status === 'failed' ? 'danger' : item.progress >= 100 ? 'success' : 'primary'
+                  item.status === 'failed' ? 'danger' : item.progress >= 100 ? 'success' : 'warning'
                 }
                 className="flex-1"
               />

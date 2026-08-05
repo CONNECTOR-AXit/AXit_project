@@ -128,7 +128,7 @@ function HistoryRow({ entry }: { entry: HistoryEntry }) {
 
   return (
     <motion.div variants={staggerItem}>
-      <Card className="flex items-start gap-3.5 p-4 transition-all duration-200 hover:border-primary-200 hover:shadow-lift">
+      <Card className="flex items-start gap-3.5 p-4 transition-all duration-200 hover:shadow-lift">
         <span
           className={cn('flex size-9 shrink-0 items-center justify-center rounded-xl', meta.className)}
         >

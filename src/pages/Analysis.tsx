@@ -162,8 +162,8 @@ function InfoTile({
   value: string
 }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-line bg-line-soft/50 px-4 py-3">
-      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white text-primary shadow-soft">
+    <div className="flex items-center gap-3 rounded-xl bg-line-soft/50 px-4 py-3">
+      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white text-ink-muted shadow-soft">
         <Icon className="size-4" />
       </span>
       <div className="min-w-0">

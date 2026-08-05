@@ -73,7 +73,7 @@ export function Dropzone({
         transition={{ type: 'spring', stiffness: 320, damping: 20 }}
         className={cn(
           'mb-3 flex size-14 items-center justify-center rounded-2xl transition-colors',
-          dragging ? 'brand-gradient text-white' : 'bg-white text-primary shadow-card',
+          dragging ? 'brand-gradient text-white' : 'bg-line-soft text-ink-muted shadow-card',
         )}
       >
         <UploadCloud className="size-6" strokeWidth={2} />

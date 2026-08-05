@@ -148,7 +148,7 @@ export default function Editor() {
         <Card className="flex min-w-0 flex-col overflow-hidden p-0">
           {!previewMode && <EditorToolbar onCommand={touch} />}
           <div className="max-h-[calc(100vh-260px)] min-h-[520px] flex-1 overflow-y-auto bg-canvas/40">
-            <div className="my-6 rounded-xl border border-line bg-white shadow-soft sm:mx-6">
+            <div className="my-6 rounded-xl bg-white shadow-soft sm:mx-6">
               <DocumentCanvas
                 blocks={doc.blocks}
                 activeBlockId={activeBlockId}
@@ -164,7 +164,7 @@ export default function Editor() {
             <span>원본 문서 5개</span>
             <span>·</span>
             <span>버전 {doc.version}</span>
-            <Badge variant="secondary" className="ml-auto">
+            <Badge variant="neutral" className="ml-auto">
               AI 통합 문서
             </Badge>
           </div>
@@ -208,7 +208,7 @@ export default function Editor() {
                   {documentSources.map((source) => (
                     <li
                       key={source.name}
-                      className="flex items-center gap-2 rounded-lg border border-line px-3 py-2.5"
+                      className="flex items-center gap-2 rounded-lg bg-line-soft px-3 py-2.5"
                     >
                       <span className="min-w-0 flex-1 truncate text-[12.5px] font-semibold text-ink">
                         {source.name}
@@ -224,7 +224,7 @@ export default function Editor() {
               <TabsContent value="comments" className="h-full overflow-y-auto p-4">
                 <ul className="space-y-3">
                   {documentComments.map((comment) => (
-                    <li key={comment.id} className="rounded-xl border border-line p-3">
+                    <li key={comment.id} className="rounded-xl bg-line-soft p-3">
                       <div className="flex items-center gap-2">
                         <MessageSquare className="size-3.5 shrink-0 text-ink-subtle" />
                         <span className="text-[12px] font-bold text-ink">{comment.author}</span>

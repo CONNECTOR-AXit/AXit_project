@@ -10,7 +10,7 @@ export interface LogoProps {
 export function Logo({ compact = false, className }: LogoProps) {
   return (
     <span className={cn('flex items-center gap-2.5 select-none', className)}>
-      <span className="brand-gradient relative flex size-8 shrink-0 items-center justify-center rounded-[10px] shadow-brand">
+      <span className="brand-gradient relative flex size-8 shrink-0 items-center justify-center rounded-[10px]">
         <svg viewBox="0 0 24 24" className="size-4.5" fill="none" aria-hidden="true">
           {/* 문서 본체 */}
           <path

@@ -101,7 +101,7 @@ export function Sidebar({ collapsed, onToggleCollapse, onNavigate }: SidebarProp
             transition={{ duration: 0.2 }}
             className="overflow-hidden px-3"
           >
-            <div className="brand-gradient mb-3 rounded-xl p-3.5 text-white shadow-brand">
+            <div className="brand-gradient mb-3 rounded-xl p-3.5 text-white">
               <span className="flex items-center gap-1.5 text-[13px] font-bold">
                 <Sparkles className="size-3.5" />
                 AXit Pro

@@ -11,8 +11,7 @@ const buttonVariants = cva(
       variant: {
         primary:
           'bg-primary text-white shadow-brand hover:bg-primary-600 active:bg-primary-700 active:shadow-none',
-        gradient:
-          'brand-gradient text-white shadow-brand hover:brightness-[1.06] active:brightness-95',
+        gradient: 'brand-gradient text-white hover:brightness-[1.06] active:brightness-95',
         secondary:
           'bg-secondary-50 text-secondary-600 hover:bg-secondary-100 active:bg-secondary-200',
         outline:

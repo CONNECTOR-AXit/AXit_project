@@ -75,7 +75,7 @@ export function AnalysisStepper({
                 aria-hidden="true"
               >
                 <motion.span
-                  className="block h-full w-full origin-top-left brand-gradient"
+                  className="block h-full w-full origin-top-left bg-[#4ED0B8]"
                   initial={false}
                   animate={
                     vertical
@@ -96,8 +96,8 @@ export function AnalysisStepper({
               <span
                 className={cn(
                   'relative flex size-10 items-center justify-center rounded-full border-2 transition-colors duration-300',
-                  state === 'done' && 'border-transparent bg-success text-white',
-                  state === 'active' && 'brand-gradient border-transparent text-white shadow-brand',
+                  state === 'done' && 'border-transparent bg-[#4ED0B8] text-white',
+                  state === 'active' && 'border-transparent bg-primary text-white shadow-soft',
                   state === 'waiting' && 'border-line bg-white text-ink-subtle',
                 )}
               >

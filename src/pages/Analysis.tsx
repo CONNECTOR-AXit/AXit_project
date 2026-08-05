@@ -65,7 +65,7 @@ export default function Analysis() {
             size={200}
             strokeWidth={14}
             glow={!isComplete}
-            tone={isComplete ? 'success' : 'gradient'}
+            tone="primary"
           >
             <AnimatePresence mode="wait">
               {isComplete ? (

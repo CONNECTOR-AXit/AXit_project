@@ -8,8 +8,7 @@ export interface CircularProgressProps {
   value: number
   size?: number
   strokeWidth?: number
-  /** `gradient` 는 Blue → Mint 브랜드 그라디언트를 호를 따라 칠합니다. */
-  tone?: 'gradient' | 'primary' | 'success' | 'warning'
+  tone?: 'primary' | 'success' | 'warning'
   children?: ReactNode
   className?: string
   /** 느리게 번지는 후광. 분석이 진행 중일 때 사용합니다. */
@@ -20,7 +19,6 @@ const toneStroke = {
   primary: 'var(--color-primary)',
   success: 'var(--color-success)',
   warning: 'var(--color-warning)',
-  gradient: 'url(#axit-progress-gradient)',
 } as const
 
 /** 큰 원형 진행률. Phase 5 의 AI 분석 화면에서도 재사용합니다. */
@@ -28,7 +26,7 @@ export function CircularProgress({
   value,
   size = 180,
   strokeWidth = 12,
-  tone = 'gradient',
+  tone = 'primary',
   children,
   className,
   glow = false,
@@ -54,12 +52,6 @@ export function CircularProgress({
       )}
       {/* -90도 회전으로 12시 방향에서 시작합니다. */}
       <svg width={size} height={size} className="-rotate-90" aria-hidden="true">
-        <defs>
-          <linearGradient id="axit-progress-gradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="var(--color-primary)" />
-            <stop offset="100%" stopColor="var(--color-secondary)" />
-          </linearGradient>
-        </defs>
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -97,7 +89,7 @@ export interface MiniRingProps {
   value: number
   size?: number
   strokeWidth?: number
-  /** 100% 도달 시 초록으로 전환합니다. */
+  /** 100% 도달 여부. 텍스트 강조에만 씁니다 — 링 색은 항상 메인 컬러입니다. */
   complete?: boolean
 }
 
@@ -106,17 +98,10 @@ export function MiniRing({ value, size = 40, strokeWidth = 4, complete }: MiniRi
   const pct = clamp(value)
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
-  const stroke = complete ? 'var(--color-success)' : 'url(#axit-mini-gradient)'
 
   return (
     <span className="relative inline-flex shrink-0" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90" aria-hidden="true">
-        <defs>
-          <linearGradient id="axit-mini-gradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="var(--color-primary)" />
-            <stop offset="100%" stopColor="var(--color-secondary)" />
-          </linearGradient>
-        </defs>
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -130,7 +115,7 @@ export function MiniRing({ value, size = 40, strokeWidth = 4, complete }: MiniRi
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke={stroke}
+          stroke="var(--color-primary)"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}

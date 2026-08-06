@@ -40,7 +40,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
 
   return (
     <motion.div variants={staggerItem} className={className}>
-      <Card className="group relative flex h-full flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-lift">
+      <Card className="group relative flex h-full flex-col border border-line transition-all duration-200 hover:-translate-y-1 hover:shadow-lift">
         {/*
           카드 전체를 링크로 덮고, 드롭다운 같은 조작 요소는 z-index 로 위에 둡니다.
           중첩 링크가 되지 않으면서 카드 어디를 눌러도 이동합니다.

@@ -2,15 +2,9 @@ import type { ComponentProps } from 'react'
 
 import { cn } from '@/lib/utils'
 
-/** 흰 배경 + Soft Shadow 카드. 테두리 대신 그림자로 구분합니다. */
+/** 흰 배경 카드. 그림자·테두리 없이 페이지 배경(canvas)과의 색 대비로만 구분합니다. */
 export function Card({ className, ...props }: ComponentProps<'div'>) {
-  return (
-    <div
-      data-slot="card"
-      className={cn('rounded-xl bg-white shadow-card transition-shadow duration-200', className)}
-      {...props}
-    />
-  )
+  return <div data-slot="card" className={cn('rounded-xl bg-white', className)} {...props} />
 }
 
 export function CardHeader({ className, ...props }: ComponentProps<'div'>) {

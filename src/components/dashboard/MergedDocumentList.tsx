@@ -21,7 +21,7 @@ export function MergedDocumentList({ documents, now, className }: MergedDocument
         <li key={doc.id}>
           <Link
             to={`/projects/${doc.projectId}/editor`}
-            className="group flex h-full flex-col gap-3 rounded-xl bg-white p-4 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift"
+            className="group flex h-full flex-col gap-3 rounded-xl bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift"
           >
             <div className="flex items-start gap-3">
               <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-line-soft text-ink-muted">

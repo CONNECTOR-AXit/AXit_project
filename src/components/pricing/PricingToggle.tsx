@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils'
 import type { BillingCycle } from '@/data/pricing'
 
 const options: { value: BillingCycle; label: string }[] = [
-  { value: 'annual', label: '연간' },
   { value: 'monthly', label: '월간' },
+  { value: 'annual', label: '연간' },
 ]
 
 export interface PricingToggleProps {

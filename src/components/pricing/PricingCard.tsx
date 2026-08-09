@@ -46,7 +46,9 @@ export function PricingCard({ plan, billing }: PricingCardProps) {
           <p className="mt-3 text-[26px] leading-8 font-extrabold tracking-tight text-[#182235] tabular-nums">
             {price.toLocaleString('ko-KR')}원
           </p>
-          <p className="mt-1 text-[12px] text-ink-subtle">기업당 월 비용</p>
+          <p className="mt-1 text-[12px] text-ink-subtle">
+            기업당 {billing === 'annual' ? '연간' : '월간'} 비용
+          </p>
           <p className="mt-3 min-h-[40px] text-[12.5px] leading-5 text-ink-muted">
             {plan.description}
           </p>

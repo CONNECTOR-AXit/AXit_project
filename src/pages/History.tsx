@@ -79,7 +79,7 @@ export default function History() {
           />
         </div>
         <Select value={kind} onValueChange={(value) => setKind(value as typeof kind)}>
-          <SelectTrigger aria-label="활동 유형 필터">
+          <SelectTrigger aria-label="활동 유형 필터" className="font-bold">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

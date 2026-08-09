@@ -113,12 +113,7 @@ function NotificationGroup({
         const meta = kindMeta[item.kind]
         return (
           <motion.li key={item.id} variants={staggerItem}>
-            <Card
-              className={cn(
-                'relative transition-all duration-200 hover:shadow-lift',
-                !item.read && 'bg-primary-50/25',
-              )}
-            >
+            <Card className="relative transition-all duration-200 hover:shadow-lift">
               <Link
                 to={item.href ?? '#'}
                 onClick={() => onRead(item.id)}

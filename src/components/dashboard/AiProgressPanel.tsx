@@ -38,8 +38,8 @@ export function AiProgressPanel({ projects, credit, className }: AiProgressPanel
           <div className="flex items-center gap-2">
             {/* 진행 중임을 나타내는 맥박 점 */}
             <span className="relative flex size-1.5 shrink-0">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-warning opacity-70" />
-              <span className="relative inline-flex size-1.5 rounded-full bg-warning" />
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-70" />
+              <span className="relative inline-flex size-1.5 rounded-full bg-primary" />
             </span>
             <Link
               to={`/projects/${project.id}`}

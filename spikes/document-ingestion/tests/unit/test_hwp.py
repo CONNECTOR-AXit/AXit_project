@@ -296,5 +296,5 @@ def test_pipeline_uses_injected_hwp_adapter_and_preserves_anchor_identity() -> N
         policy, MediaType.HWP
     )
     assert envelope.result.anchor_set_hash == (
-        "dd0b69a74130a4947a3bf52505dc1ed2e48997cfa7549644e26515d0a8cc08c7"
+        "b20f6aa9b6a28d5b3011e6d050ea4487b00c9371c7e08412506071cee36963bc"
     )

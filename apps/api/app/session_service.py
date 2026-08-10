@@ -11,6 +11,8 @@ import psycopg
 from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 
+from app.activity_policy import build_event_key
+from app.activity_service import ActivityService
 from app.domain import (
     CloseExclusion,
     RevisionProcessingState,
@@ -63,6 +65,9 @@ class ClosedSnapshot:
 class SessionCloseService:
     """Apply parent-lock, audit, snapshot, and job creation in one transaction."""
 
+    def __init__(self, activity_service: ActivityService | None = None) -> None:
+        self._activities = activity_service or ActivityService()
+
     def close(
         self,
         connection: psycopg.Connection[dict[str, Any]],
@@ -97,7 +102,9 @@ class SessionCloseService:
                 cursor.execute(
                     """
                     SELECT session_row.id, session_row.host_id, session_row.topic,
-                           session_row.state, session_row.generation_epoch
+                           session_row.state, session_row.generation_epoch,
+                           session_row.state_version, session_row.retry_ordinal,
+                           session_row.room_id
                     FROM talk_sessions AS session_row
                     JOIN room_memberships AS membership
                       ON membership.room_id = session_row.room_id
@@ -130,6 +137,7 @@ class SessionCloseService:
                       ON approved_run.id = revision.approved_extraction_run_id
                      AND approved_run.source_revision_id = revision.id
                     WHERE submission.session_id = %s AND revision.is_current
+                      AND submission.deleted_at IS NULL
                     ORDER BY revision.id
                     """,
                     (session_id,),
@@ -217,13 +225,32 @@ class SessionCloseService:
                 cursor.execute(
                     """
                     UPDATE talk_sessions
-                    SET state = 'closed', closed_at = CURRENT_TIMESTAMP
+                    SET state = 'closed', closed_at = CURRENT_TIMESTAMP,
+                        state_version = state_version + 1
                     WHERE id = %s AND state = 'open'
+                    RETURNING state_version
                     """,
                     (session_id,),
                 )
                 if cursor.rowcount != 1:
                     raise SessionStateError("session changed while its parent lock was held")
+                closed_row = cursor.fetchone()
+                if closed_row is None:
+                    raise SessionStateError("closed state version was not returned")
+                room_id = _require_uuid(session["room_id"], "session room id")
+                closed_version = int(closed_row["state_version"])
+                self._activities.record(
+                    cursor,
+                    event_key=build_event_key(
+                        "session.closed", session_id=session_id,
+                        state_version=closed_version,
+                    ),
+                    event_type="session.closed", actor_id=actor_id,
+                    scope_type="session", room_id=room_id, session_id=session_id,
+                    entity_type="session", entity_id=session_id,
+                    metadata={"previous_state": "open", "state": "closed",
+                              "state_version": closed_version},
+                )
                 cursor.execute(
                     """
                     INSERT INTO generation_snapshots (
@@ -292,13 +319,32 @@ class SessionCloseService:
                 cursor.execute(
                     """
                     UPDATE talk_sessions
-                    SET state = 'processing', generation_epoch = %s
+                    SET state = 'processing', generation_epoch = %s,
+                        state_version = state_version + 1, retry_ordinal = 0
                     WHERE id = %s AND state = 'closed'
+                    RETURNING state_version
                     """,
                     (next_epoch, session_id),
                 )
                 if cursor.rowcount != 1:
                     raise SessionStateError("session could not enter processing")
+                processing_row = cursor.fetchone()
+                if processing_row is None:
+                    raise SessionStateError("processing state version was not returned")
+                processing_version = int(processing_row["state_version"])
+                self._activities.record(
+                    cursor,
+                    event_key=build_event_key(
+                        "session.processing", session_id=session_id,
+                        state_version=processing_version,
+                    ),
+                    event_type="session.processing", actor_id=actor_id,
+                    scope_type="session", room_id=room_id, session_id=session_id,
+                    entity_type="session", entity_id=session_id,
+                    metadata={"previous_state": "closed", "state": "processing",
+                              "state_version": processing_version,
+                              "generation_epoch": next_epoch},
+                )
 
         return ClosedSnapshot(
             snapshot_id=snapshot_id,
@@ -306,6 +352,87 @@ class SessionCloseService:
             state=TalkSessionState.PROCESSING,
             idempotent=False,
         )
+
+    def reopen(
+        self,
+        connection: psycopg.Connection[dict[str, Any]],
+        *,
+        session_id: UUID,
+        actor_id: UUID,
+    ) -> TalkSessionState:
+        """Send an already-analyzed session back to ``open`` for more input.
+
+        Only valid from a terminal analysis state (``ready`` or
+        ``needs_attention``) — closing again later pins whatever is current
+        at that moment into a brand-new snapshot (a new ``generation_epoch``),
+        so every prior snapshot/run/document stays exactly as it was and
+        keeps working from its own ``snapshot_id``. Nothing here rewrites or
+        deletes earlier analysis history.
+        """
+
+        with connection.transaction():
+            with connection.cursor(row_factory=dict_row) as cursor:
+                cursor.execute(
+                    """
+                    SELECT session_row.id, session_row.host_id, session_row.state,
+                           session_row.room_id
+                    FROM talk_sessions AS session_row
+                    JOIN room_memberships AS membership
+                      ON membership.room_id = session_row.room_id
+                     AND membership.user_id = %s
+                     AND membership.left_at IS NULL
+                    WHERE session_row.id = %s
+                    FOR UPDATE OF session_row
+                    """,
+                    (actor_id, session_id),
+                )
+                session = cursor.fetchone()
+                if session is None:
+                    raise SessionAccessError("session is unavailable")
+                if session["host_id"] != actor_id:
+                    raise SessionHostRequiredError("only the session host may reopen")
+
+                state = TalkSessionState(str(session["state"]))
+                # A report remains viewable after the first reopen, so users can
+                # revisit it and press reanalysis again while the session is
+                # already open. Treat that repeat intent as an idempotent success
+                # instead of surfacing a misleading 409 state conflict.
+                if state is TalkSessionState.OPEN:
+                    return TalkSessionState.OPEN
+                if state not in (TalkSessionState.READY, TalkSessionState.NEEDS_ATTENTION):
+                    raise SessionStateError(
+                        f"talk session must be ready or needs_attention, got {state}"
+                    )
+
+                cursor.execute(
+                    """
+                    UPDATE talk_sessions
+                    SET state = 'open', closed_at = NULL, state_version = state_version + 1
+                    WHERE id = %s AND state = %s
+                    RETURNING state_version
+                    """,
+                    (session_id, state.value),
+                )
+                if cursor.rowcount != 1:
+                    raise SessionStateError("session changed while its parent lock was held")
+                reopened_row = cursor.fetchone()
+                if reopened_row is None:
+                    raise SessionStateError("reopened state version was not returned")
+                reopened_version = int(reopened_row["state_version"])
+                room_id = _require_uuid(session["room_id"], "session room id")
+                self._activities.record(
+                    cursor,
+                    event_key=build_event_key(
+                        "session.reopened", session_id=session_id,
+                        state_version=reopened_version,
+                    ),
+                    event_type="session.reopened", actor_id=actor_id,
+                    scope_type="session", room_id=room_id, session_id=session_id,
+                    entity_type="session", entity_id=session_id,
+                    metadata={"previous_state": state.value, "state": "open",
+                              "state_version": reopened_version},
+                )
+        return TalkSessionState.OPEN
 
 
 def _existing_snapshot_or_raise(

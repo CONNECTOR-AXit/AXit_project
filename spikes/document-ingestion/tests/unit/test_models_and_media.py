@@ -128,12 +128,24 @@ def test_result_rejects_foreign_anchor_identity() -> None:
         (b"\xff\xd8\xff\xe0rest\xff\xd9", "photo.jpeg", MediaType.JPEG),
         (b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1rest", "legacy.hwp", MediaType.HWP),
         (b"PK\x03\x04rest", "package.hwpx", MediaType.HWPX),
+        (b"PK\x03\x04rest", "slides.pptx", MediaType.PPTX),
+        (b"PK\x03\x04rest", "workbook.xlsx", MediaType.XLSX),
     ],
 )
 def test_inspect_input_uses_magic_and_extension(
     data: bytes, filename: str, expected: MediaType
 ) -> None:
     assert inspect_input(data, filename, ExtractionPolicy()).media_type is expected
+
+
+@pytest.mark.parametrize("filename", ("사람1_RAG_img.jpg", "사람1_RAG_img.jpeg"))
+def test_inspect_input_routes_jpeg_labelled_png_to_png_processing(filename: str) -> None:
+    data = b"\x89PNG\r\n\x1a\nfixture\x00\x00\x00\x00IEND\xaeB`\x82"
+
+    inspected = inspect_input(data, filename, ExtractionPolicy())
+
+    assert inspected.media_type is MediaType.PNG
+    assert inspected.extension == "." + filename.rsplit(".", 1)[-1]
 
 
 def test_inspect_input_rejects_spoofed_extension_unknown_and_oversize() -> None:
@@ -162,6 +174,7 @@ def test_image_containers_reject_trailing_polyglot_or_missing_end_markers() -> N
 
     for payload, filename in (
         (valid_png_shell + b"PK\x03\x04", "polyglot.png"),
+        (valid_png_shell + b"PK\x03\x04", "polyglot.jpeg"),
         (valid_jpeg_shell + b"PK\x03\x04", "polyglot.jpg"),
         (b"\x89PNG\r\n\x1a\ntruncated", "truncated.png"),
         (b"\xff\xd8\xfftruncated", "truncated.jpg"),

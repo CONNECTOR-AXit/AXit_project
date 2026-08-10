@@ -44,6 +44,9 @@ _ALLOWED_MEDIA_TYPES: Final = frozenset(
         "image/jpeg",
         "application/x-hwp",
         "application/x-hwpx",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     }
 )
 _ANCHOR_KIND_BY_MEDIA_TYPE: Final = {
@@ -53,6 +56,9 @@ _ANCHOR_KIND_BY_MEDIA_TYPE: Final = {
     "image/jpeg": "image_bbox",
     "application/x-hwp": "hwp_paragraph",
     "application/x-hwpx": "hwp_paragraph",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx_paragraph",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation": "pdf_block",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx_cell",
 }
 _PARSER_FAILURE_CODES: Final = frozenset(
     {
@@ -619,6 +625,11 @@ def _bounded_capture(
         killed = True
     for thread in threads:
         thread.join(timeout=1)
+    # Popen does not close PIPE handles when callers use wait() instead of
+    # communicate(). The reader threads have reached EOF by this point, so the
+    # parent must release both descriptors explicitly on every outcome path.
+    process.stdout.close()
+    process.stderr.close()
     return _Capture(
         stdout=bytes(buffers["stdout"]),
         stderr=bytes(buffers["stderr"]),
@@ -895,6 +906,30 @@ def _validate_locator(
         _require_exact_keys(locator, {"image_id", "bbox"}, "image locator")
         _require_normalized_text(locator.get("image_id"), "image id")
         _validate_bbox(locator.get("bbox"))
+        return
+    if kind == "docx_paragraph":
+        allowed = {"paragraph", "table"}
+        if not set(locator) <= allowed or "paragraph" not in locator:
+            raise ValueError("DOCX locator has invalid fields")
+        _require_index(locator.get("paragraph"), "DOCX paragraph")
+        if "table" in locator:
+            table = _require_mapping(locator["table"], "DOCX table path")
+            _require_exact_keys(
+                table, {"index", "row", "cell", "paragraph"}, "DOCX table path"
+            )
+            for field in ("index", "row", "cell", "paragraph"):
+                _require_index(table.get(field), f"DOCX table {field}")
+        return
+    if kind == "xlsx_cell":
+        _require_exact_keys(
+            locator,
+            {"sheet", "cell", "row", "column"},
+            "XLSX locator",
+        )
+        _require_normalized_text(locator.get("sheet"), "XLSX sheet")
+        _require_normalized_text(locator.get("cell"), "XLSX cell")
+        _require_index(locator.get("row"), "XLSX row", minimum=1)
+        _require_index(locator.get("column"), "XLSX column", minimum=1)
         return
     if kind != "hwp_paragraph":
         raise ValueError("anchor kind is unsupported")

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from collections.abc import Collection, Mapping
+from collections.abc import Callable, Collection, Mapping
 from dataclasses import dataclass
 from typing import Any, Final
 from uuid import UUID, uuid4
@@ -22,7 +22,7 @@ from app.domain import JobState, StaleLeaseError
 
 
 _ALLOWED_KINDS: Final[frozenset[str]] = frozenset(
-    {"extraction", "summary", "research"}
+    {"extraction", "summary", "research", "report_suggestions"}
 )
 _COMPLETION_STATES: Final[frozenset[JobState]] = frozenset(
     {
@@ -278,6 +278,26 @@ class PostgresJobQueue:
         result: Mapping[str, object],
         error_code: str | None = None,
     ) -> None:
+        """Persist a terminal result without additional domain side effects."""
+
+        self.complete_with_effects(
+            connection,
+            claimed,
+            target_state=target_state,
+            result=result,
+            error_code=error_code,
+        )
+
+    def complete_with_effects(
+        self,
+        connection: psycopg.Connection[dict[str, Any]],
+        claimed: ClaimedJob,
+        *,
+        target_state: JobState,
+        result: Mapping[str, object],
+        error_code: str | None = None,
+        effect: Callable[[Any], None] | None = None,
+    ) -> None:
         """Persist a successful canonical result and exact lease completion atomically.
 
         The state CAS is evaluated before the insert.  If it affects zero
@@ -285,7 +305,11 @@ class PostgresJobQueue:
         result behind.  Retryable/terminal failures retain only their typed
         error state in ``jobs``/``job_attempts`` so a later retry can still
         create the one canonical successful result. Any result insert failure
-        also rolls the state back.
+        also rolls the state back.  ``effect`` exists for Phase 3 generation
+        persistence: it runs only after the lease/token CAS has succeeded and
+        remains in this same transaction.  Therefore a stale worker cannot
+        create a generated document/citation, and a failed domain write cannot
+        leave a completed job without its canonical artifact.
         """
 
         if target_state not in _COMPLETION_STATES:
@@ -297,9 +321,6 @@ class PostgresJobQueue:
             raise QueueInvariantError("failed completion requires a non-blank error_code")
         elif len(error_code) > 128:
             raise QueueInvariantError("error_code must be at most 128 characters")
-        result_dict = dict(result)
-        encoded_result = canonical_json_bytes(result_dict)
-        result_hash = hashlib.sha256(encoded_result).hexdigest()
         with connection.transaction():
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -328,7 +349,12 @@ class PostgresJobQueue:
                 )
                 if cursor.rowcount != 1:
                     raise StaleLeaseError("job completion lease is stale")
+                if effect is not None:
+                    effect(cursor)
                 if target_state is JobState.SUCCEEDED:
+                    result_dict = dict(result)
+                    encoded_result = canonical_json_bytes(result_dict)
+                    result_hash = hashlib.sha256(encoded_result).hexdigest()
                     cursor.execute(
                         """
                         INSERT INTO job_results (id, job_id, result_json, result_hash)

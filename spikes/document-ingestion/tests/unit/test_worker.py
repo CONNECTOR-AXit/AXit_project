@@ -15,7 +15,7 @@ def test_shared_policy_loader_matches_committed_g0_bounds() -> None:
 
     assert policy == ExtractionPolicy()
     assert policy.max_image_pixels == 25_000_000
-    assert policy.max_output_bytes == 1_048_576
+    assert policy.max_output_bytes == 8 * 1024 * 1024
     assert policy.max_blocks == 10_000
 
 

@@ -4,6 +4,11 @@
 - Date: 2026-07-18
 - Phase: 2 — contract freeze + minimal durable core
 
+> Scope update (2026-08-10): the offline-provider paragraph below records the
+> Phase 2 decision at that time. The approved full Grok report amendment now
+> governs production provider use without changing this ADR's provenance and
+> fencing decisions.
+
 ## Context
 
 The Phase 1 document-ingestion G0 gate is clean GO. The next dependency gate

@@ -1,4 +1,4 @@
-"""Strict input byte limits and magic/extension agreement checks."""
+"""Bounded input inspection with one explicit JPEG-labelled PNG compatibility path."""
 
 from __future__ import annotations
 
@@ -18,6 +18,7 @@ _JPEG_MAGIC = b"\xff\xd8\xff"
 _OLE_MAGIC = b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"
 _ZIP_MAGICS = (b"PK\x03\x04", b"PK\x05\x06", b"PK\x07\x08")
 _PNG_IEND = b"\x00\x00\x00\x00IEND\xaeB`\x82"
+_JPEG_LABELLED_PNG_EXTENSIONS = frozenset({".jpg", ".jpeg"})
 _EXTENSIONS: dict[str, MediaType] = {
     ".pdf": MediaType.PDF,
     ".png": MediaType.PNG,
@@ -25,6 +26,9 @@ _EXTENSIONS: dict[str, MediaType] = {
     ".jpeg": MediaType.JPEG,
     ".hwp": MediaType.HWP,
     ".hwpx": MediaType.HWPX,
+    ".docx": MediaType.DOCX,
+    ".pptx": MediaType.PPTX,
+    ".xlsx": MediaType.XLSX,
 }
 
 
@@ -85,16 +89,38 @@ def inspect_input(
             ErrorCode.UNSUPPORTED_MEDIA_TYPE,
             "filename extension is not supported",
         )
-    if extension_type is not None and extension_type is not magic_type:
+    zip_office_match = magic_type is MediaType.HWPX and extension_type in {
+        MediaType.HWPX,
+        MediaType.DOCX,
+        MediaType.PPTX,
+        MediaType.XLSX,
+    }
+    jpeg_labelled_png = (
+        magic_type is MediaType.PNG
+        and extension_type is MediaType.JPEG
+        and suffix in _JPEG_LABELLED_PNG_EXTENSIONS
+    )
+    if (
+        extension_type is not None
+        and extension_type is not magic_type
+        and not zip_office_match
+        and not jpeg_labelled_png
+    ):
         raise extraction_failure(
             ErrorCode.TYPE_MISMATCH,
             "filename extension does not match input magic",
         )
-    if magic_type is MediaType.HWPX and extension_type is not MediaType.HWPX:
+    if magic_type is MediaType.HWPX and not zip_office_match:
         raise extraction_failure(
             ErrorCode.UNSUPPORTED_MEDIA_TYPE,
-            "ZIP input must be explicitly identified as HWPX",
+            "ZIP input must be explicitly identified as a supported Office package",
         )
+    if magic_type is MediaType.HWPX and extension_type in {
+        MediaType.DOCX,
+        MediaType.PPTX,
+        MediaType.XLSX,
+    }:
+        magic_type = extension_type
     if magic_type is MediaType.PNG and not data.endswith(_PNG_IEND):
         raise extraction_failure(
             ErrorCode.CORRUPT_DOCUMENT,

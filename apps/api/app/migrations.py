@@ -14,12 +14,20 @@ from app.db import configured_database_url
 
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 _ALEMBIC_INI = _REPOSITORY_ROOT / "alembic.ini"
+_ALEMBIC_SCRIPTS = _REPOSITORY_ROOT / "apps" / "api" / "alembic"
+_API_IMPORT_ROOT = _REPOSITORY_ROOT / "apps" / "api"
 
 
 def alembic_config(database_url: str) -> Config:
-    """Build a config without writing a credential-bearing URL to disk."""
+    """Build a cwd-independent config without writing credentials to disk."""
 
     config = Config(str(_ALEMBIC_INI))
+    # Alembic resolves a relative ``script_location`` against the process
+    # working directory.  API containers run from ``/workspace/apps/api``;
+    # pin these repository locations so the one-shot migration service and
+    # local test runner execute the exact same revision tree.
+    config.set_main_option("script_location", str(_ALEMBIC_SCRIPTS))
+    config.set_main_option("prepend_sys_path", str(_API_IMPORT_ROOT))
     config.attributes["database_url"] = database_url
     return config
 

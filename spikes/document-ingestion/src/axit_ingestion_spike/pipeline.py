@@ -16,6 +16,7 @@ from axit_ingestion_spike.models import (
     MediaType,
     extraction_failure,
 )
+from axit_ingestion_spike.office import PptxExtractor, XlsxExtractor
 from axit_ingestion_spike.ocr import OcrEngine, TesseractCli
 from axit_ingestion_spike.pdf import PdfBackend, PdfExtractor, PdfiumBackend
 
@@ -65,15 +66,39 @@ def extract_document(
                 ocr=ocr,
                 policy=active_policy,
             ).extract(data, source_sha256=source_sha256)
-        elif media.media_type in (MediaType.HWP, MediaType.HWPX):
+        elif media.media_type is MediaType.HWP:
             if hwp_extractor is None:
-                from axit_ingestion_spike.hwp import JavaHwpExtractor
+                from axit_ingestion_spike.pyhwp_extractor import PyhwpExtractor
 
-                hwp_extractor = JavaHwpExtractor(policy=active_policy)
+                hwp_extractor = PyhwpExtractor(policy=active_policy)
             result = hwp_extractor.extract(
                 data,
                 media_type=media.media_type,
                 source_sha256=source_sha256,
+            )
+        elif media.media_type is MediaType.HWPX:
+            from axit_ingestion_spike.hwp import JavaHwpExtractor
+
+            result = JavaHwpExtractor(policy=active_policy).extract(
+                data,
+                media_type=media.media_type,
+                source_sha256=source_sha256,
+            )
+        elif media.media_type is MediaType.DOCX:
+            from axit_ingestion_spike.docx import DocxExtractor
+
+            result = DocxExtractor(policy=active_policy).extract(
+                data, source_sha256=source_sha256
+            )
+        elif media.media_type is MediaType.PPTX:
+            result = PptxExtractor(
+                backend=pdf_backend or PdfiumBackend(policy=active_policy),
+                ocr=ocr,
+                policy=active_policy,
+            ).extract(data, source_sha256=source_sha256)
+        elif media.media_type is MediaType.XLSX:
+            result = XlsxExtractor(policy=active_policy).extract(
+                data, source_sha256=source_sha256
             )
         else:  # pragma: no cover - exhaustive MediaType dispatch
             raise extraction_failure(

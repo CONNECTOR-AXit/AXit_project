@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -45,6 +46,25 @@ final class DocumentExtractorTest {
         assertEquals(0, paragraph.locator().section());
         assertEquals(0, paragraph.locator().paragraph());
         assertTrue(paragraph.text().contains("회의 사전 브리핑"));
+    }
+
+    @Test
+    void hwpLargerThanOneHundredMibUsesTheApprovedTwoHundredMibBoundary() throws Exception {
+        Path fixture = tempDir.resolve("large-simple.hwp");
+        FixtureGenerator.writeSimpleHwp(fixture);
+        byte[] padding = new byte[1024 * 1024];
+        try (OutputStream output = Files.newOutputStream(
+                fixture, java.nio.file.StandardOpenOption.APPEND)) {
+            while (Files.size(fixture) <= 100L * 1024L * 1024L) {
+                output.write(padding);
+            }
+        }
+
+        ExtractionEnvelope result = DocumentExtractor.extract(
+                fixture, MediaType.HWP, PROFILE_HASH);
+
+        assertTrue(result.records().stream().anyMatch(record ->
+                record.text().contains("회의 사전 브리핑")));
     }
 
     @Test

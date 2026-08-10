@@ -29,7 +29,6 @@
             "type": "string"
           },
           "maxItems": 50,
-          "minItems": 1,
           "title": "Web Evidence Ids",
           "type": "array"
         }
@@ -38,8 +37,7 @@
         "source_anchor_id",
         "source_claim_quote",
         "verdict",
-        "explanation",
-        "web_evidence_ids"
+        "explanation"
       ],
       "title": "FactCheckItem",
       "type": "object"

@@ -1,0 +1,211 @@
+{
+  "fixture_version": "rag-meeting-demo.v1",
+  "fixture_id": "rag-meeting-briefing-ko-001",
+  "provider": "mock",
+  "model": "coding-agent-reviewed-fixture",
+  "prompt_version": "rag-meeting-ko.v1",
+  "language": "ko-KR",
+  "xai_called": false,
+  "credential_persisted": false,
+  "generated_at": "2026-07-23T00:00:00Z",
+  "meeting": {
+    "topic": "RAG의 발전과 회의 사전 브리핑 프로토타입",
+    "participants": [
+      {
+        "id": "participant-history",
+        "name": "민서",
+        "contribution": "RAG 역사 조사",
+        "anchors": [
+          {
+            "id": "anchor-history-001",
+            "exact_quote": "민서: 2020년 REALM과 Lewis 등의 RAG 논문을 중심으로 검색 결합 생성의 발전 흐름을 조사했다."
+          },
+          {
+            "id": "anchor-history-002",
+            "exact_quote": "민서: Lewis 등이 2020년 논문에서 RAG라는 명칭과 두 가지 생성 방식을 제시했다."
+          }
+        ]
+      },
+      {
+        "id": "participant-types",
+        "name": "준호",
+        "contribution": "RAG 유형 조사",
+        "anchors": [
+          {
+            "id": "anchor-types-001",
+            "exact_quote": "준호: 기본 검색-생성형, 필요할 때 검색하고 자체 비평하는 Self-RAG, 지식 그래프를 활용하는 GraphRAG를 비교했다."
+          }
+        ]
+      },
+      {
+        "id": "participant-code",
+        "name": "서연",
+        "contribution": "구현 저장소 조사",
+        "anchors": [
+          {
+            "id": "anchor-code-001",
+            "exact_quote": "서연: 재현 가능한 구현 참고용으로 Hugging Face RAG, Self-RAG, Microsoft GraphRAG 저장소를 정리했다."
+          }
+        ]
+      },
+      {
+        "id": "participant-prototype",
+        "name": "도윤",
+        "contribution": "프로토타입 기획안",
+        "anchors": [
+          {
+            "id": "anchor-prototype-001",
+            "exact_quote": "도윤: 회의 전에 참가자 자료를 모아 출처가 연결된 요약과 조사 결과를 제공하는 사전 브리핑 프로토타입을 제안했다."
+          }
+        ]
+      }
+    ]
+  },
+  "summary": {
+    "title": "참가자 제출 요약",
+    "items": [
+      {
+        "text": "민서는 2020년 주요 연구를 중심으로 RAG의 발전 흐름을 조사했다.",
+        "supports": [
+          {
+            "anchor_id": "anchor-history-001",
+            "exact_quote": "민서: 2020년 REALM과 Lewis 등의 RAG 논문을 중심으로 검색 결합 생성의 발전 흐름을 조사했다."
+          }
+        ]
+      },
+      {
+        "text": "준호는 기본형, Self-RAG, GraphRAG의 특징을 비교했다.",
+        "supports": [
+          {
+            "anchor_id": "anchor-types-001",
+            "exact_quote": "준호: 기본 검색-생성형, 필요할 때 검색하고 자체 비평하는 Self-RAG, 지식 그래프를 활용하는 GraphRAG를 비교했다."
+          }
+        ]
+      },
+      {
+        "text": "서연은 구현을 검토할 수 있는 세 가지 GitHub 저장소를 정리했다.",
+        "supports": [
+          {
+            "anchor_id": "anchor-code-001",
+            "exact_quote": "서연: 재현 가능한 구현 참고용으로 Hugging Face RAG, Self-RAG, Microsoft GraphRAG 저장소를 정리했다."
+          }
+        ]
+      },
+      {
+        "text": "도윤은 출처 연결형 회의 사전 브리핑 프로토타입을 제안했다.",
+        "supports": [
+          {
+            "anchor_id": "anchor-prototype-001",
+            "exact_quote": "도윤: 회의 전에 참가자 자료를 모아 출처가 연결된 요약과 조사 결과를 제공하는 사전 브리핑 프로토타입을 제안했다."
+          }
+        ]
+      }
+    ]
+  },
+  "research": {
+    "title": "외부 자료 조사",
+    "items": [
+      {
+        "heading": "역사",
+        "finding": "REALM은 2020년 2월 검색기를 언어모델 사전학습에 결합하는 방식을 발표했고, Lewis 등의 논문은 같은 해 5월 검색 증강 생성 모델을 두 가지 형태로 제시했다.",
+        "participant_anchor_ids": [
+          "anchor-history-001",
+          "anchor-history-002"
+        ],
+        "web_evidence_ids": [
+          "evidence-realm-paper",
+          "evidence-rag-paper"
+        ]
+      },
+      {
+        "heading": "유형",
+        "finding": "초기 RAG는 검색된 문서를 전체 출력 또는 토큰 단위 생성에 조건으로 사용한다. Self-RAG는 필요할 때 검색하고 생성 결과를 비평하며, GraphRAG는 그래프 기반 메모리 구조를 활용한다.",
+        "participant_anchor_ids": [
+          "anchor-types-001"
+        ],
+        "web_evidence_ids": [
+          "evidence-rag-paper",
+          "evidence-self-rag-paper",
+          "evidence-graphrag-github"
+        ]
+      },
+      {
+        "heading": "구현 참고",
+        "finding": "Hugging Face 연구 프로젝트에는 RAG 예제가 있고, Self-RAG 저장소는 원 논문의 구현을 제공한다. Microsoft GraphRAG 저장소는 그래프 기반 방법론의 데모 코드이며 공식 지원 제품은 아니라고 명시한다.",
+        "participant_anchor_ids": [
+          "anchor-code-001"
+        ],
+        "web_evidence_ids": [
+          "evidence-huggingface-rag-github",
+          "evidence-self-rag-github",
+          "evidence-graphrag-github"
+        ]
+      }
+    ],
+    "fact_checks": [
+      {
+        "claim": "Lewis 등이 2020년 논문에서 RAG라는 명칭과 두 가지 생성 방식을 제시했다.",
+        "verdict": "supported",
+        "explanation": "원 논문의 제목과 초록은 RAG를 명시하고, 동일 검색 문서를 전체 출력에 사용하는 방식과 토큰별로 다른 문서를 사용할 수 있는 방식을 비교한다.",
+        "participant_anchor_ids": [
+          "anchor-history-002"
+        ],
+        "web_evidence_ids": [
+          "evidence-rag-paper"
+        ]
+      }
+    ]
+  },
+  "prototype": {
+    "name": "회의 전 RAG 브리핑 보드",
+    "source_anchor_ids": [
+      "anchor-prototype-001"
+    ],
+    "problem": "참가자가 서로 다른 형식으로 준비한 자료를 회의 직전에 모두 읽기 어렵다.",
+    "solution": "참가자 제출만 압축한 요약과 외부 검증 자료를 분리해 보여주고, 각 항목에서 원문 또는 웹 출처로 이동하게 한다.",
+    "mvp_steps": [
+      "네 참가자의 자료를 제출 항목과 불변 anchor로 저장한다.",
+      "참가자 원문만 사용하는 요약본을 생성한다.",
+      "외부 자료 조사와 팩트체크를 별도 조사본으로 생성한다.",
+      "모든 결과 항목에 원문 또는 웹 근거 링크를 표시한다."
+    ]
+  },
+  "web_evidence": [
+    {
+      "id": "evidence-realm-paper",
+      "title": "REALM: Retrieval-Augmented Language Model Pre-Training",
+      "url": "https://arxiv.org/abs/2002.08909",
+      "accessed_at": "2026-07-23T00:00:00Z"
+    },
+    {
+      "id": "evidence-rag-paper",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "url": "https://arxiv.org/abs/2005.11401",
+      "accessed_at": "2026-07-23T00:00:00Z"
+    },
+    {
+      "id": "evidence-self-rag-paper",
+      "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+      "url": "https://arxiv.org/abs/2310.11511",
+      "accessed_at": "2026-07-23T00:00:00Z"
+    },
+    {
+      "id": "evidence-huggingface-rag-github",
+      "title": "Hugging Face Transformers Research Projects — RAG",
+      "url": "https://github.com/huggingface/transformers-research-projects/tree/main/rag",
+      "accessed_at": "2026-07-23T00:00:00Z"
+    },
+    {
+      "id": "evidence-self-rag-github",
+      "title": "Self-RAG original implementation",
+      "url": "https://github.com/AkariAsai/self-rag",
+      "accessed_at": "2026-07-23T00:00:00Z"
+    },
+    {
+      "id": "evidence-graphrag-github",
+      "title": "Microsoft GraphRAG",
+      "url": "https://github.com/microsoft/graphrag",
+      "accessed_at": "2026-07-23T00:00:00Z"
+    }
+  ]
+}

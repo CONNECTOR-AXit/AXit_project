@@ -15,6 +15,7 @@ from axit_ingestion_spike.ocr import (
     TesseractCli,
     parse_tesseract_tsv,
 )
+from axit_ingestion_spike.pipeline import extract_document
 
 
 TSV = """level\tpage_num\tblock_num\tpar_num\tline_num\tword_num\tleft\ttop\twidth\theight\tconf\ttext
@@ -183,6 +184,28 @@ def test_image_extractor_normalizes_post_orientation_pixel_bbox() -> None:
     assert locator["bbox"] == [0.1, 0.2, 0.6, 0.4]
     assert block.confidence == 0.9
     assert block.anchor.to_dict()["source_sha256"] == "a" * 64
+
+
+def test_pipeline_uses_png_path_for_jpeg_labelled_png() -> None:
+    decoded = DecodedImage(
+        image=FakeImage(),
+        width=100,
+        height=100,
+        original_width=100,
+        original_height=100,
+        exif_orientation=1,
+        format="PNG",
+    )
+    envelope = extract_document(
+        b"\x89PNG\r\n\x1a\nfixture\x00\x00\x00\x00IEND\xaeB`\x82",
+        filename="사람1_RAG_img.jpeg",
+        image_decoder=FakeDecoder(decoded),
+        ocr_engine=FakeOcr(),
+    )
+
+    assert envelope.ok is True
+    assert envelope.result is not None
+    assert envelope.result.media_type is MediaType.PNG
 
 
 def test_image_extractor_rejects_post_decode_pixel_overflow() -> None:

@@ -1,0 +1,29 @@
+[1] 논문 입력
+PDF / arXiv / Markdown / TXT
+
+[2] 문서 파싱
+제목, 초록, 서론, 관련연구, 방법론, 실험, 결론 분리
+
+[3] chunk 생성
+논문 section 기준 chunking
+
+[4] embedding
+문단 또는 section 단위 벡터화
+
+[5] vector DB
+FAISS 또는 Chroma 저장
+
+[6] retrieval
+질문에 맞는 근거 문단 검색
+
+[7] generation
+검색된 근거만 사용해 답변 또는 초안 생성
+
+[8] citation
+어떤 논문, 어떤 section, 어떤 문단을 근거로 썼는지 표시
+
+[9] verification
+근거 없는 문장은 표시하거나 제거
+
+[10] logging/evaluation
+검색 결과, 프롬프트, 답변, 실패 사례 저장

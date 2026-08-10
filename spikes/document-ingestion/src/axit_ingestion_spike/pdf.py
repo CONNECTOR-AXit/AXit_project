@@ -306,10 +306,18 @@ class PdfExtractor:
         backend: PdfBackend,
         ocr: OcrEngine | None,
         policy: ExtractionPolicy,
+        force_ocr: bool = False,
+        result_media_type: MediaType = MediaType.PDF,
+        result_parser_name: str | None = None,
+        result_parser_version: str | None = None,
     ) -> None:
         self.backend = backend
         self.ocr = ocr
         self.policy = policy
+        self.force_ocr = force_ocr
+        self.result_media_type = result_media_type
+        self.result_parser_name = result_parser_name or backend.name
+        self.result_parser_version = result_parser_version or backend.version
 
     def extract(self, data: bytes, *, source_sha256: str) -> ExtractionResult:
         ocr_profile: JsonValue
@@ -328,6 +336,18 @@ class PdfExtractor:
             "render_dpi": self.policy.render_dpi,
             "coordinate_profile": "crop-rotate-top-left-unit-v1",
         }
+        # Keep the pinned PDF profile byte-for-byte stable.  Conversion adapters
+        # add their source/force-OCR contract only for non-PDF callers.
+        if self.force_ocr or self.result_media_type is not MediaType.PDF:
+            profile = {
+                **profile,
+                "source_media_type": self.result_media_type.value,
+                "force_ocr": self.force_ocr,
+                "result_parser": {
+                    "name": self.result_parser_name,
+                    "version": self.result_parser_version,
+                },
+            }
         extraction_profile_hash = config_profile_hash(profile)
         document = self.backend.open(data)
         blocks: list[ExtractedBlock] = []
@@ -357,7 +377,7 @@ class PdfExtractor:
                     if normalize_text(rect.text).strip()
                 )
                 text_chars = sum(len(text) for text, _ in normalized_rects)
-                if text_chars >= self.policy.min_pdf_text_chars:
+                if not self.force_ocr and text_chars >= self.policy.min_pdf_text_chars:
                     for rect_index, (text, bbox) in enumerate(normalized_rects):
                         anchor = PdfBlockAnchor.from_text(
                             source_sha256=source_sha256,
@@ -409,9 +429,9 @@ class PdfExtractor:
             )
         return ExtractionResult(
             source_sha256=source_sha256,
-            media_type=MediaType.PDF,
-            parser_name=self.backend.name,
-            parser_version=self.backend.version,
+            media_type=self.result_media_type,
+            parser_name=self.result_parser_name,
+            parser_version=self.result_parser_version,
             normalization_profile=NORMALIZATION_PROFILE,
             config_profile_hash=extraction_profile_hash,
             blocks=tuple(blocks),

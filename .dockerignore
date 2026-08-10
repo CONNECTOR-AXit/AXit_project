@@ -1,6 +1,11 @@
 .git
 .omx
 .venv
+.env
+.env.*
+!.env.example
+.axit-blobs
+.axit-blobs/**
 **/__pycache__
 **/*.pyc
 **/.pytest_cache
@@ -13,3 +18,15 @@ coverage
 data
 playwright-report
 test-results
+Final
+Frontend
+.g007-pytest-cache/
+.g007-pytest-tmp/
+.pytest-rag-cache/
+.pytest-rag-cache
+.pytest-rag-tmp/
+.pytest-rag-tmp
+.pytest*-cache/
+.pytest*-cache
+.pytest*-tmp/
+.pytest*-tmp

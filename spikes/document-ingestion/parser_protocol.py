@@ -21,6 +21,9 @@ _MEDIA_TYPES = {
     "image/jpeg",
     "application/x-hwp",
     "application/x-hwpx",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 }
 _ERROR_CODES = {
     "EMPTY_INPUT",
@@ -51,8 +54,17 @@ _APPROVED_PARSERS = {
     "application/pdf": ("pypdfium2", "5.12.1"),
     "image/png": ("pillow+tesseract-cli", "12.3.0+5.3.0"),
     "image/jpeg": ("pillow+tesseract-cli", "12.3.0+5.3.0"),
-    "application/x-hwp": ("hwplib", "1.1.10"),
+    "application/x-hwp": ("pyhwp", "0.1b15"),
     "application/x-hwpx": ("hwpxlib", "1.0.9"),
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": (
+        "stdlib-docx", "1.0.0"
+    ),
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation": (
+        "libreoffice+pypdfium2+tesseract-cli", "1.0.0"
+    ),
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": (
+        "stdlib-xlsx", "1.0.0"
+    ),
 }
 
 
@@ -152,6 +164,30 @@ def _validate_locator(
         _require_exact_keys(locator, {"image_id", "bbox"}, "image locator")
         _require_string(locator["image_id"], "image_id")
         _validate_bbox(locator["bbox"])
+        return
+    if kind == "docx_paragraph":
+        allowed = {"paragraph", "table"}
+        if "paragraph" not in locator or not set(locator) <= allowed:
+            raise ValueError("DOCX locator has invalid fields")
+        _require_index(locator["paragraph"], "DOCX paragraph")
+        if "table" in locator:
+            table = _require_mapping(locator["table"], "DOCX table path")
+            _require_exact_keys(
+                table, {"index", "row", "cell", "paragraph"}, "DOCX table path"
+            )
+            for key in ("index", "row", "cell", "paragraph"):
+                _require_index(table[key], f"DOCX table {key}")
+        return
+    if kind == "xlsx_cell":
+        _require_exact_keys(
+            locator,
+            {"sheet", "cell", "row", "column"},
+            "XLSX locator",
+        )
+        _require_string(locator["sheet"], "XLSX sheet")
+        _require_string(locator["cell"], "XLSX cell")
+        _require_index(locator["row"], "XLSX row", minimum=1)
+        _require_index(locator["column"], "XLSX column", minimum=1)
         return
     if kind != "hwp_paragraph":
         raise ValueError("unknown anchor kind")
@@ -314,6 +350,9 @@ def _validate_success(
             "image/jpeg": "image_bbox",
             "application/x-hwp": "hwp_paragraph",
             "application/x-hwpx": "hwp_paragraph",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx_paragraph",
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation": "pdf_block",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx_cell",
         }[expected_media_type]
         if anchor["kind"] != expected_anchor_kind:
             raise ValueError("anchor kind is incompatible with the staged media type")

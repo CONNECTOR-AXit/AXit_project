@@ -5,6 +5,7 @@ description = "Provenance-first meeting pre-briefing RAG platform"
 requires-python = "==3.12.*"
 dependencies = [
   "alembic==1.18.5",
+  "argon2-cffi==25.1.0",
   "fastapi==0.139.2",
   "psycopg[binary]==3.3.4",
   "pydantic==2.13.4",
@@ -16,6 +17,7 @@ dependencies = [
 [dependency-groups]
 dev = [
   "httpx==0.28.1",
+  "httpx2==2.7.0",
   "mypy==2.3.0",
   "pytest==9.1.1",
   "pytest-asyncio==1.4.0",
@@ -24,6 +26,11 @@ dev = [
 ingestion-g0 = [
   "Pillow==12.3.0",
   "pypdfium2==5.12.1",
+  "pyhwp==0.1b15",
+  "olefile==0.47",
+  "lxml==6.1.1",
+  "cryptography==50.0.0",
+  "six==1.17.0",
 ]
 
 [tool.uv]
@@ -32,7 +39,7 @@ default-groups = ["dev", "ingestion-g0"]
 
 [tool.pytest.ini_options]
 addopts = "-ra --strict-config --strict-markers"
-pythonpath = ["apps/api"]
+pythonpath = ["apps/api", "spikes/document-ingestion", "spikes/document-ingestion/src"]
 markers = [
   "e2e: browser end-to-end tests",
   "evaluation: deterministic quality evaluation tests",
@@ -43,6 +50,7 @@ markers = [
 ]
 testpaths = ["tests"]
 cache_dir = ".omx/state/pytest-cache"
+asyncio_default_fixture_loop_scope = "function"
 
 [tool.ruff]
 target-version = "py312"
@@ -52,3 +60,8 @@ python_version = "3.12"
 strict = true
 files = ["apps/api", "spikes/document-ingestion/src", "spikes/document-ingestion/*.py"]
 exclude = ["(^|/)tests/"]
+
+[[tool.mypy.overrides]]
+# pyhwp ships no type stubs / py.typed marker.
+module = "hwp5.*"
+ignore_missing_imports = true

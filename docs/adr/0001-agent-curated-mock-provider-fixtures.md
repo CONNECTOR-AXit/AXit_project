@@ -3,6 +3,10 @@
 - **Status:** Accepted (temporary experiment strategy)
 - **Date:** 2026-07-17
 
+> Scope update (2026-08-10): this ADR remains the deterministic test-fixture
+> strategy. It is no longer the production-provider policy for the separately
+> approved description-assist and full report pipeline scopes.
+
 ## Context
 
 The meeting pre-briefing RAG experiment needs repeatable provider-shaped outputs without an external provider, credentials, paid usage, or uploads of originals. The approved temporary override explicitly suspends xAI/Grok calls.

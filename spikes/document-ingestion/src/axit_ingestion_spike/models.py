@@ -29,6 +29,9 @@ class MediaType(StrEnum):
     JPEG = "image/jpeg"
     HWP = "application/x-hwp"
     HWPX = "application/x-hwpx"
+    DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    PPTX = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
 
 class ErrorCode(StrEnum):
@@ -98,19 +101,19 @@ def extraction_failure(
 
 @dataclass(frozen=True, slots=True)
 class ExtractionPolicy:
-    max_input_bytes: int = 20 * 1024 * 1024
+    max_input_bytes: int = 200 * 1024 * 1024
     max_image_pixels: int = 25_000_000
     max_pdf_pages: int = 100
     max_archive_entries: int = 256
-    max_archive_entry_bytes: int = 20 * 1024 * 1024
-    max_archive_total_bytes: int = 64 * 1024 * 1024
+    max_archive_entry_bytes: int = 200 * 1024 * 1024
+    max_archive_total_bytes: int = 512 * 1024 * 1024
     max_archive_compression_ratio: float = 100.0
     max_xml_bytes: int = 8 * 1024 * 1024
     max_blocks: int = 10_000
     max_block_chars: int = 100_000
     max_total_chars: int = 1_000_000
-    max_output_bytes: int = 1_048_576
-    max_ocr_tsv_bytes: int = 1_048_576
+    max_output_bytes: int = 8 * 1024 * 1024
+    max_ocr_tsv_bytes: int = 8 * 1024 * 1024
     max_ocr_rows: int = 100_000
     ocr_timeout_seconds: float = 15.0
     render_dpi: int = 300

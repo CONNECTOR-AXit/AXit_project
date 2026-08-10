@@ -15,7 +15,7 @@ GO.
 3. Execute the parser image through the host sandbox runner with a read-only
    staged input, bounded output, no credentials, no network, and explicit
    CPU/RAM/PID/wall limits.
-4. Exercise real PDF, OCR, HWP, and HWPX implementations and the adversarial
+4. Exercise real PDF, OCR, HWP, HWPX, PPTX, and XLSX implementations and the adversarial
    fixture/probe matrix.
 5. Repeat cold and post-cold extraction in separate short-lived containers,
    then prove each locator class with a fresh nonce-bound browser

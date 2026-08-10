@@ -10,7 +10,6 @@ from pathlib import Path
 from uuid import uuid4
 
 import pytest
-from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
 from app.contracts import (
@@ -41,37 +40,74 @@ def test_durable_openapi_freezes_every_prd_route_and_hides_phase0_paths() -> Non
         "/api/friend-requests/{friend_request_id}/accept",
         "/api/friend-requests/{friend_request_id}/reject",
         "/api/friends",
+        "/api/projects/description-suggestions",
         "/api/rooms",
+        "/api/rooms/{room_id}/members",
+        "/api/rooms/{room_id}/membership",
         "/api/rooms/{room_id}/invitations",
         "/api/rooms/{room_id}/sessions",
         "/api/sessions/{session_id}",
         "/api/sessions/{session_id}/close",
+        "/api/sessions/{session_id}/reopen",
         "/api/sessions/{session_id}/retry",
+        "/api/sessions/{session_id}/submissions",
         "/api/sessions/{session_id}/submissions/text",
         "/api/sessions/{session_id}/submissions/files",
+        "/api/sessions/{session_id}/search",
+        "/api/sessions/{session_id}/comparison",
         "/api/submissions/{submission_id}",
         "/api/source-revisions/{revision_id}/original",
         "/api/source-revisions/{revision_id}/viewer",
+        "/api/source-revisions/{revision_id}/preview",
+        "/api/source-revisions/{revision_id}/retry-extraction",
         "/api/sessions/{session_id}/summary",
         "/api/sessions/{session_id}/research",
+        "/api/sessions/{session_id}/report",
+        "/api/sessions/{session_id}/merged-document",
+        "/api/sessions/{session_id}/merged-document/versions",
+        "/api/sessions/{session_id}/merged-document/versions/{version_id}",
+        "/api/sessions/{session_id}/grok-edit-suggestions",
+        "/api/sessions/{session_id}/suggestions",
+        "/api/suggestions/{suggestion_id}/resolve",
         "/api/citations/{citation_id}/resolve",
+        "/api/web-evidence/{web_evidence_id}",
+        "/api/source-anchors/{source_anchor_id}/resolve",
+        "/api/notifications",
+        "/api/notifications/{notification_id}/read",
+        "/api/notifications/read-all",
+        "/api/me/email-outbox",
+        "/api/me/preferences",
+        "/api/me/profile",
+        "/api/audit-events",
+        "/api/sessions/{session_id}/comments",
+        "/api/comments/{comment_id}",
     }
     assert set(paths) == expected
     assert not any("__phase0" in path for path in paths)
+
+    assert paths["/api/sessions/{session_id}"]["delete"]["operationId"] == "archiveTalkSession"
+    assert paths["/api/rooms/{room_id}/membership"]["delete"]["operationId"] == "leaveRoom"
 
     runtime_paths = runtime_app.openapi()["paths"]
     assert set(runtime_paths) == expected | {"/health"}
 
 
-def test_contract_only_routes_return_the_advertised_error_response_shape() -> None:
-    expected = {
-        "code": "contract_only",
-        "detail": "phase 2 contract only; implementation is scheduled for a later phase",
-    }
-    for application in (contract_app, runtime_app):
-        response = TestClient(application).get("/api/csrf")
-        assert response.status_code == 501
-        assert response.json() == expected
+def test_phase4_file_routes_are_promoted_from_contract_only() -> None:
+    """Freeze the promoted upload/download surface without duplicating auth E2E."""
+
+    paths = contract_app.openapi()["paths"]
+    upload = paths["/api/sessions/{session_id}/submissions/files"]["post"]
+    original = paths["/api/source-revisions/{revision_id}/original"]["get"]
+
+    assert upload["operationId"] == "submitFile"
+    assert "multipart/form-data" in upload["requestBody"]["content"]
+    assert "201" in upload["responses"]
+    assert "501" not in upload["responses"]
+
+    assert original["operationId"] == "downloadSourceOriginal"
+    assert "200" in original["responses"]
+    assert "application/octet-stream" in original["responses"]["200"]["content"]
+    assert "501" not in original["responses"]
 
 
 
@@ -272,6 +308,17 @@ def test_contract_excludes_fixture_aliases_storage_and_lease_secrets() -> None:
             accessed_at=datetime(2026, 7, 18, 0, 0),
             snippet_hash="sha256:" + "a" * 64,
         )
+
+
+def test_activity_source_responses_expose_persisted_timestamps() -> None:
+    """Frontend activity feeds must not invent timestamps for durable records."""
+
+    schemas = contract_app.openapi()["components"]["schemas"]
+
+    assert "created_at" in schemas["FriendRequestResponse"]["required"]
+    assert "created_at" in schemas["TalkSessionResponse"]["required"]
+    assert "closed_at" in schemas["TalkSessionResponse"]["required"]
+    assert "created_at" in schemas["SubmissionMetadataResponse"]["required"]
 
 
 @pytest.mark.parametrize(

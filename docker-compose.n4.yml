@@ -1,0 +1,19 @@
+services:
+  postgres:
+    ports: !reset []
+
+  api:
+    ports: !override
+      - "127.0.0.1:${N4_API_PORT:?N4_API_PORT required}:8000"
+    volumes: !reset []
+    tmpfs: !override
+      - /tmp:size=256m,mode=1777
+      - /var/lib/axit/blobs:size=256m,mode=0700
+    environment:
+      AXIT_BLOB_ROOT: /var/lib/axit/blobs
+      PUBLIC_HOST: "${N4_PUBLIC_HOST:?N4_PUBLIC_HOST required}"
+      PUBLIC_ORIGIN: "${N4_PUBLIC_ORIGIN:?N4_PUBLIC_ORIGIN required}"
+
+  web:
+    ports: !override
+      - "127.0.0.1:${N4_WEB_PORT:?N4_WEB_PORT required}:3000"

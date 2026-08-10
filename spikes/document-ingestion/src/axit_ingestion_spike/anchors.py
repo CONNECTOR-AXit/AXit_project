@@ -395,8 +395,116 @@ class HwpParagraphAnchor(_AnchorMixin):
         )
 
 
+@dataclass(frozen=True, slots=True)
+class DocxParagraphAnchor(_AnchorMixin):
+    source_sha256: str
+    extraction_profile_hash: str
+    paragraph: int
+    table: int | None
+    row: int | None
+    cell: int | None
+    cell_paragraph: int | None
+    text_fingerprint: str
+
+    def __post_init__(self) -> None:
+        self._validate_identity()
+        _require_integer(self.paragraph, label="DOCX paragraph", minimum=0)
+        path = (self.table, self.row, self.cell, self.cell_paragraph)
+        if any(value is not None for value in path):
+            if any(value is None for value in path):
+                raise ValueError("complete DOCX table path is required")
+            for value in path:
+                if value is not None:
+                    _require_integer(value, label="DOCX table path", minimum=0)
+        _require_sha256(self.text_fingerprint, label="anchor text_fingerprint")
+
+    @classmethod
+    def from_text(cls, *, source_sha256: str, extraction_profile_hash: str,
+                  paragraph: int, text: str, table: int | None = None,
+                  row: int | None = None, cell: int | None = None,
+                  cell_paragraph: int | None = None) -> "DocxParagraphAnchor":
+        normalized = normalize_text(text)
+        if not normalized:
+            raise ValueError("DOCX anchor text must not be empty")
+        return cls(source_sha256, extraction_profile_hash, paragraph, table, row,
+                   cell, cell_paragraph, text_fingerprint(normalized))
+
+    def to_dict(self) -> dict[str, JsonValue]:
+        locator: dict[str, JsonValue] = {"paragraph": self.paragraph}
+        if self.table is not None:
+            locator["table"] = {
+                "index": self.table, "row": self.row, "cell": self.cell,
+                "paragraph": self.cell_paragraph,
+            }
+        return self._identity(kind="docx_paragraph", locator=locator,
+                              fingerprint=self.text_fingerprint)
+
+
+@dataclass(frozen=True, slots=True)
+class XlsxCellAnchor(_AnchorMixin):
+    """A stable worksheet/cell locator for text indexed from an XLSX package."""
+
+    source_sha256: str
+    extraction_profile_hash: str
+    sheet: str
+    cell: str
+    row: int
+    column: int
+    text_fingerprint: str
+
+    def __post_init__(self) -> None:
+        self._validate_identity()
+        _require_identifier(self.sheet, label="XLSX sheet")
+        _require_identifier(self.cell, label="XLSX cell")
+        _require_integer(self.row, label="XLSX row", minimum=1)
+        _require_integer(self.column, label="XLSX column", minimum=1)
+        _require_sha256(self.text_fingerprint, label="anchor text_fingerprint")
+
+    @classmethod
+    def from_text(
+        cls,
+        *,
+        source_sha256: str,
+        extraction_profile_hash: str,
+        sheet: str,
+        cell: str,
+        row: int,
+        column: int,
+        text: str,
+    ) -> "XlsxCellAnchor":
+        normalized = normalize_text(text)
+        if not normalized:
+            raise ValueError("XLSX anchor text must not be empty")
+        return cls(
+            source_sha256,
+            extraction_profile_hash,
+            sheet,
+            cell,
+            row,
+            column,
+            text_fingerprint(normalized),
+        )
+
+    def to_dict(self) -> dict[str, JsonValue]:
+        return self._identity(
+            kind="xlsx_cell",
+            locator={
+                "sheet": self.sheet,
+                "cell": self.cell,
+                "row": self.row,
+                "column": self.column,
+            },
+            fingerprint=self.text_fingerprint,
+        )
+
+
 AnchorType: TypeAlias = (
-    TextLineAnchor | PdfBlockAnchor | ImageBBoxAnchor | HwpParagraphAnchor
+    TextLineAnchor
+    | PdfBlockAnchor
+    | ImageBBoxAnchor
+    | HwpParagraphAnchor
+    | DocxParagraphAnchor
+    | XlsxCellAnchor
 )
 
 

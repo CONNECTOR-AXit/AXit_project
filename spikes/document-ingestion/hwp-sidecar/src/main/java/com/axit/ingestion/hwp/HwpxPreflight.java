@@ -20,9 +20,10 @@ final class HwpxPreflight {
     private static final byte[] MEDIA_MARKER =
             "application/hwp+zip".getBytes(StandardCharsets.US_ASCII);
     private static final int MAX_ENTRIES = 256;
-    private static final long MAX_ENTRY_BYTES = 20L * 1024L * 1024L;
+    // These limits mirror policy.v1.json; the outer sandbox still enforces them.
+    private static final long MAX_ENTRY_BYTES = 200L * 1024L * 1024L;
     private static final long MAX_XML_BYTES = 8L * 1024L * 1024L;
-    private static final long MAX_TOTAL_BYTES = 64L * 1024L * 1024L;
+    private static final long MAX_TOTAL_BYTES = 512L * 1024L * 1024L;
     private static final long MAX_COMPRESSION_RATIO = 100L;
 
     private HwpxPreflight() {}

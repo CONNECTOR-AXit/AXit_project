@@ -872,3 +872,81 @@ def test_result_insert_failure_rolls_back_the_completion_cas(
             )
             attempt = cursor.fetchone()
         assert attempt == {"status": "running", "ended_at": None}
+
+
+def test_completion_effect_is_fenced_and_atomic(durable_database_url: str) -> None:
+    """Phase 3 writers may persist artifacts only after the queue lease CAS."""
+
+    upgrade_database(durable_database_url)
+    queue = PostgresJobQueue()
+    effect_user_id = uuid4()
+    with open_connection(durable_database_url) as connection:
+        job = queue.enqueue(
+            connection,
+            logical_key="phase3:completion-effect",
+            kind="summary",
+            payload={"snapshot_id": str(uuid4())},
+        )
+        claim = queue.claim_next(connection, owner="effect-worker", lease_seconds=30)
+        assert claim is not None
+
+        def persist_effect(cursor: object) -> None:
+            execute = getattr(cursor, "execute")
+            execute(
+                """
+                INSERT INTO users (id, email, password_hash, display_name)
+                VALUES (%s, %s, %s, %s)
+                """,
+                (
+                    effect_user_id,
+                    f"{effect_user_id.hex}@example.test",
+                    "phase3-effect-hash",
+                    "Effect user",
+                ),
+            )
+
+        queue.complete_with_effects(
+            connection,
+            claim,
+            target_state=JobState.SUCCEEDED,
+            result={"outcome": "persisted"},
+            effect=persist_effect,
+        )
+        assert queue.fetch_job(connection, job_id=job.id).state is JobState.SUCCEEDED
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT count(*) AS count FROM users WHERE id = %s", (effect_user_id,))
+            assert cursor.fetchone() == {"count": 1}
+
+        stale_job = queue.enqueue(
+            connection,
+            logical_key="phase3:completion-effect-stale",
+            kind="summary",
+            payload={"snapshot_id": str(uuid4())},
+        )
+        stale_claim = queue.claim_next(connection, owner="stale-effect-worker", lease_seconds=30)
+        assert stale_claim is not None
+        assert stale_claim.id == stale_job.id
+        with connection.transaction():
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE jobs SET lease_until = clock_timestamp() - INTERVAL '1 second' WHERE id = %s",
+                    (stale_job.id,),
+                )
+
+        effect_called = False
+
+        def stale_effect(cursor: object) -> None:
+            nonlocal effect_called
+            del cursor
+            effect_called = True
+
+        with pytest.raises(StaleLeaseError):
+            queue.complete_with_effects(
+                connection,
+                stale_claim,
+                target_state=JobState.SUCCEEDED,
+                result={"outcome": "stale"},
+                effect=stale_effect,
+            )
+        assert not effect_called
+        assert queue.fetch_job(connection, job_id=stale_job.id).state is JobState.RUNNING

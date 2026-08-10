@@ -79,8 +79,14 @@ APPROVED_PARSERS = {
     "application/pdf": ("pypdfium2", "5.12.1"),
     "image/png": ("pillow+tesseract-cli", "12.3.0+5.3.0"),
     "image/jpeg": ("pillow+tesseract-cli", "12.3.0+5.3.0"),
-    "application/x-hwp": ("hwplib", "1.1.10"),
+    "application/x-hwp": ("pyhwp", "0.1b15"),
     "application/x-hwpx": ("hwpxlib", "1.0.9"),
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation": (
+        "libreoffice+pypdfium2+tesseract-cli", "1.0.0"
+    ),
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": (
+        "stdlib-xlsx", "1.0.0"
+    ),
 }
 
 

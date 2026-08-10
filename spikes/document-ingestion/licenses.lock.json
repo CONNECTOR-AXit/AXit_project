@@ -48,6 +48,15 @@
       "notice": "Retain Debian copyright metadata and Apache-2.0 notice."
     },
     {
+      "name": "LibreOffice Impress",
+      "role": "PPTX to PDF slide conversion",
+      "version": "7.4.7-1+deb12u14 (Debian bookworm)",
+      "spdx": "MPL-2.0",
+      "source_url": "https://packages.debian.org/bookworm/libreoffice-impress",
+      "redistributable": true,
+      "notice": "Retain the Debian copyright file and bundled component notices shipped with LibreOffice."
+    },
+    {
       "name": "Leptonica",
       "role": "Tesseract image library",
       "version": "1.82.0-3+b3 (Debian bookworm)",

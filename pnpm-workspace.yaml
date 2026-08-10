@@ -1,8 +1,10 @@
 packages:
-  - "apps/web"
+  - "AXit_project-main_goal_frontend"
   - "packages/*"
   - "spikes/document-ingestion/viewer"
 
 allowBuilds:
   sharp: true
   unrs-resolver: true
+
+runtimeOnFail: download

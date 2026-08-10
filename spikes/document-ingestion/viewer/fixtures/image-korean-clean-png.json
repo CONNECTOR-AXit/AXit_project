@@ -1,11 +1,11 @@
 {
   "ok": true,
   "result": {
-    "anchor_set_hash": "f7183f7b029aff58d70a51fd09d053ecc25d4801db7153d35fbc647d1b9a4cc5",
+    "anchor_set_hash": "5df7c6407e9de0ed80629f013aa9a16bac1ca05dbdf2139e63e71f201b3df752",
     "blocks": [
       {
         "anchor": {
-          "extraction_profile_hash": "11c78e43eaf35f0638b0e76aca885a0725033f229ef278f99d7364a9b2a03529",
+          "extraction_profile_hash": "31b063d1175f667d67385fc9d4657e541cf450e7524b257aee2d5da3f87f2a6c",
           "kind": "image_bbox",
           "locator": {
             "bbox": [
@@ -20,7 +20,7 @@
           "source_sha256": "8e4b9045f2a1a75495723476c1606754cc116ef9daed082ff679ca04775531d3",
           "text_fingerprint": "6ec1ab6867d8ed1088ee85568f3ca1f73193bae5b13cd5585b24224203f32b2f"
         },
-        "anchor_hash": "5959de05968c5824d0a5a026e57729819164705bfea301b70c3c5ca2cba1d8a4",
+        "anchor_hash": "44254af2ecdc72606eae35e310b98a90810d00d8839b7d428a26c7eea2d54377",
         "block_type": "image_ocr",
         "confidence": 0.967562,
         "ordinal": 0,
@@ -28,7 +28,7 @@
       },
       {
         "anchor": {
-          "extraction_profile_hash": "11c78e43eaf35f0638b0e76aca885a0725033f229ef278f99d7364a9b2a03529",
+          "extraction_profile_hash": "31b063d1175f667d67385fc9d4657e541cf450e7524b257aee2d5da3f87f2a6c",
           "kind": "image_bbox",
           "locator": {
             "bbox": [
@@ -43,7 +43,7 @@
           "source_sha256": "8e4b9045f2a1a75495723476c1606754cc116ef9daed082ff679ca04775531d3",
           "text_fingerprint": "6ceea4f93c77ab55d7539595bf172070cbab710858daac144bfdc65a45429d41"
         },
-        "anchor_hash": "71e5ab4caddd30987743c6143157e9313893406ca94ae04144652a16eb8995dc",
+        "anchor_hash": "94b9c17397a3033d164e9874a90ba96b22184532fd11969677676b04319aa5c1",
         "block_type": "image_ocr",
         "confidence": 0.950707,
         "ordinal": 1,
@@ -51,7 +51,7 @@
       },
       {
         "anchor": {
-          "extraction_profile_hash": "11c78e43eaf35f0638b0e76aca885a0725033f229ef278f99d7364a9b2a03529",
+          "extraction_profile_hash": "31b063d1175f667d67385fc9d4657e541cf450e7524b257aee2d5da3f87f2a6c",
           "kind": "image_bbox",
           "locator": {
             "bbox": [
@@ -66,7 +66,7 @@
           "source_sha256": "8e4b9045f2a1a75495723476c1606754cc116ef9daed082ff679ca04775531d3",
           "text_fingerprint": "ebfa79e5049ae8545c870434c3b3c97dc318bd9011431cd295388fcda33e90fd"
         },
-        "anchor_hash": "e5af38424c28e082874904351bbfea5cd64911d4486c5bd67b2c521aec763ddc",
+        "anchor_hash": "11976613eec5885b08a46d15f0b7b4ae5f0c16d769b0593467d201851f8e9df5",
         "block_type": "image_ocr",
         "confidence": 0.94928,
         "ordinal": 2,
@@ -74,7 +74,7 @@
       },
       {
         "anchor": {
-          "extraction_profile_hash": "11c78e43eaf35f0638b0e76aca885a0725033f229ef278f99d7364a9b2a03529",
+          "extraction_profile_hash": "31b063d1175f667d67385fc9d4657e541cf450e7524b257aee2d5da3f87f2a6c",
           "kind": "image_bbox",
           "locator": {
             "bbox": [
@@ -89,14 +89,14 @@
           "source_sha256": "8e4b9045f2a1a75495723476c1606754cc116ef9daed082ff679ca04775531d3",
           "text_fingerprint": "04ee69ea85adde7fe0d8b83a5e62221e51501bc3fd48422863237dcf64ce7a80"
         },
-        "anchor_hash": "d468a9c8aa7a1b87a9c8ae07bff4028a6aea5bc64d5bbf5fa8f9ada8717599a1",
+        "anchor_hash": "18a7626bc008248cd8b2af7ff9ebd1eee925f91dd8dc8ba6b6613bdf576e2720",
         "block_type": "image_ocr",
         "confidence": 0.956782,
         "ordinal": 3,
         "text": "결론 다음 주 월 요 일 까지 검토"
       }
     ],
-    "config_profile_hash": "11c78e43eaf35f0638b0e76aca885a0725033f229ef278f99d7364a9b2a03529",
+    "config_profile_hash": "31b063d1175f667d67385fc9d4657e541cf450e7524b257aee2d5da3f87f2a6c",
     "media_type": "image/png",
     "normalization_profile": "nfc-lf-v1",
     "parser": {

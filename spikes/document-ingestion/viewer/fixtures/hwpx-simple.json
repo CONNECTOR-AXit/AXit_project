@@ -1,11 +1,11 @@
 {
   "ok": true,
   "result": {
-    "anchor_set_hash": "88c87c66d761174a165c765ffab84ee3dee5d56d2185804697d36e95363db3b9",
+    "anchor_set_hash": "fb49e056d7ec9169ad4e112fd913bfb66f1ac1d6c719d8d75a3b9a87f4181969",
     "blocks": [
       {
         "anchor": {
-          "extraction_profile_hash": "51aa844def1338fbb78756100490e156fa99331fee9be645aadf5f48f37cbc25",
+          "extraction_profile_hash": "ae4e3c7f49383c4d2768445f81fba32ce343701bcf053969bc959b50c4dea8af",
           "kind": "hwp_paragraph",
           "locator": {
             "paragraph": 0,
@@ -17,14 +17,14 @@
           "source_sha256": "c0d12dd6d6346e727a327cf4d30b7b6e8a3e1936b946ee0e401a070e1c29c02b",
           "text_fingerprint": "8ed9bfaaa1a086a66e359beec1ed04ee25319d194dff7bc835793e4bb3e29cba"
         },
-        "anchor_hash": "4acb35f7aa5d6fc872aed09928cc990f381cd51a929b632a4c677283801ce44a",
+        "anchor_hash": "078389f7a1e8f45cc0112200ebdfe674d5754c938d2e8b90a2026e7450ce862a",
         "block_type": "hwp_paragraph",
         "confidence": null,
         "ordinal": 0,
         "text": "회의 안건과 근거를 HWPX 문단에서 확인합니다."
       }
     ],
-    "config_profile_hash": "51aa844def1338fbb78756100490e156fa99331fee9be645aadf5f48f37cbc25",
+    "config_profile_hash": "ae4e3c7f49383c4d2768445f81fba32ce343701bcf053969bc959b50c4dea8af",
     "media_type": "application/x-hwpx",
     "normalization_profile": "nfc-lf-v1",
     "parser": {

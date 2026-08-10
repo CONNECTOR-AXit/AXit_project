@@ -98,7 +98,7 @@ def test_command_enforces_the_complete_static_sandbox_contract(
     assert mount.startswith("type=bind,src=")
     assert mount.endswith(",dst=/input/source,readonly")
     assert command[command.index("--tmpfs") + 1] == (
-        "/tmp:rw,noexec,nosuid,nodev,size=134217728"
+        "/tmp:rw,noexec,nosuid,nodev,size=268435456"
     )
 
     env_values = [

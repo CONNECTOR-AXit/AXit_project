@@ -24,6 +24,7 @@ FROM python:3.12.11-slim-bookworm@sha256:519591d6871b7bc437060736b9f7456b8731f14
 
 ARG TESSERACT_VERSION=5.3.0-2
 ARG LEPTONICA_VERSION=1.82.0-3+b3
+ARG LIBREOFFICE_VERSION=4:7.4.7-1+deb12u14
 
 COPY --from=uv /uv /uvx /bin/
 COPY --from=ocr-model /kor.traineddata /usr/share/tesseract-ocr/5/tessdata/kor.traineddata
@@ -45,10 +46,12 @@ RUN apt-get update \
       "liblept5=${LEPTONICA_VERSION}" \
       "libtesseract5=${TESSERACT_VERSION}" \
       "tesseract-ocr=${TESSERACT_VERSION}" \
+      "libreoffice-impress=${LIBREOFFICE_VERSION}" \
     && rm -rf /var/lib/apt/lists/* \
     && groupadd --gid 10001 axit \
     && useradd --uid 10001 --gid axit --no-create-home --shell /usr/sbin/nologin axit \
     && tesseract --version | grep --fixed-strings "tesseract 5.3.0" \
+    && soffice --version | grep --fixed-strings "LibreOffice 7.4.7" \
     && test "$(sha256sum /usr/share/tesseract-ocr/5/tessdata/kor.traineddata | cut -d' ' -f1)" = \
       "f888d4038348a0c3d25151e7f452bda0d74ca275b18cab146798bcbb94084fff"
 

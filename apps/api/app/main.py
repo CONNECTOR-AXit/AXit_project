@@ -1,9 +1,9 @@
 """FastAPI entry point with a disposable Phase 0 harness and frozen contract.
 
 The ``/api/__phase0`` routes deliberately remain in-memory transport proof
-fixtures.  The separately defined ``/api`` Phase 2 contract is visible in
-OpenAPI but returns 501 until Phase 3 supplies durable authentication and
-business handlers.  Neither surface auto-runs migrations on import.
+fixtures.  The separately defined ``/api`` durable surface now includes the
+Phase 3 text flow and the promoted Phase 4 local file/original path. Neither
+surface auto-runs migrations on import.
 """
 
 from __future__ import annotations
@@ -22,6 +22,7 @@ from starlette import status
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.responses import JSONResponse, RedirectResponse
 
+from app.api_errors import install_api_problem_handler
 from app.contracts import contract_router, install_contract_only_exception_handler
 from app.db import database_is_ready
 
@@ -33,7 +34,7 @@ ORIGINAL_HOST_HEADER_NAME: Final = "X-AXit-Original-Host"
 UPSTREAM_HEADER_NAME: Final = "X-Phase0-Upstream"
 UPSTREAM_HEADER_VALUE: Final = "api"
 CITATION_INVOCATION_HEADER_NAME: Final = "X-Phase0-Citation-Invocation"
-MAX_UPLOAD_BYTES: Final = 20 * 1024 * 1024
+MAX_UPLOAD_BYTES: Final = 200 * 1024 * 1024
 UPLOAD_CHUNK_BYTES: Final = 64 * 1024
 
 CITATION_ID: Final = "phase0-citation-001"
@@ -376,6 +377,7 @@ app.add_middleware(_Phase0UpstreamHeaderMiddleware)
 app.include_router(_phase0_router)
 app.include_router(contract_router)
 install_contract_only_exception_handler(app)
+install_api_problem_handler(app, preserve_validation_prefix=PHASE0_PREFIX)
 
 
 @app.get("/health", response_model=HealthResponse)

@@ -48,6 +48,9 @@ _MEDIA_BY_SUFFIX = {
     ".jpeg": "image/jpeg",
     ".hwp": "application/x-hwp",
     ".hwpx": "application/x-hwpx",
+    ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 }
 _PROBE_NAMES = ("network", "secret", "filesystem", "timeout", "output")
 

@@ -8,7 +8,8 @@ import java.nio.file.Path;
 import java.util.Arrays;
 
 final class DocumentExtractor {
-    private static final long MAX_INPUT_BYTES = 20L * 1024L * 1024L;
+    // Keep the sidecar boundary aligned with policy.v1.json and the upload API.
+    private static final long MAX_INPUT_BYTES = 200L * 1024L * 1024L;
     private static final byte[] CFB_MAGIC = new byte[] {
         (byte) 0xd0, (byte) 0xcf, 0x11, (byte) 0xe0,
         (byte) 0xa1, (byte) 0xb1, 0x1a, (byte) 0xe1
@@ -45,6 +46,9 @@ final class DocumentExtractor {
                 throw ExtractionFailure.of(
                         "ENCRYPTED_DOCUMENT",
                         "Encrypted documents are not accepted by the ingestion spike.");
+            }
+            if (System.getenv("AXIT_HWP_DEBUG") != null) {
+                parserFailure.printStackTrace();
             }
             throw ExtractionFailure.of(
                     "CORRUPT_DOCUMENT",

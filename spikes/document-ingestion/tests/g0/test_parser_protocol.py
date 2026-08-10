@@ -4,7 +4,7 @@ from copy import deepcopy
 
 import pytest
 
-from axit_ingestion_spike.anchors import BBox, HwpParagraphAnchor, PdfBlockAnchor
+from axit_ingestion_spike.anchors import BBox, HwpParagraphAnchor, PdfBlockAnchor, XlsxCellAnchor
 from axit_ingestion_spike.models import (
     ErrorCode,
     ExtractedBlock,
@@ -67,11 +67,43 @@ def _hwp_success_payload() -> dict[str, object]:
     return ExtractionEnvelope.success(result).to_dict()  # type: ignore[return-value]
 
 
+def _xlsx_success_payload() -> dict[str, object]:
+    text = "회의 안건"
+    anchor = XlsxCellAnchor.from_text(
+        source_sha256=SOURCE_HASH,
+        extraction_profile_hash=PROFILE_HASH,
+        sheet="Summary",
+        cell="B2",
+        row=2,
+        column=2,
+        text=text,
+    )
+    result = ExtractionResult(
+        source_sha256=SOURCE_HASH,
+        media_type=MediaType.XLSX,
+        parser_name="stdlib-xlsx",
+        parser_version="1.0.0",
+        normalization_profile=NORMALIZATION_PROFILE,
+        config_profile_hash=PROFILE_HASH,
+        blocks=(ExtractedBlock(0, text, "xlsx_cell", 1.0, anchor),),
+    )
+    return ExtractionEnvelope.success(result).to_dict()  # type: ignore[return-value]
+
+
 def test_host_revalidates_a_complete_success_envelope() -> None:
     validate_parser_payload(
         _success_payload(),
         expected_source_sha256=SOURCE_HASH,
         expected_media_type=MediaType.PDF.value,
+        bounds=BOUNDS,
+    )
+
+
+def test_host_revalidates_xlsx_cell_anchor_payload() -> None:
+    validate_parser_payload(
+        _xlsx_success_payload(),
+        expected_source_sha256=SOURCE_HASH,
+        expected_media_type=MediaType.XLSX.value,
         bounds=BOUNDS,
     )
 

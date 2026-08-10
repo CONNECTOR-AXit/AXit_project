@@ -5,10 +5,71 @@
         "text_line",
         "pdf_block",
         "image_bbox",
-        "hwp_paragraph"
+        "hwp_paragraph",
+        "docx_paragraph",
+        "xlsx_cell"
       ],
       "title": "AnchorKind",
       "type": "string"
+    },
+    "DocxParagraphLocator": {
+      "additionalProperties": false,
+      "properties": {
+        "paragraph": {
+          "minimum": 0,
+          "title": "Paragraph",
+          "type": "integer"
+        },
+        "table": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocxTablePath"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "paragraph"
+      ],
+      "title": "DocxParagraphLocator",
+      "type": "object"
+    },
+    "DocxTablePath": {
+      "additionalProperties": false,
+      "properties": {
+        "cell": {
+          "minimum": 0,
+          "title": "Cell",
+          "type": "integer"
+        },
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "paragraph": {
+          "minimum": 0,
+          "title": "Paragraph",
+          "type": "integer"
+        },
+        "row": {
+          "minimum": 0,
+          "title": "Row",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "index",
+        "row",
+        "cell",
+        "paragraph"
+      ],
+      "title": "DocxTablePath",
+      "type": "object"
     },
     "HwpFootnotePath": {
       "additionalProperties": false,
@@ -209,6 +270,41 @@
       ],
       "title": "TextLineLocator",
       "type": "object"
+    },
+    "XlsxCellLocator": {
+      "additionalProperties": false,
+      "properties": {
+        "cell": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Cell",
+          "type": "string"
+        },
+        "column": {
+          "minimum": 1,
+          "title": "Column",
+          "type": "integer"
+        },
+        "row": {
+          "minimum": 1,
+          "title": "Row",
+          "type": "integer"
+        },
+        "sheet": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Sheet",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sheet",
+        "cell",
+        "row",
+        "column"
+      ],
+      "title": "XlsxCellLocator",
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -246,6 +342,12 @@
         },
         {
           "$ref": "#/$defs/HwpParagraphLocator"
+        },
+        {
+          "$ref": "#/$defs/DocxParagraphLocator"
+        },
+        {
+          "$ref": "#/$defs/XlsxCellLocator"
         }
       ],
       "title": "Locator"

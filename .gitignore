@@ -22,6 +22,7 @@ __pycache__/
 
 # Local data and runtime
 data/
+.axit-blobs/
 *.log
 .omx/state/
 .omx/logs/
@@ -45,3 +46,4 @@ data/
 Thumbs.db
 .idea/
 .vscode/
+.axit-blobs/

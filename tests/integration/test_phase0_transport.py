@@ -81,7 +81,7 @@ RESERVED_CITATION_TARGET = (
     "#highlight=anchor-agenda-001"
 )
 
-EXACT_UPLOAD_BYTES = 20 * 1024 * 1024
+EXACT_UPLOAD_BYTES = 200 * 1024 * 1024
 OVERSIZED_UPLOAD_BYTES = EXACT_UPLOAD_BYTES + 1
 _PAYLOAD_CHUNK = bytes(range(256)) * 256
 
@@ -207,11 +207,18 @@ def test_phase0_api_is_not_published_outside_the_compose_network() -> None:
 
     assert compose["services"]["api"].get("ports") in (None, [])
     assert compose["services"]["orchestrator"].get("ports") in (None, [])
+    assert compose["services"]["orchestrator"].get("env_file") in (None, [])
     web_ports = compose["services"]["web"].get("ports") or []
     assert len(web_ports) == 1
     assert web_ports[0]["host_ip"] == "127.0.0.1"
     assert int(web_ports[0]["published"]) == 3000
     assert int(web_ports[0]["target"]) == 3000
+
+    api_tmpfs = compose["services"]["api"].get("tmpfs") or []
+    assert any(
+        entry.startswith("/tmp:") and "size=256m" in entry
+        for entry in api_tmpfs
+    ), "API tmpfs must fit one accepted 200 MiB multipart upload"
 
     runtime = subprocess.run(
         ["docker", "compose", "ps", "--format", "json", "api"],
@@ -430,7 +437,7 @@ def test_phase0_exactly_20_mib_multipart_reaches_api_byte_exact(
             UPLOAD_PATH,
             files={
                 "file": (
-                    "phase0-exactly-20mib.bin",
+                        "phase0-exactly-20mib.bin",
                     payload,
                     "application/octet-stream",
                 )

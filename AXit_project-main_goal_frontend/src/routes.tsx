@@ -1,0 +1,95 @@
+import { lazy, Suspense, type ReactNode } from 'react'
+import { createBrowserRouter } from 'react-router-dom'
+
+import { AppLayout } from '@/components/layout/AppLayout'
+import { Skeleton } from '@/components/ui/skeleton'
+import NotFound from '@/pages/NotFound'
+
+/* 라우트 단위 코드 스플리팅 — 첫 진입 번들을 작게 유지합니다. */
+const Dashboard = lazy(() => import('@/pages/Dashboard'))
+const Projects = lazy(() => import('@/pages/Projects'))
+const ProjectDetail = lazy(() => import('@/pages/ProjectDetail'))
+const Upload = lazy(() => import('@/pages/Upload'))
+const Augment = lazy(() => import('@/pages/Augment'))
+const Analysis = lazy(() => import('@/pages/Analysis'))
+const AnalysisResult = lazy(() => import('@/pages/AnalysisResult'))
+const Editor = lazy(() => import('@/pages/Editor'))
+const Documents = lazy(() => import('@/pages/Documents'))
+const History = lazy(() => import('@/pages/History'))
+const Notifications = lazy(() => import('@/pages/Notifications'))
+const Settings = lazy(() => import('@/pages/Settings'))
+const Landing = lazy(() => import('@/pages/Landing'))
+const SignUp = lazy(() => import('@/pages/SignUp'))
+const Login = lazy(() => import('@/pages/Login'))
+
+/** lazy 페이지를 불러오는 동안 표시되는 스켈레톤. */
+function RouteFallback() {
+  return (
+    <div className="space-y-5">
+      <Skeleton className="h-9 w-64" />
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <Skeleton key={index} className="h-[148px] rounded-xl" />
+        ))}
+      </div>
+      <Skeleton className="h-[320px] rounded-xl" />
+    </div>
+  )
+}
+
+function page(element: ReactNode) {
+  return <Suspense fallback={<RouteFallback />}>{element}</Suspense>
+}
+
+/**
+ * handle.title 은 AppLayout 이 헤더 제목으로 읽어갑니다.
+ * 404 는 사이드바 없이 보여야 하므로 레이아웃 밖에 둡니다.
+ */
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppLayout />,
+    children: [
+      { index: true, element: page(<Dashboard />), handle: { title: '대시보드' } },
+      { path: 'projects', element: page(<Projects />), handle: { title: '프로젝트' } },
+      {
+        path: 'projects/:projectId',
+        element: page(<ProjectDetail />),
+        handle: { title: '프로젝트 상세' },
+      },
+      {
+        path: 'projects/:projectId/analysis',
+        element: page(<Analysis />),
+        handle: { title: 'AI 분석' },
+      },
+      {
+        path: 'projects/:projectId/analysis/result',
+        element: page(<AnalysisResult />),
+        handle: { title: '분석 결과' },
+      },
+      {
+        path: 'projects/:projectId/editor',
+        element: page(<Editor />),
+        handle: { title: '통합 문서 편집' },
+      },
+      {
+        path: 'projects/:projectId/upload',
+        element: page(<Upload />),
+        handle: { title: '문서 업로드' },
+      },
+      {
+        path: 'projects/:projectId/augment',
+        element: page(<Augment />),
+        handle: { title: '자료 증강' },
+      },
+      { path: 'documents', element: page(<Documents />), handle: { title: '통합 문서' } },
+      { path: 'history', element: page(<History />), handle: { title: '히스토리' } },
+      { path: 'notifications', element: page(<Notifications />), handle: { title: '알림' } },
+      { path: 'settings', element: page(<Settings />), handle: { title: '설정' } },
+    ],
+  },
+  { path: '/landing', element: page(<Landing />) },
+  { path: '/signup', element: page(<SignUp />) },
+  { path: '/login', element: page(<Login />) },
+  { path: '*', element: <NotFound /> },
+])

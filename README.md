@@ -386,8 +386,8 @@ chmod +x scripts/start-dev.sh
 docker compose up --build
 ```
 
-> ⚠️ **Windows + 경로에 한글이 포함된 경우 (이 저장소 기본 폴더명
-> `해커톤_AXit팀` 포함) 이 명령이 아래 에러로 즉시 실패할 수 있습니다.**
+> ⚠️ **Windows에서 저장소 경로에 한글이 포함된 경우 이 명령이 아래 에러로
+> 즉시 실패할 수 있습니다.**
 >
 > ```
 > failed to dial gRPC: rpc error: code = Internal desc = rpc error: code = Internal desc =
@@ -611,8 +611,8 @@ corepack pnpm --dir AXit_project-main_goal_frontend test
 ```
 
 `corepack pnpm test`는 프런트엔드뿐 아니라 G0 문서 뷰어의 캡처 provenance와
-Playwright 증거까지 검사하는 전체 워크스페이스 검증입니다. 제출 증거 fixture를
-갱신하거나 검토하는 경우에만 별도로 실행하세요.
+Playwright 시각 검증 fixture까지 검사하는 전체 워크스페이스 검증입니다. 관련
+fixture를 갱신하거나 검토하는 경우에만 별도로 실행하세요.
 
 ### 5.3 Python 백엔드 — 패키징 없음, 실행만
 
@@ -655,7 +655,7 @@ docker build --pull=false -f spikes/document-ingestion/Dockerfile -t axit-ingest
 
 ### 5.5 빌드·품질 게이트
 
-제출 직전 최소 검증 순서는 다음과 같습니다.
+변경사항을 병합하기 전 최소 검증 순서는 다음과 같습니다.
 
 ```bash
 # 프런트엔드/워크스페이스

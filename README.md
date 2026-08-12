@@ -1,4 +1,7 @@
-# AXit — 회의 프리브리핑 RAG 플랫폼
+# AXit — 회의 문서 종합 플랫폼
+
+AXit은 여러 회의 자료를 한곳에 모아 분석하고, 핵심 내용과 근거를 바탕으로
+통합 문서를 생성·편집할 수 있는 회의 문서 종합 플랫폼입니다.
 
 - **백엔드**: FastAPI (Python 3.12) + PostgreSQL
 - **프런트엔드**: React 19 + TypeScript + Vite (`AXit_project-main_goal_frontend`)
@@ -10,25 +13,176 @@
 
 ---
 
-## 1. 사전 준비 (런타임 · 도구 설치)
+## 빠른 시작
+
+처음 실행하는 사용자는 아래 순서만 따르면 됩니다. 저장소는 Windows의
+Docker BuildKit 한글 경로 문제를 피하도록 **영문 경로**에 클론하세요.
+
+### Windows PowerShell
+
+```powershell
+git clone https://github.com/CONNECTOR-AXit/AXit_project.git C:\dev\AXit_project
+cd C:\dev\AXit_project
+Copy-Item .env.example .env
+
+# .env.grok.local은 저장소 루트에 준비되어 있다고 가정합니다.
+uv sync --locked
+pwsh -NoProfile -File scripts/start-dev.ps1
+```
+
+### macOS / Linux
+
+```bash
+git clone https://github.com/CONNECTOR-AXit/AXit_project.git ~/dev/AXit_project
+cd ~/dev/AXit_project
+cp .env.example .env
+
+# .env.grok.local은 저장소 루트에 준비되어 있다고 가정합니다.
+uv sync --locked
+chmod +x scripts/start-dev.sh
+./scripts/start-dev.sh
+```
+
+기동이 끝나면 다음 두 가지만 확인합니다.
+
+```bash
+docker compose ps
+```
+
+- `postgres`, `api`, `orchestrator`, `web`이 모두 `healthy`
+- 브라우저에서 http://localhost:3000 접속 가능
+
+> API는 호스트의 `localhost:8000`에 직접 공개하지 않는 것이 정상입니다. Web
+> 컨테이너가 내부 Docker 네트워크의 `api:8000`으로 프록시합니다. 따라서 서비스는
+> 항상 http://localhost:3000 에서 확인하세요.
+
+첫 사용 흐름은 **회원가입 → 로그인 → 프로젝트 생성 → 문서 2개 이상 업로드 →
+AI 분석 시작 → 분석 결과 확인**입니다. 업로드가 50%에서 움직이지 않으면
+`.logs/file-extraction-worker.err.log`를 확인하세요.
+
+---
+
+## 1. 클린 환경 준비 (런타임 · 도구 설치)
 
 ### 1.1 필수 항목
 
-| 도구 | 버전 | 확인 방법 |
-| --- | --- | --- |
-| Git | 최신 | `git --version` |
-| Node.js | `22.17.0` (`.nvmrc` 고정) | `node -v` |
-| pnpm | `11.4.0` (Node의 corepack으로 관리) | `pnpm -v` |
-| Python | `3.12.11` (`.python-version` 고정) | `python --version` |
-| uv | 최신 | `uv --version` |
-| Docker Desktop (Compose 포함) | 최신 | `docker compose version` |
+| 도구 | 버전 | 확인 방법 | 용도 |
+| --- | --- | --- | --- |
+| Git | 최신 | `git --version` | 항상 필요 |
+| Docker Desktop/Engine + Compose v2 | 최신 | `docker version`, `docker compose version` | 권장 전체 실행에 필요 |
+| uv | 최신 | `uv --version` | Python 설치·의존성·문서 추출 워커에 필요 |
+| Python | `3.12.11` (`.python-version`) | `uv run python --version` | `uv`가 자동 설치·관리 |
+| Node.js | `22.17.0` (`.nvmrc`) | `node -v` | 로컬 프런트엔드 빌드/개발 시 필요 |
+| pnpm | `11.4.0` (`package.json`) | `pnpm -v` | 로컬 프런트엔드 빌드/개발 시 필요 |
 
-> Docker Compose 기본 스택만 띄우고 문서 OCR/파싱을 사용하지 않을 경우에는
-> Node/Python/uv를 로컬에 반드시 설치할 필요가 없습니다(컨테이너 안에서
-> 설치됩니다). 문서 추출 워커는 호스트에서 실행되므로, 업로드 문서 인식까지
-> 사용하려면 Python과 uv도 로컬에 설치해야 합니다.
+> 권장 실행 경로는 **Docker + 호스트 문서 추출 워커**입니다. 이 경로는
+> Git, Docker, uv가 필요하고 Node/pnpm은 Docker 이미지 안에서 사용합니다.
+> Node/pnpm을 호스트에 설치하는 이유는 4.2절의 로컬 개발과 5절의 개별
+> 컴파일·검증을 실행하기 위해서입니다.
 
-### 1.2 Node.js 22.17.0 설치
+### 1.2 Windows 10/11 클린 설치 (권장 환경)
+
+1. BIOS/UEFI 가상화를 켜고 관리자 PowerShell에서 WSL 2를 설치·갱신합니다.
+
+   ```powershell
+   wsl --install
+   wsl --update
+   ```
+
+2. Git, Docker Desktop, uv를 설치합니다. `winget`이 없는 환경은 각 공식 설치
+   링크([Git](https://git-scm.com/download/win),
+   [Docker Desktop](https://docs.docker.com/desktop/setup/install/windows-install/),
+   [uv](https://docs.astral.sh/uv/getting-started/installation/))를 사용하세요.
+
+   ```powershell
+   winget install --id Git.Git -e
+   winget install --id Docker.DockerDesktop -e
+   winget install --id astral-sh.uv -e
+   ```
+
+3. **터미널을 새로 열고 Docker Desktop을 실행**한 다음 Linux container 엔진이
+   준비될 때까지 기다립니다. Python 3.12.11은 uv로 설치합니다.
+
+   ```powershell
+   uv python install 3.12.11
+   git --version
+   uv --version
+   uv run --python 3.12.11 python --version
+   docker version
+   docker compose version
+   ```
+
+4. 로컬 프런트엔드 컴파일도 할 경우에만
+   [nvm-windows 공식 설치 프로그램](https://github.com/coreybutler/nvm-windows/releases)을
+   설치하고 새 관리자 PowerShell에서 아래를 실행합니다.
+
+   ```powershell
+   nvm install 22.17.0
+   nvm use 22.17.0
+   corepack enable
+   corepack prepare pnpm@11.4.0 --activate
+   node -v
+   pnpm -v
+   ```
+
+### 1.3 macOS / Ubuntu 클린 설치
+
+먼저 Git과 curl을 준비합니다.
+
+```bash
+# macOS: 명령줄 개발 도구(Git 포함)
+xcode-select --install
+
+# Ubuntu/Debian
+sudo apt-get update
+sudo apt-get install -y git curl ca-certificates
+```
+
+Docker는 운영체제 공식 절차로 설치하고 실행합니다:
+[macOS Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/),
+[Ubuntu Docker Engine](https://docs.docker.com/engine/install/ubuntu/). 설치 후
+`docker version`과 `docker compose version`이 모두 성공해야 합니다.
+
+uv와 uv 관리 Python을 설치합니다.
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+exec "$SHELL" -l
+uv python install 3.12.11
+uv --version
+uv run --python 3.12.11 python --version
+```
+
+로컬 프런트엔드 컴파일도 할 경우에만 nvm과 Node/pnpm을 설치합니다.
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
+exec "$SHELL" -l
+nvm install 22.17.0
+nvm use 22.17.0
+corepack enable
+corepack prepare pnpm@11.4.0 --activate
+node -v
+pnpm -v
+```
+
+### 1.4 버전 확인 체크리스트
+
+```bash
+git --version
+docker version
+docker compose version
+uv --version
+uv run --python 3.12.11 python --version
+```
+
+로컬 빌드까지 수행한다면 추가로 `node -v`가 `v22.17.0`, `pnpm -v`가
+`11.4.0`인지 확인합니다.
+
+<details>
+<summary>기존 설치 안내(도구별 상세)를 펼치기</summary>
+
+#### Node.js 22.17.0 설치
 
 Windows(PowerShell) 기준, [nvm-windows](https://github.com/coreybutler/nvm-windows) 사용을 권장합니다.
 
@@ -45,7 +199,7 @@ nvm install
 nvm use
 ```
 
-### 1.3 pnpm 11.4.0 설치 (corepack)
+#### pnpm 11.4.0 설치 (corepack)
 
 Node 22에는 corepack이 내장되어 있습니다. `package.json`의
 `packageManager` 필드가 pnpm 버전을 고정하므로, corepack만 활성화하면 됩니다.
@@ -56,7 +210,7 @@ corepack prepare pnpm@11.4.0 --activate
 pnpm -v   # 11.4.0
 ```
 
-### 1.4 Python 3.12.11 + uv 설치
+#### Python 3.12.11 + uv 설치
 
 Python 3.12 계열이 설치되어 있어야 합니다 (`pyproject.toml`의
 `requires-python = "==3.12.*"`).
@@ -89,19 +243,24 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 > `uv --version`이 "찾을 수 없음"으로 나오면 터미널(또는 IDE 통합 터미널)을
 > 새로 열어 다시 시도하세요.
 
-### 1.5 Docker Desktop 설치
+#### Docker Desktop 설치
 
 전체 스택(DB + API + Orchestrator + Web)을 한 번에 띄우려면 Docker Desktop(WSL2
 백엔드 권장, Windows 기준)을 설치하고 실행해 둡니다.
+
+</details>
 
 ---
 
 ## 2. 저장소 클론 및 의존성 설치
 
 ```bash
-git clone <이 저장소 URL>
-cd 해커톤_AXit팀
+git clone https://github.com/CONNECTOR-AXit/AXit_project.git
+cd AXit_project
 ```
+
+> Windows에서는 `C:\dev\AXit_project`처럼 전체 경로에도 한글이 없는 위치를
+> 권장합니다.
 
 ### 2.1 Node/pnpm 워크스페이스 의존성 설치
 
@@ -133,7 +292,13 @@ uv sync --locked
 
 `.env.example`을 복사해 `.env`를 만듭니다.
 
+```powershell
+# Windows PowerShell
+Copy-Item .env.example .env
+```
+
 ```bash
+# macOS / Linux
 cp .env.example .env
 ```
 
@@ -181,10 +346,41 @@ GROK_MODEL=grok-4.5
 `migrate`(1회성 스키마 마이그레이션) → `api`(FastAPI) + `orchestrator`(백그라운드
 워커) → `web`(React 프로덕션 서버).
 
-> 이 기본 스택에는 원본 문서의 OCR/파싱을 담당하는 파일 추출 워커가 포함되지
-> 않습니다. 웹/API와 AI 보고서 생성 기능은 아래 명령으로 시작할 수 있지만,
-> 업로드한 PDF/HWPX/DOCX 등의 인식까지 사용하려면 **4.3절의 G0 이미지 빌드와
-> 파일 추출 워커 실행도 반드시 완료해야 합니다.**
+> **이 기본 스택에는 원본 문서의 OCR/파싱을 담당하는 파일 추출 워커가 포함되지
+> 않습니다** (이유는 4.3절 참고 — 호스트 Docker 소켓이 필요해 의도적으로
+> Compose 밖에서 실행합니다). `docker compose up`만 실행하고 이 워커를
+> 깜빡하면, 웹/API/AI 보고서 생성 기능은 정상 동작해도 **업로드한 PDF/HWPX/
+> DOCX 등은 "처리 중"(진행률 50%)에서 영원히 멈춘 것처럼 보입니다** — 이건
+> 버그가 아니라 워커가 없어서 큐가 아예 소비되지 않는 상태입니다.
+>
+> 그래서 **아래 두 명령을 매번 세트로 실행**하거나(권장), 이 세트를 한 번에
+> 실행하는 스크립트(`scripts/start-dev.ps1` / `scripts/start-dev.sh`)를
+> 쓰세요. 스크립트는 이미 떠 있는 컨테이너/워커를 감지해 중복 실행하지
+> 않으므로 여러 번 실행해도 안전합니다.
+
+```powershell
+# Windows (PowerShell)
+pwsh -NoProfile -File scripts/start-dev.ps1
+```
+
+```bash
+# macOS / Linux
+chmod +x scripts/start-dev.sh
+./scripts/start-dev.sh
+```
+
+- 스크립트가 하는 일: `docker compose up -d --build` → 서비스 healthy 대기 →
+  `axit-ingestion-g0:local` 이미지 빌드(4.3절) → `app.file_extraction_worker`를
+  백그라운드로 기동. 로그는 `.logs/file-extraction-worker.{out,err}.log`에
+  남습니다.
+- **완료 확인:** 파일을 하나 업로드했을 때 진행률이 몇 초~수십 초 안에 50%를
+  지나 100%(또는 실패 시 0%)로 움직이면 워커가 정상 동작 중인 것입니다.
+  50%에서 멈춰 있다면 워커 로그(`.logs/file-extraction-worker.err.log`)와
+  `docker ps`(Postgres/Docker Desktop이 켜져 있는지)를 확인하세요.
+
+수동으로 하나씩 실행하고 싶다면(스크립트를 쓰지 않는 경우) 아래처럼 두
+단계를 **모두** 실행해야 합니다: 이 절의 `docker compose up --build`와,
+4.3절의 파일 추출 워커 실행.
 
 ```bash
 docker compose up --build
@@ -225,12 +421,22 @@ docker compose up --build
 
 - 웹: http://localhost:3000
 - API: 컨테이너 내부 네트워크에서만 노출 (`web` → `api:8000`로 프록시).
-  API에 직접 접근하려면 `docker-compose.yml`에 포트 매핑을 추가하거나
-  아래 4.2의 로컬 실행 방식을 사용하세요.
+  따라서 `http://localhost:8000`이 열리지 않는 것이 정상입니다. API를 직접
+  디버깅할 때만 아래 4.2의 로컬 실행 방식을 사용하세요.
 
 종료:
 
+```powershell
+# Windows: 호스트 파일 추출 워커 종료 후 Compose 종료
+Get-CimInstance Win32_Process -Filter "Name = 'python.exe'" |
+  Where-Object { $_.CommandLine -like '*app.file_extraction_worker*' } |
+  ForEach-Object { Stop-Process -Id $_.ProcessId }
+docker compose down
+```
+
 ```bash
+# macOS / Linux
+pkill -f app.file_extraction_worker || true
 docker compose down
 ```
 
@@ -323,7 +529,10 @@ corepack pnpm --dir AXit_project-main_goal_frontend run dev
 `app.file_extraction_worker`는 **`docker-compose.yml`에 서비스로 포함되어
 있지 않습니다.** 파싱을 위해 별도의 격리된 샌드박스 컨테이너(`axit-ingestion-g0`)를
 호스트에서 직접 실행해야 합니다(호스트 Docker 소켓을 컨테이너에 마운트하지
-않는 설계이기 때문입니다).
+않는 설계이기 때문입니다). **이 단계를 건너뛰면 업로드한 문서가 "처리 중"
+50%에서 절대 넘어가지 않습니다** — 아래는 4.1절의 `scripts/start-dev.ps1` /
+`scripts/start-dev.sh`가 자동으로 실행하는 것과 같은 내용이니, 그 스크립트를
+썼다면 이 절은 참고용이고 아래 명령을 따로 실행할 필요가 없습니다.
 
 ```powershell
 # Windows (PowerShell) — Postgres/Docker Desktop이 켜져 있어야 합니다
@@ -366,6 +575,15 @@ Compose 기본 스택을 먼저 실행했다면 루트의 `.axit-blobs`가 이�
 
 ## 5. 컴파일 / 빌드 방법
 
+모든 명령은 **저장소 루트**에서 실행합니다. 클린 환경이라면 먼저 아래 두
+의존성 설치를 완료합니다. Docker 이미지 빌드만 할 때는 Dockerfile이 이미지
+안에서 의존성을 설치하므로 이 단계는 생략할 수 있습니다.
+
+```bash
+corepack pnpm install --frozen-lockfile
+uv sync --locked
+```
+
 ### 5.1 프런트엔드 빌드 (TypeScript 컴파일 + Vite 번들)
 
 ```bash
@@ -389,8 +607,12 @@ corepack pnpm --dir AXit_project-main_goal_frontend run start
 corepack pnpm build
 corepack pnpm typecheck
 corepack pnpm lint
-corepack pnpm test
+corepack pnpm --dir AXit_project-main_goal_frontend test
 ```
+
+`corepack pnpm test`는 프런트엔드뿐 아니라 G0 문서 뷰어의 캡처 provenance와
+Playwright 증거까지 검사하는 전체 워크스페이스 검증입니다. 제출 증거 fixture를
+갱신하거나 검토하는 경우에만 별도로 실행하세요.
 
 ### 5.3 Python 백엔드 — 패키징 없음, 실행만
 
@@ -398,9 +620,15 @@ corepack pnpm test
 산출물(wheel 등)이 없습니다. `uv sync`로 설치된 `.venv`를 그대로 실행에
 사용합니다.
 
+Python 소스 전체의 문법/바이트코드 컴파일 가능 여부는 아래처럼 확인합니다.
+
+```bash
+uv run python -m compileall -q apps/api/app
+```
+
 ### 5.4 Docker 이미지 빌드
 
-두 서비스 모두 루트 디렉터리를 빌드 컨텍스트로 사용합니다.
+모든 명령은 루트 디렉터리를 빌드 컨텍스트로 사용합니다.
 
 ```bash
 # API (FastAPI, Python 3.12-slim 기반)
@@ -408,6 +636,59 @@ docker build -f apps/api/Dockerfile -t axit-api:local .
 
 # Web (Node 22-bookworm-slim, pnpm 멀티스테이지 빌드)
 docker build -f AXit_project-main_goal_frontend/Dockerfile -t axit-web:local .
+
+# 문서 OCR/파싱 샌드박스
+docker build --pull=false -f spikes/document-ingestion/Dockerfile -t axit-ingestion-g0:local .
 ```
 
-`docker compose up --build`를 실행하면 두 이미지를 자동으로 빌드합니다.
+Compose가 사용하는 실제 태그로 API/migrate/orchestrator와 Web을 한꺼번에
+빌드하려면 다음을 실행합니다. 문서 파싱 샌드박스는 Compose 밖에서 사용하므로
+두 번째 명령이 별도로 필요합니다.
+
+```bash
+docker compose build
+docker build --pull=false -f spikes/document-ingestion/Dockerfile -t axit-ingestion-g0:local .
+```
+
+`docker compose up --build` 또는 4.1절의 시작 스크립트는 Compose 이미지를
+빌드하면서 실행까지 이어갑니다. 시작 스크립트는 파싱 샌드박스도 함께 빌드합니다.
+
+### 5.5 빌드·품질 게이트
+
+제출 직전 최소 검증 순서는 다음과 같습니다.
+
+```bash
+# 프런트엔드/워크스페이스
+corepack pnpm typecheck
+corepack pnpm lint
+corepack pnpm --dir AXit_project-main_goal_frontend test
+corepack pnpm build
+
+# Python 정적 검사
+uv run ruff check apps/api tests
+uv run mypy apps/api/app
+uv run python -m compileall -q apps/api/app
+
+# 배포 이미지와 서비스 상태
+docker compose build
+docker build --pull=false -f spikes/document-ingestion/Dockerfile -t axit-ingestion-g0:local .
+docker compose up -d
+docker compose ps
+```
+
+Python 테스트는 저장소 루트를 import 경로에 포함해 실행합니다.
+
+```powershell
+# Windows PowerShell
+$env:PYTHONPATH = "."
+uv run pytest -q
+```
+
+```bash
+# macOS / Linux
+PYTHONPATH=. uv run pytest -q
+```
+
+마지막 `docker compose ps`에서 `postgres`, `api`, `orchestrator`, `web`이 모두
+`healthy`이면 빌드와 기본 기동 검증이 완료된 것입니다. `migrate`는 정상적으로
+종료되는 1회성 작업이라 목록에 계속 실행 중으로 보이지 않는 것이 정상입니다.
